@@ -1,0 +1,25 @@
+.login {
+    margin-top: var(--navbar-height);
+}
+
+.form {
+    display: grid;
+    row-gap: 20px;
+    width: 100%;
+    max-width: 550px;
+    margin: 0 auto;
+    box-shadow: var(--shadow);
+    border-radius: 8px;
+    padding: 25px 20px;
+}
+
+.btnWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.link {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
