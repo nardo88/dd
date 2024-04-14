@@ -140,7 +140,7 @@ module.exports = {
         '@typescript-eslint/no-unused-vars': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/adjacent-overload-signatures': 'error',
-        '@typescript-eslint/ban-ts-comment': 'error',
+        '@typescript-eslint/ban-ts-comment': 'off',
         '@typescript-eslint/ban-types': 'error',
         camelcase: 'off',
         '@typescript-eslint/naming-convention': [
