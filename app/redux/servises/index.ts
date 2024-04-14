@@ -16,9 +16,9 @@ export function createReducerManager(
     getReducerMap: () => reducers,
     reduce: (state: StateSchema, action: AnyAction) => {
       if (keysToRemove.length > 0) {
-        state = { ...state }
+        const st = { ...state }
         keysToRemove.forEach((key: StateSchemaKey) => {
-          delete state[key]
+          delete st[key]
         })
         keysToRemove = []
       }
