@@ -113,7 +113,7 @@ module.exports = {
         ],
       },
     ],
-    'react/jsx-closing-bracket-location': 'warn',
+    'react/jsx-closing-bracket-location': 'off',
     'react/jsx-closing-tag-location': 'warn',
     'react/jsx-tag-spacing': 'warn',
     'react/jsx-curly-spacing': 'warn',

@@ -8,15 +8,22 @@ import { loginAction, loginReducer } from '../../modules/slice/LoginSlice'
 import { Button } from '@shared/ui/Button/Button'
 import Link from 'next/link'
 import { ReduxStoreWithManager } from '@app/redux/types'
+import { loginByEmail } from '@features/Login/modules/asyncThunk'
 
 export const Login: FC = () => {
-  const loginValue = useSelector(getLogin)
-  const passwordValue = useSelector(getpassword)
+  const login = useSelector(getLogin)
+  const password = useSelector(getpassword)
   const dispatch = useAppDispatch()
   const store = useStore() as ReduxStoreWithManager
 
   const submitHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    dispatch(
+      loginByEmail({
+        login,
+        password,
+      })
+    )
   }
 
   useEffect(() => {
@@ -30,12 +37,12 @@ export const Login: FC = () => {
     <div className={cls.login}>
       <form className={cls.form} onSubmit={submitHandler}>
         <Input
-          value={loginValue}
+          value={login}
           onChange={(v) => dispatch(loginAction.changeLogin(v))}
           label="Email"
         />
         <Input
-          value={passwordValue}
+          value={password}
           onChange={(v) => dispatch(loginAction.changePassword(v))}
           label="Пароль"
           type={InputTypes.PASSWORD}

@@ -1,13 +1,13 @@
 .header {
-    background-color: #1f1f1f;
-    padding: 0 30px;
-    height: var(--navbar-height);
-
+  background-color: #1f1f1f;
+  padding: 0 30px;
+  height: var(--navbar-height);
+  display: flex;
 }
 
 .wrapper {
-    padding: 20px 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }

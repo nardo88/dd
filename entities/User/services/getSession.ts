@@ -8,7 +8,8 @@ export const getSession = createAsyncThunk<
   { rejectValue: string }
 >('get user session', async (_, thunkApi) => {
   try {
-    const { data } = await api.get<IUserData>('/user/session')
+    const { data } = await api.get<IUserData>('/users/get-user')
+
     return data
   } catch (e) {
     return thunkApi.rejectWithValue('Пользователь не авторизован')

@@ -6,7 +6,7 @@ import { getSession } from '../services/getSession'
 const initialState: SessionSchema = {
   isAuth: false,
   userData: null,
-  isReady: true,
+  isReady: false,
   isLoad: false,
 }
 
@@ -17,6 +17,7 @@ const sessionSlice = createSlice({
     logout(state) {
       localStorage.removeItem(USER_TOKEN_KEY)
       state.userData = null
+      state.isAuth = false
     },
   },
 
@@ -29,6 +30,7 @@ const sessionSlice = createSlice({
         state.userData = action.payload
         state.isLoad = false
         state.isReady = true
+        state.isAuth = true
       })
       .addCase(getSession.rejected, (state) => {
         state.isLoad = false
