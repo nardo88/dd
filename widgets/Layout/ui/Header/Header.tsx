@@ -7,7 +7,7 @@ import { LeftMenu } from '../LeftMenu/LeftMenu'
 
 export const Header: FC = () => {
   const dispatch = useAppDispatch()
-  const { isReady, isAuth, isLoad } = useAppSelector(getSessionData)
+  const { isReady } = useAppSelector(getSessionData)
 
   useEffect(() => {
     if (!isReady) {
@@ -21,7 +21,7 @@ export const Header: FC = () => {
     <header className={cls.header}>
       <div className={cls.wrapper}>
         <Logo />
-        <LeftMenu isAuth={isAuth} isLoad={isLoad} />
+        <LeftMenu />
       </div>
     </header>
   )

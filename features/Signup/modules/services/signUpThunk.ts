@@ -8,7 +8,7 @@ export const signUpThunk = createAsyncThunk<
 >('create new user', async (options, thunkApi) => {
   try {
     const { email, password } = options
-    const { status } = await api.post('/user/signup', { email, password })
+    const { status } = await api.post('/signup', { email, password })
     return status
   } catch (e: any) {
     return thunkApi.rejectWithValue(

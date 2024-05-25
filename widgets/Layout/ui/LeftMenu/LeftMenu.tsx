@@ -1,29 +1,59 @@
-import { FC, useEffect, useRef, useState } from 'react'
+import { FC, useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 
 import cls from './LeftMenu.module.scss'
 import { ProfileIcon } from '@shared/ui/Icons/Profile'
-import { useAppDispatch } from '@shared/hooks/redux'
-import { sessionAction } from '@entities/User'
+import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
+import { getSessionData, sessionAction } from '@entities/User'
+import { useRouter } from 'next/router'
 
-interface LeftMenuProps {
-  isAuth: boolean
-  isLoad: boolean
-}
-
-export const LeftMenu: FC<LeftMenuProps> = ({ isAuth, isLoad }) => {
+export const LeftMenu: FC = () => {
+  const { isAuth, isLoad, userData } = useAppSelector(getSessionData)
+  const { push } = useRouter()
+  const roles = userData?.roles
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const dispath = useAppDispatch()
   const ref = useRef<HTMLUListElement>(null)
   const closeMenu = () => setIsOpen(false)
 
-  const menuItems = [
-    {
-      id: 'logOut',
-      click: () => dispath(sessionAction.logout()),
-      title: 'Выйти',
-    },
-  ]
+  const menuItems = useMemo(() => {
+    const menu = [
+      {
+        id: 'profile',
+        click: () => push('/profile'),
+        title: 'Профиль',
+      },
+      {
+        id: 'logout',
+        click: () => dispath(sessionAction.logout()),
+        title: 'Выйти',
+      },
+    ]
+
+    if (roles?.includes('admin')) {
+      menu.splice(
+        1,
+        0,
+        {
+          id: 'conspect_manager',
+          click: () => push('/articles'),
+          title: 'Управление конспектами',
+        },
+        {
+          id: 'roles',
+          click: () => push('/roles'),
+          title: 'Роли',
+        },
+        {
+          id: 'editor',
+          click: () => push('/editor'),
+          title: 'Создать конспект',
+        }
+      )
+    }
+
+    return menu
+  }, [userData?.roles])
 
   const hideMenu = (e: any) => {
     if (isAuth && ref.current && !ref.current.contains(e.target)) {
