@@ -10,7 +10,6 @@ const Signup: React.FC = () => {
           <Login />
         </div>
       </Layout.Content>
-      <Layout.Footer />
     </Layout>
   )
 }

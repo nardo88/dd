@@ -1,28 +1,28 @@
 .input {
-    padding: 8px 10px;
-    font-size: 14px;
-    line-height: 130%;
-    width: 100%;
-    border-radius: 4px;
-    border: 1px solid var(--color-border);
-    background-color: transparent;
-    outline: none;
-    color: var(--color-secondary);
+  padding: 8px 10px;
+  font-size: 14px;
+  line-height: 130%;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
+  background-color: transparent;
+  outline: none;
+  color: var(--color-secondary);
 
-    &:disabled {
-        color: var(--color-border);
-    }
+  &:disabled {
+    color: var(--color-border);
+  }
 }
 
 .label {
-    font-size: 12px;
-    color: var(--color-secondary);
-    margin-bottom: 4px;
-    padding-left: 3px;
-    display: block;
+  font-size: 12px;
+  color: var(--color-secondary);
+  margin-bottom: 4px;
+  padding-left: 3px;
+  display: block;
 }
 
 .error {
-    margin-top: 3px;
-    color: var(---color-error) !important;
+  margin-top: 3px;
+  color: var(--color-error) !important;
 }

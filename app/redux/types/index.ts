@@ -9,6 +9,7 @@ import store from '../Store'
 import { SessionSchema } from '@entities/User'
 import { LoginInitialState } from '@features/Login'
 import { SignupInitialState } from '@features/Signup'
+import { CatalogState } from '@features/Catalog'
 
 // тип store
 export type RootState = ReturnType<typeof store.getState>
@@ -23,6 +24,7 @@ export interface StateSchema {
   // async
   login?: LoginInitialState
   signup?: SignupInitialState
+  catalog?: CatalogState
 }
 
 export type StateSchemaKey = keyof StateSchema

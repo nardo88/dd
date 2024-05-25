@@ -13,13 +13,13 @@
     bottom: 0;
     left: 0;
     height: 5px;
-    background: var(---color-success);
+    background: var(--color-success);
     width: 0;
     transition: width 0.1s ease-in-out;
   }
 
   &:hover {
-    color: var(---color-success);
+    color: var(--color-success);
 
     &:before {
       width: 100%;

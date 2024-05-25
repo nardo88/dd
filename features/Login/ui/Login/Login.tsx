@@ -7,7 +7,7 @@ import { useAppDispatch } from '@shared/hooks/redux'
 import { loginAction, loginReducer } from '../../modules/slice/LoginSlice'
 import { Button } from '@shared/ui/Button/Button'
 import Link from 'next/link'
-import { ReduxStoreWithManager } from '@app/redux/types'
+import { ReduxStoreWithManager } from '@app/redux'
 import { loginByEmail } from '@features/Login/modules/asyncThunk'
 
 export const Login: FC = () => {

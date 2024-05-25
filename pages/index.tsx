@@ -1,4 +1,5 @@
 import { getSessionData } from '@entities/User'
+import { Catalog } from '@features/Catalog'
 import { Layout } from '@widgets/Layout'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
@@ -17,9 +18,8 @@ const Home: React.FC = () => {
     <Layout title={'Главная'}>
       <Layout.Header />
       <Layout.Content>
-        <div className="container">content</div>
+        <Catalog />
       </Layout.Content>
-      <Layout.Footer />
     </Layout>
   )
 }

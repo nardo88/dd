@@ -3,7 +3,6 @@ import { Header } from '../Header/Header'
 import cls from './Layout.module.scss'
 import { classNames } from '@shared/helpers/classNames'
 import { ReactNode } from 'react'
-import { Footer } from '../Footer/Footer'
 
 interface LayoutProps extends IProps {
   title?: string
@@ -19,7 +18,6 @@ const Content: React.FC<IProps> = ({ children }) => {
 
 export const Layout: React.FC<LayoutProps> & {
   Header: React.FC
-  Footer: React.FC
   Content: React.FC<IProps>
 } = ({ children, title = 'Distant.Global' }) => {
   return (
@@ -33,5 +31,4 @@ export const Layout: React.FC<LayoutProps> & {
 }
 
 Layout.Header = Header
-Layout.Footer = Footer
 Layout.Content = Content

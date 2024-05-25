@@ -1,26 +1,30 @@
 @import 'modules/variables.scss';
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto'
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto';
 }
 
 html,
 body,
 #__next {
-    height: 100%;
+  height: 100%;
+}
+
+ul {
+  list-style: none;
 }
 
 .df {
-    display: flex;
+  display: flex;
 }
 
 .fdc {
-    flex-direction: column;
+  flex-direction: column;
 }
 
 .fh {
-    height: 100%;
+  height: 100%;
 }

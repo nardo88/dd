@@ -1,5 +1,5 @@
 // import { RootState } from '@app/redux'
-import { StateSchema } from '@app/redux/types'
+import { StateSchema } from '@app/redux'
 
 export const getEmail = (state: StateSchema) => state.signup?.email || ''
 export const getPassword = (state: StateSchema) => state.signup?.password || ''

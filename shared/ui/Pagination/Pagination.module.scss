@@ -1,0 +1,138 @@
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.buttonsWrapper {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.desctopPoint {
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 4px 5px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: var(--color-success);
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid var(--color-success);
+  background: transparent;
+  border-radius: 4px;
+
+  &:hover {
+    background: var(--color-success);
+    color: var(--color-white);
+  }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.dotItem {
+  width: 30px;
+  height: 30px;
+  padding: 4px 5px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 16px;
+  color: var(--content-900);
+  text-align: center;
+  cursor: default;
+  background-color: transparent;
+  border: none;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.current {
+  background: var(--color-success);
+  color: var(--color-white);
+}
+
+.prev {
+  display: flex;
+  align-items: center;
+  margin-right: 4px;
+}
+
+.sidebtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid var(--color-success);
+  background: var(--color-success);
+
+  & > svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--color-white);
+  }
+
+  &.disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
+}
+
+.counter {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  & > span {
+    padding-right: 8px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--base-400);
+  }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.total {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--content-900);
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.mobileCurrentPage {
+  display: none;
+
+  // 576px 768px 992px 1200px
+  @media (max-width: 768px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 4px;
+    min-width: 30px;
+    height: 30px;
+  }
+}

@@ -1,4 +1,4 @@
-import { StateSchema } from '@app/redux/types'
+import { StateSchema } from '@app/redux'
 
 export const getLogin = (state: StateSchema) => state.login?.login || ''
 

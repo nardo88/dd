@@ -14,7 +14,7 @@ import {
 import { signupAction, signupReducer } from '../../modules/slice/signupSlice'
 import { Button } from '@shared/ui/Button/Button'
 import { useStore } from 'react-redux'
-import { ReduxStoreWithManager } from '@app/redux/types'
+import { ReduxStoreWithManager } from '@app/redux'
 import { Text, TextVariant } from '@shared/ui/Text/Text'
 import { Loader } from '@shared/ui/Loader/Loader'
 import { validateSignUp } from '../../modules/helpers/validate'
