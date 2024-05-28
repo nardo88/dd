@@ -1,5 +1,6 @@
 .Sidebar {
-  position: absolute;
+  position: fixed;
+  top: var(--navbar-height);
   z-index: 10;
   background-color: var(--color-secondary);
   border: 1px solid;

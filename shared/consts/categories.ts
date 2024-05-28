@@ -1,21 +1,3 @@
-import javaScript from '/img/templates/javaScript.jpg'
-import typeScript from '/img/templates/typeScript.jpg'
-import nodeJS from '/img/templates/nodeJS.jpg'
-import react from '/img/templates/react.jpg'
-import redux from '/img/templates/redux.jpg'
-import nextJS from '/img/templates/nextJS.jpg'
-import linux from '/img/templates/linux.jpg'
-import mongoDB from '/img/templates/mongoDB.jpg'
-import docker from '/img/templates/docker.jpg'
-import vite from '/img/templates/vite.jpg'
-import webpack from '/img/templates/webpack.jpg'
-import css from '/img/templates/css.jpg'
-import postgreSQL from '/img/templates/postgreSQL.jpg'
-import fireBase from '/img/templates/fireBase.png'
-import webRtc from '/img/templates/WEBRTC.png'
-import test from '/img/templates/jest.png'
-import { StaticImageData } from 'next/image'
-
 export enum Categories {
   any = 'any',
   javaScript = 'javaScript',
@@ -105,21 +87,21 @@ export const variantsTranslate = {
   code: 'Код',
 }
 
-export const covers: Partial<Record<Categories, StaticImageData>> = {
-  javaScript,
-  typeScript,
-  nodeJS,
-  react,
-  redux,
-  nextJS,
-  linux,
-  mongoDB,
-  docker,
-  vite,
-  webpack,
-  css,
-  postgreSQL,
-  fireBase,
-  webRtc,
-  test,
+export const covers: Partial<Record<Categories, string>> = {
+  javaScript: '/img/templates/javaScript.jpg',
+  typeScript: '/img/templates/typeScript.jpg',
+  nodeJS: '/img/templates/nodeJS.jpg',
+  react: '/img/templates/react.jpg',
+  redux: '/img/templates/redux.jpg',
+  nextJS: '/img/templates/nextJS.jpg',
+  linux: '/img/templates/linux.jpg',
+  mongoDB: '/img/templates/mongoDB.jpg',
+  docker: '/img/templates/docker.jpg',
+  vite: '/img/templates/vite.jpg',
+  webpack: '/img/templates/webpack.jpg',
+  css: '/img/templates/css.jpg',
+  postgreSQL: '/img/templates/postgreSQL.jpg',
+  fireBase: '/img/templates/fireBase.png',
+  webRtc: '/img/templates/WEBRTC.png',
+  test: '/img/templates/jest.png',
 }

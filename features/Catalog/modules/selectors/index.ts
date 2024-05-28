@@ -1,4 +1,7 @@
 import { StateSchema } from '@app/redux'
+import { IArticleItem } from '../../types'
+
+const emptyArr: IArticleItem[] = []
 
 export const getTitleFilterValue = (state: StateSchema) =>
   state.catalog?.filter?.title || ''
@@ -10,3 +13,9 @@ export const getCurentPage = (state: StateSchema) =>
 
 export const getIsOpenSidebar = (state: StateSchema) =>
   state.catalog?.isOpen || false
+
+export const getArticleList = (state: StateSchema) =>
+  state.catalog?.articles || emptyArr
+
+export const getIsLoading = (state: StateSchema) =>
+  state.catalog?.isLoading || false

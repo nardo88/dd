@@ -1,5 +1,6 @@
-import { CatalogState } from '@features/Catalog/types'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { CatalogState, IResData } from '../../types'
+import { getArticles } from '../asyncThunk/getArticles'
 
 const initialState: CatalogState = {
   articles: [],
@@ -27,6 +28,23 @@ const CatalogSlice = createSlice({
     toggleSidebar(state, action: PayloadAction<boolean>) {
       state.isOpen = action.payload
     },
+    setArticles(state, action: PayloadAction<IResData>) {
+      state.total = action.payload.total
+      state.articles = action.payload.data
+    },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(getArticles.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(getArticles.fulfilled, (state) => {
+        state.isLoading = false
+      })
+      .addCase(getArticles.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload as string
+      })
   },
 })
 

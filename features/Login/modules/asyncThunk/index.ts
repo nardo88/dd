@@ -19,7 +19,6 @@ export const loginByEmail = createAsyncThunk<void, IFormData, IThunkAPI>(
       window.location.href = '/'
       return
     } catch (e: any) {
-      console.log('e: ', e)
       thunkApi.rejectWithValue(e.message)
     }
   }

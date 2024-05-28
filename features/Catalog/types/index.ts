@@ -5,7 +5,7 @@ type ArticleType = Pick<
   'category' | 'createdAt' | 'title' | 'description' | 'image'
 >
 
-interface IArticleItem extends ArticleType {
+export interface IArticleItem extends ArticleType {
   id: string
 }
 
@@ -20,4 +20,9 @@ export interface CatalogState {
   }
   curentPage: number
   isOpen: boolean
+}
+
+export interface IResData {
+  data: IArticleItem[]
+  total: number
 }
