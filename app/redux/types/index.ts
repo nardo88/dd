@@ -10,6 +10,7 @@ import { SessionSchema } from '@entities/User'
 import { LoginInitialState } from '@features/Login'
 import { SignupInitialState } from '@features/Signup'
 import { CatalogState } from '@features/Catalog'
+import { ArticleEditorState } from '@features/ArticleEditor'
 
 // тип store
 export type RootState = ReturnType<typeof store.getState>
@@ -25,6 +26,7 @@ export interface StateSchema {
   login?: LoginInitialState
   signup?: SignupInitialState
   catalog?: CatalogState
+  articleEditor?: ArticleEditorState
 }
 
 export type StateSchemaKey = keyof StateSchema
