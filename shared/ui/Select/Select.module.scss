@@ -1,0 +1,112 @@
+.wrapper {
+  position: relative;
+}
+
+.label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 20px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.noValue {
+  height: 38px;
+}
+
+.dropDown {
+  position: absolute;
+  top: 105%;
+  right: 0;
+  left: 0;
+  z-index: 4;
+  width: fit-content;
+  min-width: 100%;
+  max-height: 250px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  font-size: 14px;
+  line-height: 20px;
+  background-color: var(--color-white);
+  border-radius: 4px;
+  box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.3);
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar {
+    width: 5px;
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-secondary);
+    border-radius: 10px;
+  }
+}
+
+.selectOption {
+  padding: 8px 12px;
+  color: var(--color-primary);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--color-border);
+  }
+
+  @media (max-width: 768px) {
+    padding: 6px 8px;
+  }
+}
+
+.errorText {
+  height: 12px;
+  font-size: 12px;
+  line-height: 140%;
+}
+
+div.error {
+  color: var(--color-error);
+  border: 1px solid var(--color-error);
+}
+
+label.error {
+  color: var(--color-error);
+}
+
+.disabled {
+  color: var(--color-primary);
+}
+
+.arrow {
+  float: right;
+  height: 18px;
+  margin-left: 4px;
+
+  & > svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.rotate {
+  & > svg {
+    transform: rotate(180deg);
+  }
+}
+
+.cup {
+  cursor: pointer;
+}

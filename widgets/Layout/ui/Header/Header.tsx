@@ -4,6 +4,7 @@ import { Logo } from '@shared/ui/Icons/Logo'
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
 import { getSession, getSessionData } from '@entities/User'
 import { LeftMenu } from '../LeftMenu/LeftMenu'
+import Link from 'next/link'
 
 export const Header: FC = () => {
   const dispatch = useAppDispatch()
@@ -15,13 +16,13 @@ export const Header: FC = () => {
     }
   }, [dispatch, isReady])
 
-  if (!isReady) return null
-
   return (
     <header className={cls.header}>
       <div className={cls.wrapper}>
-        <Logo />
-        <LeftMenu />
+        <Link href="/">
+          <Logo />
+        </Link>
+        {isReady && <LeftMenu />}
       </div>
     </header>
   )
