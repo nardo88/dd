@@ -19,7 +19,6 @@ type PropsType = {
   errorClassName?: string
   className?: string
   disabled?: boolean
-  valueLengthСonstraint?: number
   placeholder?: string
   wrapper?: RefObject<HTMLDivElement> | null
 }
@@ -35,7 +34,6 @@ export const Select = (props: PropsType) => {
     errorClassName,
     className,
     disabled = false,
-    valueLengthСonstraint,
     placeholder,
     wrapper,
   } = props
@@ -87,9 +85,7 @@ export const Select = (props: PropsType) => {
         onClick={() => options.length && !disabled && setIsOpen(!isOpen)}>
         <span>
           {placeholder && !value ? placeholder : ''}
-          {(valueLengthСonstraint
-            ? getShortString(value?.title || '', valueLengthСonstraint)
-            : value?.title) || ''}
+          {value?.title || ''}
         </span>
 
         <span className={classNames(cls.arrow, { [cls.rotate]: isOpen })}>
@@ -104,9 +100,7 @@ export const Select = (props: PropsType) => {
                 key={item.id}
                 className={cls.selectOption}
                 onClick={() => changeSelect(item)}>
-                {valueLengthСonstraint
-                  ? getShortString(item.title, valueLengthСonstraint)
-                  : item.title}
+                {item.title}
               </li>
             ))}
           </ul>

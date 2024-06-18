@@ -1,9 +1,16 @@
-import { ArticleEditorState, TabVariant } from '../../types'
+import { ArticleEditorState, IArticleData, TabVariant } from '../../types'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 const initialState: ArticleEditorState = {
   isLoading: false,
   activeTab: 'settings',
+  article: {
+    body: [],
+    category: null,
+    description: '',
+    image: null,
+    title: '',
+  },
 }
 
 const ArticleEditorSlice = createSlice({
@@ -12,6 +19,18 @@ const ArticleEditorSlice = createSlice({
   reducers: {
     changeActiveTab(state, action: PayloadAction<TabVariant>) {
       state.activeTab = action.payload
+    },
+    setArticleData(state, action: PayloadAction<IArticleData>) {
+      state.article = action.payload
+    },
+    setCategory(state, action: PayloadAction<string>) {
+      state.article.category = action.payload
+    },
+    setTitle(state, action: PayloadAction<string>) {
+      state.article.title = action.payload
+    },
+    setDescription(state, action: PayloadAction<string>) {
+      state.article.description = action.payload
     },
   },
   //   extraReducers(builder) {
