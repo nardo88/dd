@@ -1,0 +1,48 @@
+.editor {
+  & > div > div {
+    font-style: 14px;
+    line-height: 130%;
+    color: var(--color-secondary);
+    padding: 8px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--color-border);
+  }
+
+  .ql-tooltip {
+    z-index: 10;
+  }
+}
+
+.label,
+.limit {
+  font-size: 12px;
+  color: var(--color-secondary);
+  margin-bottom: 4px;
+}
+
+.limit {
+  margin-left: auto;
+  display: inline-flex;
+}
+
+.top {
+  display: flex;
+}
+
+.errorText {
+  font-size: 12px;
+  color: var(--color-error);
+  margin-top: 2px;
+  display: block;
+}
+
+.error {
+  .ql-editor {
+    color: var(--color-error);
+    border-color: var(--color-error);
+  }
+}
+
+.labelError {
+  color: var(--color-error);
+}
