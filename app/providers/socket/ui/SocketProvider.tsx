@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { SocketContext } from './SocketContext'
 import { useAppSelector } from '@shared/hooks/redux'
 import { getSessionData } from '@entities/User'
