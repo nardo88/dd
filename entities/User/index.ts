@@ -1,6 +1,6 @@
 // selectors
 export { getSessionData } from './selectors'
-// slise
+// slice
 export { sessionAction, sessionReducer } from './slice/userSlice'
 // thunk
 export { getSession } from './services/getSession'

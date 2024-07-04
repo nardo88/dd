@@ -1,3 +1,5 @@
+import { Socket } from 'socket.io-client'
+
 export interface IUserData {
   email: string
   roles: string[]
@@ -9,4 +11,5 @@ export interface SessionSchema {
   isLoad: boolean
   isReady: boolean
   userData: IUserData | null
+  token: string | null
 }

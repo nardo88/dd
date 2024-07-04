@@ -8,7 +8,6 @@ import { Categories, covers } from '@shared/consts/categories'
 
 export const Articles: FC = () => {
   const articles = useAppSelector(getArticleList)
-  console.log('articles: ', articles)
   if (!articles.length)
     return (
       <div className={cls.empty}>

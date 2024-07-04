@@ -7,7 +7,8 @@ const initialState: SessionSchema = {
   isAuth: false,
   userData: null,
   isReady: false,
-  isLoad: false,
+  isLoad: true,
+  token: null,
 }
 
 const sessionSlice = createSlice({
@@ -18,6 +19,7 @@ const sessionSlice = createSlice({
       localStorage.removeItem(USER_TOKEN_KEY)
       state.userData = null
       state.isAuth = false
+      state.token = null
     },
   },
 
@@ -31,6 +33,8 @@ const sessionSlice = createSlice({
         state.isLoad = false
         state.isReady = true
         state.isAuth = true
+        const token = localStorage.getItem('user_token') as string
+        state.token = token
       })
       .addCase(getSession.rejected, (state) => {
         state.isLoad = false
