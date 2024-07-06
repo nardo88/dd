@@ -5,6 +5,7 @@ import { classNames } from '@shared/helpers/classNames'
 export enum ButtonVariant {
   PRIMARY = 'primary',
   SECONDARY = 'secondary',
+  ICON = 'icon',
 }
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -35,6 +36,7 @@ export const Button: FC<ButtonProps> = (props) => {
         {
           [cls.primary]: variant === ButtonVariant.PRIMARY,
           [cls.secondary]: variant === ButtonVariant.SECONDARY,
+          [cls.icon]: variant === ButtonVariant.ICON,
         },
         [className]
       )}

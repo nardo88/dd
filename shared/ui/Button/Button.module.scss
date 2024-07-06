@@ -13,3 +13,18 @@
   border: 1px solid var(--color-success);
   background-color: var(--color-success);
 }
+
+.icon {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 0 5px 1px rgba(0, 0, 0, 0.2) inset;
+
+  svg {
+    path {
+      stroke: var(--color-secondary);
+    }
+  }
+}

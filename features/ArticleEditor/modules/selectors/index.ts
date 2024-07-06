@@ -11,3 +11,9 @@ export const getTitle = (state: StateSchema) =>
 
 export const getDescription = (state: StateSchema) =>
   state?.articleEditor?.article?.description || ''
+
+export const getImage = (state: StateSchema) =>
+  state.articleEditor?.article?.image || null
+
+export const getBody = (state: StateSchema) =>
+  state.articleEditor?.article.body || []

@@ -67,26 +67,6 @@ export const categories = _categories.sort((a, b) =>
   a.title.localeCompare(b.title)
 )
 
-export const bodyVariants = [
-  { id: 'text', title: 'Текст' },
-  { id: 'image', title: 'Изображение' },
-  { id: 'markdown', title: 'MarkDown' },
-  { id: 'video', title: 'Видео' },
-  { id: 'file', title: 'Файл' },
-  { id: 'frame', title: 'Фрейм' },
-  { id: 'code', title: 'Код' },
-]
-
-export const variantsTranslate = {
-  text: 'Текст',
-  image: 'Изображение',
-  markdown: 'MarkDown',
-  video: 'Видео',
-  file: 'Файл',
-  frame: 'Фрейм',
-  code: 'Код',
-}
-
 export const covers: Partial<Record<Categories, string>> = {
   javaScript: '/img/templates/javaScript.jpg',
   typeScript: '/img/templates/typeScript.jpg',

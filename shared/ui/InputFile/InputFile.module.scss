@@ -1,0 +1,66 @@
+.label {
+  font-size: 12px;
+  color: var(--color-secondary);
+  margin-bottom: 4px;
+  padding-left: 3px;
+  display: block;
+}
+
+.InputWrapper {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  & > input {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 0;
+    z-index: 10;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  svg > path {
+    stroke: var(--color-secondary);
+  }
+
+  @media (max-width: 768px) {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.Control {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border: 1px solid var(--color-border);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.progress {
+  flex-grow: 1;
+  margin-left: auto;
+  max-width: 300px;
+}
+
+.preview {
+  max-width: 300px;
+  margin-top: 15px;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
+}
+
+.video {
+  margin-top: 15px;
+  max-width: 300px;
+  width: 100%;
+}

@@ -1,8 +1,4 @@
-export interface IBody {
-  _id: string
-  type: string
-  value: string
-}
+import { IBody } from '@shared/ui/Body'
 
 export interface IArticle {
   _id: string

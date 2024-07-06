@@ -1,3 +1,4 @@
+import { IBody } from '@shared/ui/Body'
 import { ArticleEditorState, IArticleData, TabVariant } from '../../types'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
@@ -31,6 +32,12 @@ const ArticleEditorSlice = createSlice({
     },
     setDescription(state, action: PayloadAction<string>) {
       state.article.description = action.payload
+    },
+    setImage(state, action: PayloadAction<string | null>) {
+      state.article.image = action.payload
+    },
+    setBody(state, action: PayloadAction<IBody[]>) {
+      state.article.body = action.payload
     },
   },
   //   extraReducers(builder) {

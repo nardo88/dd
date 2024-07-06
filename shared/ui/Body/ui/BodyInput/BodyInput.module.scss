@@ -1,0 +1,53 @@
+.variants {
+  height: 0;
+  position: absolute;
+  overflow: hidden;
+  left: 0;
+  top: 120%;
+}
+
+.isOpen {
+  height: auto;
+}
+
+.addSection {
+  position: relative;
+  width: fit-content;
+}
+
+.variantList {
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.variantItem {
+  padding: 5px 10px;
+  cursor: pointer;
+  background-color: var(--color-secondary);
+  border-bottom: 1px solid var(--color-white);
+  color: var(--color-white);
+
+  &:hover {
+    background: var(--color-border);
+  }
+}
+
+.bodyItem {
+  padding: 15px;
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
+  cursor: grab;
+}
+
+.topContent {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.content {
+  margin: 30px 0;
+  display: grid;
+  gap: 15px;
+}

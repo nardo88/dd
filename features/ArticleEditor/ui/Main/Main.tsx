@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
 import { getActiveTab } from '../../modules/selectors'
 import { Settings } from '../Settings/Settings'
 import { getArticleData } from '../../modules/asyncThunks.ts/getArticleData'
+import { Content } from '../Content/Content'
 
 interface MainProps {
   id?: string
@@ -15,7 +16,6 @@ interface MainProps {
 
 export const Main: FC<MainProps> = (props) => {
   const { id } = props
-  console.log('id: ', id)
   const store = useStore() as ReduxStoreWithManager
   const activeTab = useAppSelector(getActiveTab)
   const dispatch = useAppDispatch()
@@ -38,6 +38,7 @@ export const Main: FC<MainProps> = (props) => {
       <Tabs />
       <div className={cls.content}>
         {activeTab === 'settings' && <Settings />}
+        {activeTab === 'content' && <Content />}
       </div>
     </div>
   )
