@@ -37,6 +37,10 @@
   border-radius: 4px;
   border: 1px solid var(--color-border);
   cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
 }
 
 .topContent {
@@ -50,4 +54,17 @@
   margin: 30px 0;
   display: grid;
   gap: 15px;
+}
+
+.itemTitle {
+  user-select: none;
+}
+
+.selected {
+  opacity: 0.6;
+  background: var(--color-success);
+}
+
+.hide {
+  display: none;
 }

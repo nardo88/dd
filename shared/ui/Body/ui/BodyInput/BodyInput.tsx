@@ -20,6 +20,9 @@ export const BodyInput: FC<BodyInputProps> = (props) => {
   const { className, body, onChange } = props
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const ref = useRef<HTMLDivElement | null>(null)
+  const [currentItem, setCurentItem] = useState<string | null>(null)
+
+  const parent = useRef<HTMLDivElement | null>(null)
 
   const addItem = (type: BodyItemType) => {
     onChange([...body, { _id: createId(), type, value: '' }])
@@ -36,6 +39,36 @@ export const BodyInput: FC<BodyInputProps> = (props) => {
     onChange(body.map((i) => (i._id === id ? { ...i, value } : i)))
   }
 
+  const dragStart = (e: any, id: string) => {
+    console.log('dragStart: ', id)
+    e.target.classList.add(cls.selected)
+  }
+
+  const dragEnd = (e: any, id: string) => {
+    console.log('dragEnd: ', id)
+    e.target.classList.remove(cls.selected)
+  }
+
+  const dragOver = (e: any) => {
+    e.preventDefault()
+  }
+
+  const drop = (e: any, id: string) => {
+    e.preventDefault()
+    console.log('drop: ', id)
+    // if (startIndex === index) {
+    //   return
+    // }
+    // if (startIndex !== null) {
+    //   const body = [...data.body]
+    //   body.splice(startIndex, 1)
+    //   body.splice(index, 0, currentItem)
+    //   setData({ ...data, body })
+    //   setStartIndex(null)
+    //   setCurrentItem(null)
+    // }
+  }
+
   useEffect(() => {
     window.addEventListener('click', hideList)
   }, [])
@@ -45,8 +78,16 @@ export const BodyInput: FC<BodyInputProps> = (props) => {
       <div className={cls.content}>
         {body.map((item) => (
           <div key={item._id} className={cls.bodyItem}>
-            <div className={cls.topContent}>
-              <Text variant={TextVariant.HELPER}>
+            <div
+              className={cls.topContent}
+              draggable
+              onDragEnd={(e) => dragEnd(e, item._id)}
+              onDragOver={(e: any) => dragOver(e)}
+              onDragStart={(e) => dragStart(e, item._id)}
+              // onDragEnter={(e: any) => dragEnter(e)}
+              // onDragLeave={(e: any) => dragLeave(e)}
+              onDrop={(e: any) => drop(e, item._id)}>
+              <Text variant={TextVariant.HELPER} className={cls.itemTitle}>
                 {bodyVariantsTitle[item.type]}
               </Text>
               <Button variant={ButtonVariant.ICON}>
