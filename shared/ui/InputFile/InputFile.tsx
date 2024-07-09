@@ -78,11 +78,14 @@ export const InputFile: FC<InputFileProps> = (props) => {
         <span className={cls.label}>{bodyVariantsTitle[type]}</span>
       ) : null}
       <div className={cls.Control}>
-        {remove && (
+        {url && remove && (
           <Button
             variant={ButtonVariant.ICON}
-            onClick={remove}
-            className={cls.removeBtn}
+            onClick={() => {
+              remove()
+              setProgress(0)
+            }}
+            className={cls.controlBtn}
             title="Удалить">
             <Remove fill="var(----color-secondary)" />
           </Button>
@@ -91,7 +94,7 @@ export const InputFile: FC<InputFileProps> = (props) => {
           <Button
             variant={ButtonVariant.ICON}
             onClick={remove}
-            className={cls.removeBtn}>
+            className={cls.controlBtn}>
             <Upload />
           </Button>
           <input
@@ -106,21 +109,19 @@ export const InputFile: FC<InputFileProps> = (props) => {
         )}
       </div>
 
-      {type === 'image' && urlFile && (
-        <img src={urlFile} className={cls.preview} />
-      )}
-      {type === 'file' && urlFile && (
+      {type === 'image' && url && <img src={url} className={cls.preview} />}
+      {type === 'file' && url && (
         <a
-          download={urlFile}
-          href={urlFile}
+          download={url}
+          href={url}
           className="mt20 df"
           target="_blank"
           rel="noreferrer">
           Скачать
         </a>
       )}
-      {type === 'video' && urlFile && (
-        <video controls className={cls.video} src={urlFile} />
+      {type === 'video' && url && (
+        <video controls className={cls.video} src={url} />
       )}
     </div>
   )

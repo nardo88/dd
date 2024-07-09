@@ -1,5 +1,10 @@
 import { IBody } from '@shared/ui/Body'
-import { ArticleEditorState, IArticleData, TabVariant } from '../../types'
+import {
+  ArticleEditorState,
+  IArticleData,
+  IValidateErrors,
+  TabVariant,
+} from '../../types'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 const initialState: ArticleEditorState = {
@@ -12,6 +17,7 @@ const initialState: ArticleEditorState = {
     image: null,
     title: '',
   },
+  validate: null,
 }
 
 const ArticleEditorSlice = createSlice({
@@ -38,6 +44,9 @@ const ArticleEditorSlice = createSlice({
     },
     setBody(state, action: PayloadAction<IBody[]>) {
       state.article.body = action.payload
+    },
+    setValidate(state, action: PayloadAction<IValidateErrors | null>) {
+      state.validate = action.payload
     },
   },
   //   extraReducers(builder) {

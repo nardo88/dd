@@ -4,6 +4,8 @@
   overflow: hidden;
   left: 0;
   top: 120%;
+  transition: 0.2s;
+  z-index: 200;
 }
 
 .isOpen {

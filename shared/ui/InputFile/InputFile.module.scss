@@ -39,7 +39,7 @@
 .Control {
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 5px;
   border: 1px solid var(--color-border);
   padding: 4px 8px;
   border-radius: 4px;
@@ -63,4 +63,11 @@
   margin-top: 15px;
   max-width: 300px;
   width: 100%;
+}
+
+.controlBtn {
+  svg {
+    width: 15px;
+    height: 15px;
+  }
 }

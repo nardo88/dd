@@ -17,3 +17,6 @@ export const getImage = (state: StateSchema) =>
 
 export const getBody = (state: StateSchema) =>
   state.articleEditor?.article.body || []
+
+export const getValidate = (state: StateSchema) =>
+  state.articleEditor?.validate || null
