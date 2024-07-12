@@ -7,7 +7,7 @@ import { ReduxStoreWithManager } from '@app/redux'
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
 import { getActiveTab } from '../../modules/selectors'
 import { Settings } from '../Settings/Settings'
-import { getArticleData } from '../../modules/asyncThunks.ts/getArticleData'
+import { getArticleData } from '../../modules/asyncThunks/getArticleData'
 import { Content } from '../Content/Content'
 
 interface MainProps {

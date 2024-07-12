@@ -1,4 +1,3 @@
-import { IArticle } from '@entities/Articles'
 import { IArticleData } from '@features/ArticleEditor/types'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { api } from '@shared/libs/axios'

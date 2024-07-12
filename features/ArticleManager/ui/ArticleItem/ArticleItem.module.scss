@@ -1,0 +1,11 @@
+.ArticleItem {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--color-border);
+  display: grid;
+  grid-template-columns: 5fr 2fr 2fr 50px 50px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}

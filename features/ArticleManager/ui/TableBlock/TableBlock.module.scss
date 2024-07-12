@@ -1,0 +1,19 @@
+.TableBlock {
+  padding: 20px;
+  border-radius: 8px;
+  background: var(--color-white);
+  flex-grow: 1;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+}
+
+.empty {
+  font-style: italic;
+  margin-top: 50px;
+  text-align: center;
+}
+
+.pagination {
+  margin-top: auto;
+}

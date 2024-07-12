@@ -1,0 +1,17 @@
+.FilterBlock {
+  padding: 20px;
+  border-radius: 8px;
+  background: var(--color-white);
+  display: grid;
+  grid-template-columns: 1fr 1fr 160px;
+  gap: 20px;
+  align-items: end;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    button {
+      margin-left: auto;
+    }
+  }
+}
