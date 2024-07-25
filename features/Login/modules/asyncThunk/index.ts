@@ -9,17 +9,17 @@ interface IThunkAPI {
 
 export const loginByEmail = createAsyncThunk<void, IFormData, IThunkAPI>(
   'loginByEmail',
-  async (opt, thunkApi) => {
+  async (opt, { rejectWithValue }) => {
     try {
       const { data } = await api.post('/signin', {
         email: opt.login,
         password: opt.password,
       })
+
       localStorage.setItem(USER_TOKEN_KEY, data.token)
       window.location.href = '/'
-      return
     } catch (e: any) {
-      thunkApi.rejectWithValue(e.message)
+      return rejectWithValue(e.message)
     }
   }
 )
