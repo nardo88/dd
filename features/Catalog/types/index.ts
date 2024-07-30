@@ -18,8 +18,7 @@ export interface CatalogState {
     title: string
     category: string | null
   }
-  curentPage: number
-  isOpen: boolean
+  currentPage: number
 }
 
 export interface IResData {

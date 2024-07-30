@@ -9,10 +9,9 @@ const initialState: CatalogState = {
     category: null,
     title: '',
   },
-  isOpen: false,
   isLoading: false,
   total: 0,
-  curentPage: 1,
+  currentPage: 1,
 }
 
 const CatalogSlice = createSlice({
@@ -22,11 +21,8 @@ const CatalogSlice = createSlice({
     changeTitleFilter(state, action: PayloadAction<string>) {
       state.filter.title = action.payload
     },
-    setCurentPage(state, action: PayloadAction<number>) {
-      state.curentPage = action.payload
-    },
-    toggleSidebar(state, action: PayloadAction<boolean>) {
-      state.isOpen = action.payload
+    setCurrentPage(state, action: PayloadAction<number>) {
+      state.currentPage = action.payload
     },
     setArticles(state, action: PayloadAction<IResData>) {
       state.total = action.payload.total

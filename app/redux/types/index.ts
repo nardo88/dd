@@ -12,6 +12,8 @@ import { SignupInitialState } from '@features/Signup'
 import { CatalogState } from '@features/Catalog'
 import { ArticleEditorState } from '@features/ArticleEditor'
 import { ArticleManagerState } from '@features/ArticleManager'
+import { SidebarState } from '@features/Sidebar'
+import { ArticleState } from '@features/ArticleViewer'
 
 // тип store
 export type RootState = ReturnType<typeof store.getState>
@@ -29,6 +31,8 @@ export interface StateSchema {
   catalog?: CatalogState
   articleEditor?: ArticleEditorState
   articleManager?: ArticleManagerState
+  sidebar?: SidebarState
+  article?: ArticleState
 }
 
 export type StateSchemaKey = keyof StateSchema

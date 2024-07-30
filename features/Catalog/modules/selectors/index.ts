@@ -8,11 +8,8 @@ export const getTitleFilterValue = (state: StateSchema) =>
 
 export const getTotal = (state: StateSchema) => state.catalog?.total || 0
 
-export const getCurentPage = (state: StateSchema) =>
-  state.catalog?.curentPage || 1
-
-export const getIsOpenSidebar = (state: StateSchema) =>
-  state.catalog?.isOpen || false
+export const getCurrentPage = (state: StateSchema) =>
+  state.catalog?.currentPage || 1
 
 export const getArticleList = (state: StateSchema) =>
   state.catalog?.articles || emptyArr

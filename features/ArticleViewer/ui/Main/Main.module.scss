@@ -1,0 +1,11 @@
+.content {
+  position: relative;
+  padding: 20px 20px 20px calc(var(--sidebar-width-min) + 20px);
+
+  @media (max-width: 768px) {
+    width: 100vw;
+  }
+}
+.Main {
+  position: relative;
+}

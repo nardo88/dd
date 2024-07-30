@@ -4,7 +4,7 @@ import { api } from '@shared/libs/axios'
 import { catalogAction } from '../slice'
 
 interface IOptions {
-  curentPage: number
+  currentPage: number
   pageCount: number
 }
 
@@ -16,10 +16,10 @@ export const getArticles = createAsyncThunk<void, IOptions, IThunkAPI>(
   'getArticles',
   async (options, thunkApi) => {
     try {
-      const { curentPage, pageCount } = options
+      const { currentPage, pageCount } = options
       const { data } = await api.get<IResData>('/articles/catalog', {
         params: {
-          page: curentPage,
+          page: currentPage,
           pageCount,
         },
       })
