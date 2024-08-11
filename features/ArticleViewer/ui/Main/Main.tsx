@@ -8,7 +8,7 @@ import { articleReducer } from '../../modules/slice'
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
 import { getArticle } from '../../modules/asyncThunk'
 import { getArticleBody } from '../../modules/selectors'
-import { BodyOutput } from '@shared/ui/BodyOutput/BodyOutput'
+import { BodyOutput } from '@shared/ui/Body'
 
 export const Main: FC = () => {
   const store = useStore() as ReduxStoreWithManager
@@ -17,6 +17,7 @@ export const Main: FC = () => {
   const { articleId } = query
 
   const article = useAppSelector(getArticleBody)
+  console.log('article: ', article)
 
   useEffect(() => {
     if (articleId) {

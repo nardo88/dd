@@ -11,7 +11,7 @@ import { Text, TextVariant } from '@shared/ui/Text/Text'
 import { Remove } from '@shared/ui/Icons/Remove'
 import { Reorder } from 'framer-motion'
 import { InputFile } from '@shared/ui/InputFile/InputFile'
-import { MarkDownEditor } from '@shared/ui/MarkDownEditor/MarkDownEditor'
+import { MarkDownEditor } from '@shared/ui/MarkDownEditor'
 import { CodeEditor } from '@shared/ui/CodeEditor/CodeEditor'
 import { Input } from '@shared/ui/Input'
 
