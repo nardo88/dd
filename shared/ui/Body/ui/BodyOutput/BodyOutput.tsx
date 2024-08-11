@@ -4,7 +4,7 @@ import { classNames } from '@shared/helpers/classNames'
 import { IBody } from '../..'
 import { MediumText } from '../../../MediumText'
 import { Image } from '../Image/Image'
-import { Code } from '../Code/Code'
+import { AsyncCode as Code } from '../Code/Code.async'
 
 interface BodyOutputProps {
   className?: string
