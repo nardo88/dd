@@ -3,6 +3,8 @@ import cls from './BodyOutput.module.scss'
 import { classNames } from '@shared/helpers/classNames'
 import { IBody } from '../..'
 import { MediumText } from '../../../MediumText'
+import { Image } from '../Image/Image'
+import { Code } from '../Code/Code'
 
 interface BodyOutputProps {
   className?: string
@@ -16,7 +18,8 @@ export const BodyOutput: FC<BodyOutputProps> = (props) => {
       {body.map((item) => (
         <div key={item._id}>
           {item.type === 'text' && <MediumText children={item.value} />}
-          {/* {item.type === 'image' && <Image />} */}
+          {item.type === 'image' && <Image src={item.value} />}
+          {item.type === 'code' && <Code value={item.value} />}
         </div>
       ))}
     </div>
