@@ -43,6 +43,7 @@ export const Editor: FC<EditorProps> = (props) => {
         theme="bubble"
         className={classNames('editor', { error: !!errorText })}
         onChange={(val, _d, _s, e) => {
+          if (value === val) return
           const text = e.getLength()
           if (limit !== undefined && text - 1 > limit && editor.current) {
             return editor.current.setEditorContents(
@@ -50,7 +51,7 @@ export const Editor: FC<EditorProps> = (props) => {
               value
             )
           }
-          setLength(text - 1)
+          if (limit !== undefined) setLength(text - 1)
           onChange(val)
         }}
       />
