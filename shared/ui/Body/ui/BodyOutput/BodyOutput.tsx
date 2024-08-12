@@ -5,6 +5,9 @@ import { IBody } from '../..'
 import { MediumText } from '../../../MediumText'
 import { Image } from '../Image/Image'
 import { AsyncCode as Code } from '../Code/Code.async'
+import { Video } from '../Video/Video'
+import { IFrame } from '../IFrame/IFrame'
+import { MarkdownViewer } from '@shared/ui/MarkdownViewer'
 
 interface BodyOutputProps {
   className?: string
@@ -20,6 +23,19 @@ export const BodyOutput: FC<BodyOutputProps> = (props) => {
           {item.type === 'text' && <MediumText children={item.value} />}
           {item.type === 'image' && <Image src={item.value} />}
           {item.type === 'code' && <Code value={item.value} />}
+          {item.type === 'video' && <Video src={item.value} />}
+          {item.type === 'frame' && <IFrame src={item.value} />}
+          {item.type === 'markdown' && <MarkdownViewer value={item.value} />}
+          {item.type === 'file' && (
+            <a
+              download={item.value}
+              href={item.value}
+              className={cls.downLoad}
+              target="_blank"
+              rel="noreferrer">
+              Скачать файл
+            </a>
+          )}
         </div>
       ))}
     </div>
