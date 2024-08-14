@@ -5,6 +5,7 @@ import { getActiveTab } from '../../modules/selectors'
 import { TabVariant } from '../../types'
 import { articleEditorAction } from '../../modules/slice'
 import { classNames } from '@shared/helpers/classNames'
+import { checkIsError } from '../../modules/helpers/checkIsError'
 
 export const Tabs: FC = () => {
   const dispatch = useAppDispatch()
@@ -15,21 +16,26 @@ export const Tabs: FC = () => {
   }
 
   return (
-    <ul className={cls.Tabs}>
-      <li
-        className={classNames(cls.tabItem, {
-          [cls.activeTab]: activeTab === 'settings',
-        })}
-        onClick={() => setActiveTab('settings')}>
-        Настройки
-      </li>
-      <li
-        className={classNames(cls.tabItem, {
-          [cls.activeTab]: activeTab === 'content',
-        })}
-        onClick={() => setActiveTab('content')}>
-        Содержимое
-      </li>
-    </ul>
+    <div>
+      <ul className={cls.Tabs}>
+        <li
+          className={classNames(cls.tabItem, {
+            [cls.activeTab]: activeTab === 'settings',
+            [cls.invalid]: checkIsError('settings'),
+          })}
+          onClick={() => setActiveTab('settings')}>
+          Настройки
+        </li>
+        <li
+          className={classNames(cls.tabItem, {
+            [cls.activeTab]: activeTab === 'content',
+            [cls.invalid]: checkIsError('content'),
+          })}
+          onClick={() => setActiveTab('content')}>
+          Содержимое
+        </li>
+      </ul>
+      {}
+    </div>
   )
 }

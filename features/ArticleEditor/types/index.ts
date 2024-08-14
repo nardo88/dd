@@ -17,6 +17,7 @@ export interface ArticleEditorState {
   activeTab: TabVariant
   article: IArticleData
   validate: IValidateErrors | null
+  error: null | string
 }
 
 export interface IValidateData {

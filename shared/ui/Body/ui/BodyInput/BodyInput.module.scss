@@ -53,7 +53,6 @@
 }
 
 .content {
-  margin: 30px 0;
   display: grid;
   gap: 15px;
 }
@@ -69,4 +68,8 @@
 
 .hide {
   display: none;
+}
+
+.addBtn {
+  margin-top: 20px;
 }

@@ -38,7 +38,7 @@ export const Main: FC<MainProps> = (props) => {
       <Tabs />
       <div className={cls.content}>
         {activeTab === 'settings' && <Settings />}
-        {activeTab === 'content' && <Content />}
+        {activeTab === 'content' && <Content id={id} />}
       </div>
     </div>
   )

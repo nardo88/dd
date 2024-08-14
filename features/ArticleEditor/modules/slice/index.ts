@@ -6,6 +6,7 @@ import {
   TabVariant,
 } from '../../types'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { saveArticle } from '../asyncThunks/saveArticle'
 
 const initialState: ArticleEditorState = {
   isLoading: false,
@@ -18,6 +19,7 @@ const initialState: ArticleEditorState = {
     title: '',
   },
   validate: null,
+  error: null,
 }
 
 const ArticleEditorSlice = createSlice({
@@ -49,19 +51,19 @@ const ArticleEditorSlice = createSlice({
       state.validate = action.payload
     },
   },
-  //   extraReducers(builder) {
-  //     builder
-  //       .addCase(getArticles.pending, (state) => {
-  //         state.isLoading = true
-  //       })
-  //       .addCase(getArticles.fulfilled, (state) => {
-  //         state.isLoading = false
-  //       })
-  //       .addCase(getArticles.rejected, (state, action) => {
-  //         state.isLoading = false
-  //         state.error = action.payload as string
-  //       })
-  //   },
+  extraReducers(builder) {
+    builder
+      .addCase(saveArticle.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(saveArticle.fulfilled, (state) => {
+        state.isLoading = false
+      })
+      .addCase(saveArticle.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload as string
+      })
+  },
 })
 
 export const { actions: articleEditorAction } = ArticleEditorSlice

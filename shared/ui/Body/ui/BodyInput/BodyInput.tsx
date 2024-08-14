@@ -47,36 +47,6 @@ export const BodyInput: FC<BodyInputProps> = (props) => {
     onChange(body.map((i) => (i._id === id ? { ...i, value } : i)))
   }
 
-  const dragStart = (e: any, id: string) => {
-    console.log('dragStart: ', id)
-    e.target.classList.add(cls.selected)
-  }
-
-  const dragEnd = (e: any, id: string) => {
-    console.log('dragEnd: ', id)
-    e.target.classList.remove(cls.selected)
-  }
-
-  const dragOver = (e: any) => {
-    e.preventDefault()
-  }
-
-  const drop = (e: any, id: string) => {
-    e.preventDefault()
-    console.log('drop: ', id)
-    // if (startIndex === index) {
-    //   return
-    // }
-    // if (startIndex !== null) {
-    //   const body = [...data.body]
-    //   body.splice(startIndex, 1)
-    //   body.splice(index, 0, currentItem)
-    //   setData({ ...data, body })
-    //   setStartIndex(null)
-    //   setCurrentItem(null)
-    // }
-  }
-
   useEffect(() => {
     window.addEventListener('click', hideList)
   }, [])
@@ -95,76 +65,79 @@ export const BodyInput: FC<BodyInputProps> = (props) => {
 
   return (
     <div className={classNames(cls.BodyInput, {}, [className])}>
-      <Reorder.Group
-        as="ul"
-        axis="y"
-        values={body}
-        onReorder={onChange}
-        className={cls.content}>
-        {body.map((item) => (
-          <Reorder.Item
-            value={item}
-            key={item._id}
-            className={cls.bodyItem}
-            whileDrag={{
-              scale: 1.01,
-              boxShadow: '0 0 5px 3px rgba(0,0,0,0.3)',
-              background: 'white',
-              cursor: 'grabbing',
-            }}>
-            <div className={cls.topContent}>
-              <Text variant={TextVariant.HELPER}>
-                {bodyVariantsTitle[item.type]}
-              </Text>
-              <Button
-                variant={ButtonVariant.ICON}
-                onClick={() => removeItem(item._id)}>
-                <Remove />
-              </Button>
-            </div>
-            {item.type === 'text' && (
-              <MediumEditor
-                value={item.value}
-                onChange={(value) => changeValue(item._id, value)}
-              />
-            )}
+      {!!body.length && (
+        <Reorder.Group
+          as="ul"
+          axis="y"
+          values={body}
+          onReorder={onChange}
+          className={cls.content}>
+          {body.map((item) => (
+            <Reorder.Item
+              value={item}
+              key={item._id}
+              className={cls.bodyItem}
+              whileDrag={{
+                scale: 1.01,
+                boxShadow: '0 0 5px 3px rgba(0,0,0,0.3)',
+                background: 'white',
+                cursor: 'grabbing',
+              }}>
+              <div className={cls.topContent}>
+                <Text variant={TextVariant.HELPER}>
+                  {bodyVariantsTitle[item.type]}
+                </Text>
+                <Button
+                  variant={ButtonVariant.ICON}
+                  onClick={() => removeItem(item._id)}>
+                  <Remove />
+                </Button>
+              </div>
+              {item.type === 'text' && (
+                <MediumEditor
+                  value={item.value}
+                  onChange={(value) => changeValue(item._id, value)}
+                />
+              )}
 
-            {['image', 'file', 'video'].includes(item.type) && (
-              <InputFile
-                url={item.value}
-                type={item.type}
-                onChange={(v) => changeValue(item._id, v)}
-                remove={() => changeValue(item._id, '')}
-              />
-            )}
+              {['image', 'file', 'video'].includes(item.type) && (
+                <InputFile
+                  url={item.value}
+                  type={item.type}
+                  onChange={(v) => changeValue(item._id, v)}
+                  remove={() => changeValue(item._id, '')}
+                />
+              )}
 
-            {item.type === 'markdown' && (
-              <MarkDownEditor
-                value={item.value}
-                onChange={(v) => changeValue(item._id, v)}
-              />
-            )}
+              {item.type === 'markdown' && (
+                <MarkDownEditor
+                  value={item.value}
+                  onChange={(v) => changeValue(item._id, v)}
+                />
+              )}
 
-            {item.type === 'code' && (
-              <CodeEditor
-                value={item.value}
-                onChange={(v) => changeValue(item._id, v)}
-              />
-            )}
+              {item.type === 'code' && (
+                <CodeEditor
+                  value={item.value}
+                  onChange={(v) => changeValue(item._id, v)}
+                />
+              )}
 
-            {item.type === 'frame' && (
-              <Input
-                value={item.value}
-                onChange={(v) => changeValue(item._id, v)}
-              />
-            )}
-          </Reorder.Item>
-        ))}
-      </Reorder.Group>
+              {item.type === 'frame' && (
+                <Input
+                  value={item.value}
+                  onChange={(v) => changeValue(item._id, v)}
+                />
+              )}
+            </Reorder.Item>
+          ))}
+        </Reorder.Group>
+      )}
       <div className={cls.addSection} ref={ref}>
         <Button
           variant={ButtonVariant.ICON}
-          onClick={() => setIsOpen((p) => !p)}>
+          onClick={() => setIsOpen((p) => !p)}
+          className={cls.addBtn}>
           <Plus />
         </Button>
         <div
