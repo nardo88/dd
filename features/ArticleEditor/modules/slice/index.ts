@@ -1,12 +1,8 @@
 import { IBody } from '@shared/ui/Body'
-import {
-  ArticleEditorState,
-  IArticleData,
-  IValidateErrors,
-  TabVariant,
-} from '../../types'
+import { ArticleEditorState, IArticleData, IValidateErrors, TabVariant } from '../../types'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { saveArticle } from '../asyncThunks/saveArticle'
+import { create } from '../asyncThunks/create'
+import { update } from '../asyncThunks/update'
 
 const initialState: ArticleEditorState = {
   isLoading: false,
@@ -53,13 +49,25 @@ const ArticleEditorSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(saveArticle.pending, (state) => {
+      .addCase(create.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(saveArticle.fulfilled, (state) => {
+      .addCase(create.fulfilled, (state) => {
         state.isLoading = false
       })
-      .addCase(saveArticle.rejected, (state, action) => {
+      .addCase(create.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload as string
+      })
+
+    builder
+      .addCase(update.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(update.fulfilled, (state) => {
+        state.isLoading = false
+      })
+      .addCase(update.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload as string
       })

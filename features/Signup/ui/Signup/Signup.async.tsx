@@ -1,7 +1,7 @@
-import { LoadComponent } from '@shared/ui/LoadComponent/LoadComponent'
+import { Loader } from '@shared/ui/Loader/Loader'
 import dynamic from 'next/dynamic'
 
 export const AsyncSignup = dynamic(() => import('./Signup'), {
-  loading: () => <LoadComponent />,
+  loading: () => <Loader fill />,
   ssr: false,
 })

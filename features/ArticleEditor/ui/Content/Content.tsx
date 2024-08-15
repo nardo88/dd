@@ -5,9 +5,10 @@ import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
 import { getBody, getCategory, getTitle } from '../../modules/selectors'
 import { articleEditorAction } from '../../modules/slice'
 import { validate } from '../../modules/helpers/validate'
-import { saveArticle } from '../../modules/asyncThunks/saveArticle'
-import cls from './Content.module.scss'
+import { create } from '../../modules/asyncThunks/create'
 import { useRouter } from 'next/router'
+import { update } from '../../modules/asyncThunks/update'
+import cls from './Content.module.scss'
 
 export const Content: FC<{ id?: string }> = ({ id }) => {
   const dispatch = useAppDispatch()
@@ -24,7 +25,11 @@ export const Content: FC<{ id?: string }> = ({ id }) => {
     dispatch(articleEditorAction.setValidate(null))
     const result = validate({ body, category, title })
     if (result) return dispatch(articleEditorAction.setValidate(result))
-    dispatch(saveArticle({ id, push }))
+    if (id) {
+      dispatch(update({ id }))
+    } else {
+      dispatch(create({ push }))
+    }
   }
 
   return (

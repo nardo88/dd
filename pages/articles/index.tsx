@@ -1,33 +1,34 @@
 import { getSessionData } from '@entities/User'
 import { ArticleManager } from '@features/ArticleManager'
+import { NOT_FOUND_PAGE } from '@shared/consts/pages'
 import { useAppSelector } from '@shared/hooks/redux'
+import { AccessType } from '@shared/types/pages'
 import { Loader } from '@shared/ui/Loader/Loader'
 import { Layout } from '@widgets/Layout'
 import { NotFoundPage } from '@widgets/NotFoundPage'
-import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 
 export default function EditorPage() {
-  const { query } = useRouter()
+  const [access, setAccess] = useState<AccessType>('pending')
   const { isAuth, isReady, userData } = useAppSelector(getSessionData)
 
+  useEffect(() => {
+    if (isReady) {
+      if (userData?.roles?.includes('admin')) {
+        setAccess('access')
+      } else {
+        setAccess('forbidden')
+      }
+    }
+  }, [isAuth, isReady])
+
   return (
-    <Layout
-      title={
-        !isReady
-          ? ''
-          : userData?.roles.includes('admin')
-            ? 'Управление конспектами'
-            : 'Страница не найдена'
-      }>
+    <Layout title={access === 'pending' ? '' : access === 'access' ? 'Управление конспектами' : NOT_FOUND_PAGE}>
       <Layout.Header />
       <Layout.Content>
-        {!isReady && <Loader />}
-        {isReady && (!isAuth || !userData?.roles.includes('admin')) && (
-          <NotFoundPage />
-        )}
-        {isReady && isAuth && userData?.roles.includes('admin') && (
-          <ArticleManager />
-        )}
+        {access === 'pending' && <Loader fill />}
+        {access === 'forbidden' && <NotFoundPage />}
+        {access === 'access' && <ArticleManager />}
       </Layout.Content>
     </Layout>
   )

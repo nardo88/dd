@@ -1,26 +1,36 @@
 import { getSessionData } from '@entities/User'
 import { ArticleEditor } from '@features/ArticleEditor'
+import { NOT_FOUND_PAGE } from '@shared/consts/pages'
 import { useAppSelector } from '@shared/hooks/redux'
+import { AccessType } from '@shared/types/pages'
 import { Loader } from '@shared/ui/Loader/Loader'
 import { Layout } from '@widgets/Layout'
 import { NotFoundPage } from '@widgets/NotFoundPage'
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 
 export default function EditorPage() {
-  const { query } = useRouter()
+  const [access, setAccess] = useState<AccessType>('pending')
   const { isAuth, isReady, userData } = useAppSelector(getSessionData)
+  const { query } = useRouter()
+
+  useEffect(() => {
+    if (isReady) {
+      if (userData?.roles?.includes('admin')) {
+        setAccess('access')
+      } else {
+        setAccess('forbidden')
+      }
+    }
+  }, [isAuth, isReady])
 
   return (
-    <Layout title={'Редактор'}>
+    <Layout title={access === 'pending' ? '' : access === 'access' ? 'Редактор' : NOT_FOUND_PAGE}>
       <Layout.Header />
       <Layout.Content>
-        {!isReady && <Loader />}
-        {isReady && (!isAuth || !userData?.roles.includes('admin')) && (
-          <NotFoundPage />
-        )}
-        {isReady && isAuth && userData?.roles.includes('admin') && (
-          <ArticleEditor id={query.id as string} />
-        )}
+        {access === 'pending' && <Loader fill />}
+        {access === 'forbidden' && <NotFoundPage />}
+        {access === 'access' && <ArticleEditor id={query.id?.toLocaleString()} />}
       </Layout.Content>
     </Layout>
   )

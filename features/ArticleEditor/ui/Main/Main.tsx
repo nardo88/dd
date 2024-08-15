@@ -5,10 +5,11 @@ import { articleEditorReducer } from '../../modules/slice'
 import { useStore } from 'react-redux'
 import { ReduxStoreWithManager } from '@app/redux'
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
-import { getActiveTab } from '../../modules/selectors'
+import { getActiveTab, getIsLoading } from '../../modules/selectors'
 import { Settings } from '../Settings/Settings'
 import { getArticleData } from '../../modules/asyncThunks/getArticleData'
 import { Content } from '../Content/Content'
+import { Loader } from '@shared/ui/Loader/Loader'
 
 interface MainProps {
   id?: string
@@ -18,6 +19,7 @@ export const Main: FC<MainProps> = (props) => {
   const { id } = props
   const store = useStore() as ReduxStoreWithManager
   const activeTab = useAppSelector(getActiveTab)
+  const isLoading = useAppSelector(getIsLoading)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -35,6 +37,7 @@ export const Main: FC<MainProps> = (props) => {
 
   return (
     <div className={cls.Main}>
+      {isLoading && <Loader className={cls.loader} />}
       <Tabs />
       <div className={cls.content}>
         {activeTab === 'settings' && <Settings />}

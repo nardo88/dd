@@ -12,7 +12,7 @@ import { getArticles } from '../../modules/asyncThunk/getArticles'
 import { Loader } from '@shared/ui/Loader/Loader'
 import { Sidebar } from '@features/Sidebar'
 
-const PAGE_Count = 12
+const PAGE_COUNT = 12
 
 export const Main: FC = () => {
   const store = useStore() as ReduxStoreWithManager
@@ -32,7 +32,7 @@ export const Main: FC = () => {
   }, [store])
 
   useEffect(() => {
-    dispatch(getArticles({ currentPage, pageCount: PAGE_Count }))
+    dispatch(getArticles({ currentPage, pageCount: PAGE_COUNT }))
   }, [currentPage])
 
   return (
@@ -46,6 +46,7 @@ export const Main: FC = () => {
           currentPage={currentPage}
           onChange={changeCurrentPage}
           total={total}
+          pageCount={PAGE_COUNT}
         />
       </div>
     </div>

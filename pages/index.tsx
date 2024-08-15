@@ -1,24 +1,33 @@
 import { getSessionData } from '@entities/User'
 import { Catalog } from '@features/Catalog'
+import { AccessType } from '@shared/types/pages'
+import { Loader } from '@shared/ui/Loader/Loader'
 import { Layout } from '@widgets/Layout'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 const Home: React.FC = () => {
-  const router = useRouter()
-  const session = useSelector(getSessionData)
+  const [access, setAccess] = useState<AccessType>('pending')
+  const { push } = useRouter()
+  const { isReady, isAuth } = useSelector(getSessionData)
+
   useEffect(() => {
-    if (session.isReady && !session.isAuth) {
-      router.push('/signin')
+    if (isReady) {
+      if (isAuth) {
+        setAccess('access')
+      } else {
+        push('/signin')
+      }
     }
-  }, [session.isAuth, session.isReady, router])
+  }, [isReady, isAuth])
 
   return (
     <Layout title={'Главная'}>
       <Layout.Header />
       <Layout.Content>
-        <Catalog />
+        {access === 'pending' && <Loader fill />}
+        {access === 'access' && <Catalog />}
       </Layout.Content>
     </Layout>
   )

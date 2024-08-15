@@ -17,7 +17,6 @@ export const TableBlock: FC = () => {
   const changePage = (p: number) => {
     dispatch(articleManagerAction.setCurrentPage(p))
   }
-  console.log('data: ', data)
 
   if (!data.length)
     return (

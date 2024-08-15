@@ -17,7 +17,6 @@ export const Main: FC = () => {
   const { articleId } = query
 
   const article = useAppSelector(getArticleBody)
-  console.log('article: ', article)
 
   useEffect(() => {
     if (articleId) {
