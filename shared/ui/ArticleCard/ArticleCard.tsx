@@ -17,14 +17,11 @@ interface ArticleCardProps {
 }
 
 export const ArticleCard: FC<ArticleCardProps> = (props) => {
-  const { className, id, image, title, description, category, createdAt } =
-    props
+  const { className, id, image, title, description, category, createdAt } = props
   const cat = categories.find((i) => i.id === category)
 
   return (
-    <Link
-      href={`/${id}`}
-      className={classNames(cls.ArticleCard, {}, [className])}>
+    <Link href={`/article/${id}`} className={classNames(cls.ArticleCard, {}, [className])}>
       <div className={cls.top}>
         <img src={image || '/img/templates/empty.png'} />
       </div>

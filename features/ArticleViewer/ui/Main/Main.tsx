@@ -14,15 +14,15 @@ export const Main: FC = () => {
   const store = useStore() as ReduxStoreWithManager
   const dispatch = useAppDispatch()
   const { query } = useRouter()
-  const { articleId } = query
+  const { id } = query
 
   const article = useAppSelector(getArticleBody)
 
   useEffect(() => {
-    if (articleId) {
-      dispatch(getArticle(articleId.toLocaleString()))
+    if (id) {
+      dispatch(getArticle(id.toLocaleString()))
     }
-  }, [articleId])
+  }, [id])
 
   useEffect(() => {
     store.reducerManager.add('article', articleReducer)

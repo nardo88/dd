@@ -12,7 +12,7 @@ export const LeftMenu: FC = () => {
   const { push } = useRouter()
   const roles = userData?.roles
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const dispath = useAppDispatch()
+  const dispatch = useAppDispatch()
   const ref = useRef<HTMLUListElement>(null)
   const closeMenu = () => setIsOpen(false)
 
@@ -25,7 +25,7 @@ export const LeftMenu: FC = () => {
       },
       {
         id: 'logout',
-        click: () => dispath(sessionAction.logout()),
+        click: () => dispatch(sessionAction.logout()),
         title: 'Выйти',
       },
     ]
@@ -77,10 +77,7 @@ export const LeftMenu: FC = () => {
         </Link>
       ) : (
         <div className={cls.menu} onClick={(e) => e.stopPropagation()}>
-          <ProfileIcon
-            className={cls.profileIcon}
-            onClick={() => setIsOpen((p) => !p)}
-          />
+          <ProfileIcon className={cls.profileIcon} onClick={() => setIsOpen((p) => !p)} />
           {isOpen && (
             <ul className={cls.Wrapper} ref={ref}>
               {menuItems.map((item) => (

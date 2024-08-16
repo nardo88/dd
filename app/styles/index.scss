@@ -1,4 +1,5 @@
 @import 'modules/variables.scss';
+@import 'modules/mixins.scss';
 
 * {
   margin: 0;
@@ -11,6 +12,8 @@ html,
 body,
 #__next {
   height: 100%;
+
+  @include scroll;
 }
 
 ul {
