@@ -123,7 +123,7 @@ module.exports = {
     'react/jsx-uses-vars': 'warn',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'off',
-    'prettier/prettier': 'warn',
+    'prettier/prettier': 'off',
     'unused-imports/no-unused-imports': 'error',
     '@next/next/no-img-element': 'off',
     '@next/next/no-sync-scripts': 'off',

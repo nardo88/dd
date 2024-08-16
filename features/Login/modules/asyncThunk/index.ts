@@ -19,7 +19,7 @@ export const loginByEmail = createAsyncThunk<void, IFormData, IThunkAPI>(
       localStorage.setItem(USER_TOKEN_KEY, data.token)
       window.location.href = '/'
     } catch (e: any) {
-      return rejectWithValue(e.message)
+      return rejectWithValue(e.response.data.message || e.message)
     }
   }
 )

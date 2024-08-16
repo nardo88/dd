@@ -46,7 +46,7 @@ export const Sidebar: FC = () => {
 
   return (
     <div className={classNames(cls.Sidebar, { [cls.open]: isOpen })} ref={ref}>
-      <div className={cls.burgerWrapper}>
+      <div className={classNames(cls.burgerWrapper, { [cls.isOpen]: isOpen })}>
         <Burger onClick={toggleIsOpen} isOpen={isOpen} />
       </div>
       <PreviewList />

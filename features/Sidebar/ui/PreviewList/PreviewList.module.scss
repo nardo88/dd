@@ -1,3 +1,5 @@
+@import '@app/styles/modules/mixins';
+
 .loaderWrapper {
   height: 100%;
   display: flex;
@@ -7,4 +9,10 @@
 
 .isHide {
   opacity: 0;
+}
+
+.PreviewList {
+  overflow-y: auto;
+  height: calc(100vh - 90px);
+  @include scroll(var(--color-border));
 }
