@@ -1,10 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { SidebarState } from '../types'
+import { IPreviewList, SidebarState } from '../types'
 
 const initialState: SidebarState = {
   error: null,
   isOpen: false,
   isLoading: false,
+  articles: [],
+  activeCategory: null,
 }
 
 const SidebarSlice = createSlice({
@@ -13,6 +15,16 @@ const SidebarSlice = createSlice({
   reducers: {
     toggleSidebar(state, action: PayloadAction<boolean>) {
       state.isOpen = action.payload
+    },
+    setPreview(state, action: PayloadAction<IPreviewList[]>) {
+      state.articles = action.payload
+    },
+    setActiveCategory(state, action: PayloadAction<string>) {
+      if (state.activeCategory === action.payload) {
+        state.activeCategory = null
+      } else {
+        state.activeCategory = action.payload
+      }
     },
   },
 })

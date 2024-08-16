@@ -6,16 +6,14 @@
   border: 1px solid;
   width: var(--sidebar-width-max);
   height: 100%;
-  padding: 5px;
-  transform: translateX(
-    calc(var(--sidebar-width-min) - var(--sidebar-width-max))
-  );
+  transform: translateX(calc(var(--sidebar-width-min) - var(--sidebar-width-max)));
   transition: transform 0.3s ease-in-out;
 }
 
 .burgerWrapper {
   display: flex;
   justify-content: flex-end;
+  padding: 5px;
 }
 
 .open {

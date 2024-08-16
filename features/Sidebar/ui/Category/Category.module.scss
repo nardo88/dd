@@ -1,0 +1,43 @@
+.Category {
+  border-top: 1px solid var(--color-border);
+}
+
+.categoryTitle {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 10px;
+}
+
+.title {
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+.arrow {
+  transform: rotate(90deg);
+  transition: transform 0.2s ease-in-out;
+  path {
+    stroke: var(--color-white);
+  }
+}
+
+.active {
+  transform: rotate(0deg);
+}
+
+.articleList {
+  background: var(--color-border);
+}
+
+.article {
+  padding: 10px 15px;
+  border-top: 1px solid var(--color-white);
+  color: var(--color-white);
+  cursor: pointer;
+  &:hover {
+    background: var(--color-success);
+  }
+}
