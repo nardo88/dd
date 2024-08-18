@@ -3,6 +3,7 @@ import { Header } from '../Header/Header'
 import cls from './Layout.module.scss'
 import { classNames } from '@shared/helpers/classNames'
 import { ReactNode } from 'react'
+import { Notifications } from '@entities/Notifications'
 
 interface LayoutProps extends IProps {
   title?: string
@@ -25,6 +26,7 @@ export const Layout: React.FC<LayoutProps> & {
       <Head>
         <title>{title || ''}</title>
       </Head>
+      <Notifications />
       <div className={classNames('', {}, ['df', 'fdc', 'fh'])}>{children}</div>
     </>
   )

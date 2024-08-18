@@ -1,15 +1,12 @@
 import { sessionReducer } from '@entities/User'
-import {
-  CombinedState,
-  Reducer,
-  ReducersMapObject,
-  configureStore,
-} from '@reduxjs/toolkit'
-import { createReducerManager } from '../servises'
+import { CombinedState, Reducer, ReducersMapObject, configureStore } from '@reduxjs/toolkit'
+import { createReducerManager } from '../services'
 import { StateSchema } from '../types'
+import { notificationReducer } from '@entities/Notifications'
 
 const rootReducer: ReducersMapObject<StateSchema> = {
   session: sessionReducer,
+  notification: notificationReducer,
 }
 
 const reducerManager = createReducerManager(rootReducer)

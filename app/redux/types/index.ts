@@ -14,6 +14,7 @@ import { ArticleEditorState } from '@features/ArticleEditor'
 import { ArticleManagerState } from '@features/ArticleManager'
 import { SidebarState } from '@features/Sidebar'
 import { ArticleState } from '@features/ArticleViewer'
+import { NotificationSchema } from '@entities/Notifications'
 
 // тип store
 export type RootState = ReturnType<typeof store.getState>
@@ -24,6 +25,7 @@ export type AppDispatch = typeof store.dispatch
 // динамические редьюсеры указываем как не обязательные
 export interface StateSchema {
   session: SessionSchema
+  notification: NotificationSchema
 
   // async
   login?: LoginInitialState
