@@ -6,6 +6,7 @@ import { catalogAction } from '../slice'
 interface IOptions {
   currentPage: number
   pageCount: number
+  filter: string
 }
 
 interface IThunkAPI {
@@ -16,18 +17,18 @@ export const getArticles = createAsyncThunk<void, IOptions, IThunkAPI>(
   'getArticles',
   async (options, thunkApi) => {
     try {
-      const { currentPage, pageCount } = options
+      const { currentPage, pageCount, filter } = options
       const { data } = await api.get<IResData>('/articles/catalog', {
         params: {
           page: currentPage,
           pageCount,
+          filter,
         },
       })
-      thunkApi.dispatch(
-        catalogAction.setArticles({ data: data.data, total: data.total })
-      )
+
+      thunkApi.dispatch(catalogAction.setArticles({ data: data.data, total: data.total }))
     } catch (e: any) {
-      thunkApi.rejectWithValue(e.message)
+      return thunkApi.rejectWithValue(e?.response?.data?.details || e.message)
     }
   }
 )
