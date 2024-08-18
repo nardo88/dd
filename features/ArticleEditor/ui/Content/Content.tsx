@@ -9,8 +9,10 @@ import { create } from '../../modules/asyncThunks/create'
 import { useRouter } from 'next/router'
 import { update } from '../../modules/asyncThunks/update'
 import cls from './Content.module.scss'
+import { useNotification } from '@entities/Notifications'
 
 export const Content: FC<{ id?: string }> = ({ id }) => {
+  const { addNotification } = useNotification()
   const dispatch = useAppDispatch()
   const { push } = useRouter()
   const body = useAppSelector(getBody)
@@ -26,7 +28,7 @@ export const Content: FC<{ id?: string }> = ({ id }) => {
     const result = validate({ body, category, title })
     if (result) return dispatch(articleEditorAction.setValidate(result))
     if (id) {
-      dispatch(update({ id }))
+      dispatch(update({ id, addNotification }))
     } else {
       dispatch(create({ push }))
     }

@@ -1,6 +1,88 @@
+.wrapper {
+  width: 300px;
+}
+
+.Notification {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--color-white);
+  overflow: hidden;
+
+  p {
+    color: var(--color-white);
+  }
+
+  svg > path {
+    fill: var(--color-white);
+  }
+}
+
 .error {
+  background: var(--color-error);
 }
+
 .success {
+  background: var(--color-success);
 }
+
 .info {
+  background: var(--color-info);
+}
+
+.close {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 100%;
+  animation: timer forwards linear;
+  background: var(--color-white);
+}
+
+.hide {
+  animation: fadeOut 0.3s forwards;
+}
+
+.comeIn {
+  animation: fadeIn 0.3s forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(300px);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    transform: translateX(300px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes timer {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 0;
+  }
 }
