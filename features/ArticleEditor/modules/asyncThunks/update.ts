@@ -30,7 +30,7 @@ export const update = createAsyncThunk<void, IOptions, IThunkAPI>(
 
       addNotification({ message: 'Статья успешно сохранена', type: 'success', delay: 3000 })
     } catch (e: any) {
-      thunkApi.rejectWithValue(e.message)
+      return thunkApi.rejectWithValue(e.message)
     }
   }
 )

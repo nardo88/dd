@@ -30,7 +30,7 @@ export const Content: FC<{ id?: string }> = ({ id }) => {
     if (id) {
       dispatch(update({ id, addNotification }))
     } else {
-      dispatch(create({ push }))
+      dispatch(create({ push, addNotification }))
     }
   }
 

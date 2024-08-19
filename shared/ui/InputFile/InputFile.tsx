@@ -1,6 +1,5 @@
-import { FC } from 'react'
 import dayjs from 'dayjs'
-import { useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { classNames } from '@shared/helpers/classNames'
 import { BodyItemType, bodyVariantsTitle } from '@shared/ui/Body'
 import { Button, ButtonVariant } from '@shared/ui/Button/Button'
@@ -35,34 +34,28 @@ export const InputFile: FC<InputFileProps> = (props) => {
       uploadTask.on(
         'state_changed',
         (snapshot: any) => {
-          const progress = Math.floor(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          )
+          const progress = Math.floor((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
           setProgress(progress)
         },
         (error: any) => {
           switch (error?.code) {
             case 'storage/unauthorized':
-              console.log(`User doesn't have permission to access the object`)
+              console.log("User doesn't have permission to access the object")
               break
             case 'storage/canceled':
-              console.log(`User canceled the upload`)
+              console.log('User canceled the upload')
               break
             case 'storage/unknown':
-              console.log(
-                `Unknown error occurred, inspect error.serverResponse`
-              )
+              console.log('Unknown error occurred, inspect error.serverResponse')
               break
           }
         },
         () => {
           // После того как файл загружен мы получаем ссылку
-          getDownloadURL(uploadTask.snapshot.ref).then(
-            (downloadURL: string) => {
-              setUrlFile(downloadURL)
-              onChange(downloadURL)
-            }
-          )
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL: string) => {
+            setUrlFile(downloadURL)
+            onChange(downloadURL)
+          })
         }
       )
     } else {
@@ -91,10 +84,7 @@ export const InputFile: FC<InputFileProps> = (props) => {
           </Button>
         )}
         <div className={cls.InputWrapper}>
-          <Button
-            variant={ButtonVariant.ICON}
-            onClick={remove}
-            className={cls.controlBtn}>
+          <Button variant={ButtonVariant.ICON} onClick={remove} className={cls.controlBtn}>
             <Upload />
           </Button>
           <input
@@ -104,25 +94,16 @@ export const InputFile: FC<InputFileProps> = (props) => {
             }}
           />
         </div>
-        {progress > 0 && (
-          <Progress className={cls.progress} progress={progress} />
-        )}
+        {progress > 0 && <Progress className={cls.progress} progress={progress} />}
       </div>
 
       {type === 'image' && url && <img src={url} className={cls.preview} />}
       {type === 'file' && url && (
-        <a
-          download={url}
-          href={url}
-          className="mt20 df"
-          target="_blank"
-          rel="noreferrer">
+        <a download={url} href={url} className="mt20 df" target="_blank" rel="noreferrer">
           Скачать
         </a>
       )}
-      {type === 'video' && url && (
-        <video controls className={cls.video} src={url} />
-      )}
+      {type === 'video' && url && <video controls className={cls.video} src={url} />}
     </div>
   )
 }

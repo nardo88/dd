@@ -20,7 +20,7 @@ export const BodyOutput: FC<BodyOutputProps> = (props) => {
     <div className={classNames(cls.BodyOutput, {}, [className])}>
       {body.map((item) => (
         <div key={item._id}>
-          {item.type === 'text' && <MediumText children={item.value} />}
+          {item.type === 'text' && <MediumText value={item.value} />}
           {item.type === 'image' && <Image src={item.value} />}
           {item.type === 'code' && <Code value={item.value} />}
           {item.type === 'video' && <Video src={item.value} />}

@@ -3,17 +3,12 @@ import { useStore } from 'react-redux'
 import { ReduxStoreWithManager } from '@app/redux'
 import { FilterBlock } from '../FilterBlock/FilterBlock'
 import { TableBlock } from '../TableBlock/TableBlock'
-import { articleManagerAction, articleManagerReducer } from '../../slice'
+import { articleManagerReducer } from '../../slice'
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
-import {
-  getCategoryFilter,
-  getCurrentPage,
-  getTitleFilter,
-  getTotal,
-} from '../../selectors'
+import { getCategoryFilter, getCurrentPage, getIsLoading, getTitleFilter } from '../../selectors'
 import { getArticleList } from '../../asyncThunk/getArticleList'
 import cls from './Main.module.scss'
-import Pagination from '@shared/ui/Pagination/Pagination'
+import { Loader } from '@shared/ui/Loader/Loader'
 
 interface MainProps {
   className?: string
@@ -25,6 +20,7 @@ export const Main: FC = () => {
   const title = useAppSelector(getTitleFilter)
   const page = useAppSelector(getCurrentPage)
   const category = useAppSelector(getCategoryFilter)
+  const isLoading = useAppSelector(getIsLoading)
 
   useEffect(() => {
     dispatch(
@@ -45,6 +41,7 @@ export const Main: FC = () => {
 
   return (
     <div className={cls.Main}>
+      {isLoading && <Loader className={cls.loader} />}
       <FilterBlock />
       <TableBlock />
     </div>

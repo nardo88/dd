@@ -10,6 +10,7 @@ import { Settings } from '../Settings/Settings'
 import { getArticleData } from '../../modules/asyncThunks/getArticleData'
 import { Content } from '../Content/Content'
 import { Loader } from '@shared/ui/Loader/Loader'
+import { useNotification } from '@entities/Notifications'
 
 interface MainProps {
   id?: string
@@ -17,6 +18,7 @@ interface MainProps {
 
 export const Main: FC<MainProps> = (props) => {
   const { id } = props
+  const { addNotification } = useNotification()
   const store = useStore() as ReduxStoreWithManager
   const activeTab = useAppSelector(getActiveTab)
   const isLoading = useAppSelector(getIsLoading)
@@ -31,7 +33,7 @@ export const Main: FC<MainProps> = (props) => {
 
   useEffect(() => {
     if (id) {
-      dispatch(getArticleData({ id }))
+      dispatch(getArticleData({ id, addNotification }))
     }
   }, [id])
 

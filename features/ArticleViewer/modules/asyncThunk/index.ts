@@ -14,7 +14,7 @@ export const getArticle = createAsyncThunk<void, string, IThunkAPI>(
       const { data } = await api.get<IBody[]>(`/articles/get-one/${articleId}`)
       thunkApi.dispatch(articleAction.setArticle(data))
     } catch (e: any) {
-      thunkApi.rejectWithValue(e.message)
+      return thunkApi.rejectWithValue(e.message)
     }
   }
 )

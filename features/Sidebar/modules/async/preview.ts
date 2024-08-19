@@ -12,6 +12,6 @@ export const preview = createAsyncThunk<void, void, IThunkAPI>('preview', async 
     const { data } = await api.get<IPreviewList[]>('/articles/preview')
     thunkApi.dispatch(sidebarAction.setPreview(data))
   } catch (e: any) {
-    thunkApi.rejectWithValue(e.message)
+    return thunkApi.rejectWithValue(e.message)
   }
 })

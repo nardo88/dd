@@ -1,10 +1,7 @@
-import { IArticleData } from '@features/ArticleEditor/types'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { useAppSelector } from '@shared/hooks/redux'
 import { api } from '@shared/libs/axios'
-import { getCategoryFilter, getCurrentPage, getTitleFilter } from '../selectors'
 import { articleManagerAction } from '../slice'
-import { IArticle, IResp } from '../types'
+import { IResp } from '../types'
 
 interface IOptions {
   title: string
@@ -27,12 +24,12 @@ export const getArticleList = createAsyncThunk<void, IOptions, IThunkAPI>(
           page,
           pageCount: 10,
           title,
-          category: category,
+          category,
         },
       })
       thunkApi.dispatch(articleManagerAction.setArticles(data))
     } catch (e: any) {
-      thunkApi.rejectWithValue(e.message)
+      return thunkApi.rejectWithValue(e.message)
     }
   }
 )

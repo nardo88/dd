@@ -1,9 +1,8 @@
-import { IBody } from '@shared/ui/Body'
-
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { ArticleManagerState, IResp } from '../types'
 import { OptionType } from '@shared/ui/Select/Select'
 import { getArticleList } from '../asyncThunk/getArticleList'
+import { remove } from '../asyncThunk/remove'
 
 const initialState: ArticleManagerState = {
   isLoading: false,
@@ -52,6 +51,15 @@ const ArticleEditorSlice = createSlice({
       .addCase(getArticleList.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload as string
+      })
+      .addCase(remove.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(remove.fulfilled, (state) => {
+        state.isLoading = false
+      })
+      .addCase(remove.rejected, (state) => {
+        state.isLoading = false
       })
   },
 })

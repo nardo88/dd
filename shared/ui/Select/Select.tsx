@@ -5,7 +5,6 @@ import { Text, TextVariant } from '@shared/ui/Text/Text'
 import cls from './Select.module.scss'
 import { ArrowBottom } from '../Icons/ArrowBottom'
 import { classNames } from '@shared/helpers/classNames'
-import { getShortString } from '@shared/helpers/getShortString'
 
 export type OptionType = { id: string; title: string }
 
@@ -96,10 +95,7 @@ export const Select = (props: PropsType) => {
         <div className={cls.dropDown}>
           <ul>
             {options.map((item: OptionType) => (
-              <li
-                key={item.id}
-                className={cls.selectOption}
-                onClick={() => changeSelect(item)}>
+              <li key={item.id} className={cls.selectOption} onClick={() => changeSelect(item)}>
                 {item.title}
               </li>
             ))}

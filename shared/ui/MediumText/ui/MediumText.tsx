@@ -5,16 +5,16 @@ import 'react-quill/dist/quill.snow.css'
 import './MediumText.scss'
 
 interface MediumTextProps {
-  children?: string
+  value?: string
   className?: string
 }
 
 export const MediumText: FC<MediumTextProps> = (props) => {
-  const { className, children } = props
+  const { className, value } = props
 
   return (
     <ReactQuill
-      value={children}
+      value={value}
       className={classNames('MediumText', {}, [className])}
       readOnly
       modules={{ toolbar: null }}

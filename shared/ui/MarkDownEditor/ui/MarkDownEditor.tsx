@@ -14,12 +14,7 @@ export const MarkDownEditor: FC<MarkDownEditorProps> = (props) => {
 
   return (
     <div className={classNames('MarkDownEditor', {}, [className])}>
-      <MDEditor
-        hideToolbar={true}
-        value={value}
-        onChange={(val: any) => onChange(val)}
-        preview="edit"
-      />
+      <MDEditor hideToolbar value={value} onChange={(val: any) => onChange(val)} preview="edit" />
     </div>
   )
 }

@@ -1,10 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { api } from '@shared/libs/axios'
 import { StateSchema } from '@app/redux/types'
-import { useRouter } from 'next/router'
+import { INotificationData } from '@entities/Notifications'
 
 interface IOptions {
   push: (path: string) => void
+  addNotification: (val: INotificationData) => void
 }
 
 interface IThunkAPI {
@@ -14,9 +15,8 @@ interface IThunkAPI {
 export const create = createAsyncThunk<void, IOptions, IThunkAPI>(
   'create',
   async (options, thunkApi) => {
+    const { push, addNotification } = options
     try {
-      const { push } = options
-
       const { articleEditor } = thunkApi.getState() as StateSchema
 
       const { data } = await api.post('/articles/create', {
@@ -26,10 +26,11 @@ export const create = createAsyncThunk<void, IOptions, IThunkAPI>(
         description: articleEditor?.article.description,
         image: articleEditor?.article.image,
       })
-
+      addNotification({ message: 'Статья успешно сохранена', type: 'success' })
       push(`/editor/${data.id}`)
     } catch (e: any) {
-      thunkApi.rejectWithValue(e.message)
+      addNotification({ message: e?.response?.data?.details || e.message, type: 'error' })
+      return thunkApi.rejectWithValue(e.message)
     }
   }
 )
