@@ -9,11 +9,11 @@ import { createId } from '@shared/helpers/createId/createId'
 import { MediumEditor } from '@shared/ui/MediumEditor'
 import { Text, TextVariant } from '@shared/ui/Text/Text'
 import { Remove } from '@shared/ui/Icons/Remove'
-import { Reorder } from 'framer-motion'
 import { InputFile } from '@shared/ui/InputFile/InputFile'
 import { MarkDownEditor } from '@shared/ui/MarkDownEditor'
 import { CodeEditor } from '@shared/ui/CodeEditor/CodeEditor'
 import { Input } from '@shared/ui/Input'
+import { Reorder } from '@shared/ui/Reorder'
 
 interface BodyInputProps {
   className?: string
@@ -56,8 +56,7 @@ export const BodyInput: FC<BodyInputProps> = (props) => {
       setDown(
         window.innerHeight <
           Number(
-            Math.floor(ref.current?.getBoundingClientRect()?.top) +
-              listRef.current?.offsetHeight
+            Math.floor(ref.current?.getBoundingClientRect()?.top) + listRef.current?.offsetHeight
           )
       )
     }
@@ -66,30 +65,18 @@ export const BodyInput: FC<BodyInputProps> = (props) => {
   return (
     <div className={classNames(cls.BodyInput, {}, [className])}>
       {!!body.length && (
-        <Reorder.Group
-          as="ul"
-          axis="y"
-          values={body}
-          onReorder={onChange}
-          className={cls.content}>
-          {body.map((item) => (
-            <Reorder.Item
-              value={item}
+        <Reorder.Container className={cls.content}>
+          {body.map((item, index) => (
+            <Reorder.Element
               key={item._id}
               className={cls.bodyItem}
-              whileDrag={{
-                scale: 1.01,
-                boxShadow: '0 0 5px 3px rgba(0,0,0,0.3)',
-                background: 'white',
-                cursor: 'grabbing',
-              }}>
+              keyField="_id"
+              index={index}
+              data={body}
+              setData={onChange}>
               <div className={cls.topContent}>
-                <Text variant={TextVariant.HELPER}>
-                  {bodyVariantsTitle[item.type]}
-                </Text>
-                <Button
-                  variant={ButtonVariant.ICON}
-                  onClick={() => removeItem(item._id)}>
+                <Text variant={TextVariant.HELPER}>{bodyVariantsTitle[item.type]}</Text>
+                <Button variant={ButtonVariant.ICON} onClick={() => removeItem(item._id)}>
                   <Remove />
                 </Button>
               </div>
@@ -110,28 +97,19 @@ export const BodyInput: FC<BodyInputProps> = (props) => {
               )}
 
               {item.type === 'markdown' && (
-                <MarkDownEditor
-                  value={item.value}
-                  onChange={(v) => changeValue(item._id, v)}
-                />
+                <MarkDownEditor value={item.value} onChange={(v) => changeValue(item._id, v)} />
               )}
 
               {item.type === 'code' && (
-                <CodeEditor
-                  value={item.value}
-                  onChange={(v) => changeValue(item._id, v)}
-                />
+                <CodeEditor value={item.value} onChange={(v) => changeValue(item._id, v)} />
               )}
 
               {item.type === 'frame' && (
-                <Input
-                  value={item.value}
-                  onChange={(v) => changeValue(item._id, v)}
-                />
+                <Input value={item.value} onChange={(v) => changeValue(item._id, v)} />
               )}
-            </Reorder.Item>
+            </Reorder.Element>
           ))}
-        </Reorder.Group>
+        </Reorder.Container>
       )}
       <div className={cls.addSection} ref={ref}>
         <Button
@@ -148,10 +126,7 @@ export const BodyInput: FC<BodyInputProps> = (props) => {
           }}>
           <ul className={cls.variantList}>
             {variants.map((item) => (
-              <li
-                key={item.id}
-                className={cls.variantItem}
-                onClick={() => addItem(item.id)}>
+              <li key={item.id} className={cls.variantItem} onClick={() => addItem(item.id)}>
                 {item.title}
               </li>
             ))}
