@@ -26,6 +26,8 @@ export enum Categories {
   vite = 'vite',
   browserApi = 'browserApi',
   webRtc = 'webRtc',
+  patterns = 'patterns',
+  algoritms = 'algoritms',
 }
 
 interface ICategory {
@@ -61,11 +63,11 @@ const _categories: ICategory[] = [
   { id: Categories.vite, title: 'Vite' },
   { id: Categories.browserApi, title: 'Browser APIs' },
   { id: Categories.webRtc, title: 'Web RTC' },
+  { id: Categories.patterns, title: 'Паттерны' },
+  { id: Categories.algoritms, title: 'Алгоритмы' },
 ]
 
-export const categories = _categories.sort((a, b) =>
-  a.title.localeCompare(b.title)
-)
+export const categories = _categories.sort((a, b) => a.title.localeCompare(b.title))
 
 export const covers: Partial<Record<Categories, string>> = {
   javaScript: '/img/templates/javaScript.jpg',
@@ -84,4 +86,6 @@ export const covers: Partial<Record<Categories, string>> = {
   fireBase: '/img/templates/fireBase.png',
   webRtc: '/img/templates/WEBRTC.png',
   test: '/img/templates/jest.png',
+  patterns: '/img/templates/patterns.png',
+  algoritms: '/img/templates/algoritms.png',
 }

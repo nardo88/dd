@@ -28,6 +28,17 @@ export function Element<T>({
     if (!detectLeftButton(e)) {
       return
     }
+
+    if (window?.getSelection) {
+      if (window?.getSelection()?.empty) {
+        // Chrome
+        window.getSelection()?.empty()
+      } else if (window?.getSelection()?.removeAllRanges) {
+        // Firefox
+        window.getSelection()?.removeAllRanges()
+      }
+    }
+
     if (!container) return
     setIsDragging(true)
     // const container = containerRef.current as HTMLDivElement
@@ -67,10 +78,8 @@ export function Element<T>({
       item.style.transform = `translateY(${distance}px)`
     })
     // Движение элемента
-    let x = e.clientX
-    let y = e.clientY
-
-    document.onpointermove = dragMove as any
+    const x = e.clientX
+    const y = e.clientY
 
     function dragMove(e: PointerEvent) {
       const posX = e.clientX - x
@@ -84,15 +93,17 @@ export function Element<T>({
         const rect1 = dragItem.getBoundingClientRect()
         const rect2 = item.getBoundingClientRect()
 
-        let isOverlapping =
+        const isOverlapping =
           rect1.y < rect2.y + rect2.height / 2 && rect1.y + rect1.height / 2 > rect2.y
 
         if (isOverlapping) {
           if (item.getAttribute('style')) {
             item.style.transform = ''
+            // eslint-disable-next-line no-param-reassign
             index++
           } else {
             item.style.transform = `translateY(${distance}px)`
+            // eslint-disable-next-line no-param-reassign
             index--
           }
           newData = newData.filter((item: any) => item[keyField] !== dragData[keyField])
@@ -100,9 +111,9 @@ export function Element<T>({
         }
       })
     }
+    document.onpointermove = dragMove as any
 
     // Отпускаем кнопку мыши
-    document.onpointerup = dragEnd
 
     function dragEnd() {
       document.onpointerup = null
@@ -118,6 +129,7 @@ export function Element<T>({
       })
       setData(newData)
     }
+    document.onpointerup = dragEnd
   }
 
   useEffect(() => {

@@ -80,33 +80,35 @@ export const BodyInput: FC<BodyInputProps> = (props) => {
                   <Remove />
                 </Button>
               </div>
-              {item.type === 'text' && (
-                <MediumEditor
-                  value={item.value}
-                  onChange={(value) => changeValue(item._id, value)}
-                />
-              )}
+              <div onPointerDown={(e) => e.stopPropagation()}>
+                {item.type === 'text' && (
+                  <MediumEditor
+                    value={item.value}
+                    onChange={(value) => changeValue(item._id, value)}
+                  />
+                )}
 
-              {['image', 'file', 'video'].includes(item.type) && (
-                <InputFile
-                  url={item.value}
-                  type={item.type}
-                  onChange={(v) => changeValue(item._id, v)}
-                  remove={() => changeValue(item._id, '')}
-                />
-              )}
+                {['image', 'file', 'video'].includes(item.type) && (
+                  <InputFile
+                    url={item.value}
+                    type={item.type}
+                    onChange={(v) => changeValue(item._id, v)}
+                    remove={() => changeValue(item._id, '')}
+                  />
+                )}
 
-              {item.type === 'markdown' && (
-                <MarkDownEditor value={item.value} onChange={(v) => changeValue(item._id, v)} />
-              )}
+                {item.type === 'markdown' && (
+                  <MarkDownEditor value={item.value} onChange={(v) => changeValue(item._id, v)} />
+                )}
 
-              {item.type === 'code' && (
-                <CodeEditor value={item.value} onChange={(v) => changeValue(item._id, v)} />
-              )}
+                {item.type === 'code' && (
+                  <CodeEditor value={item.value} onChange={(v) => changeValue(item._id, v)} />
+                )}
 
-              {item.type === 'frame' && (
-                <Input value={item.value} onChange={(v) => changeValue(item._id, v)} />
-              )}
+                {item.type === 'frame' && (
+                  <Input value={item.value} onChange={(v) => changeValue(item._id, v)} />
+                )}
+              </div>
             </Reorder.Element>
           ))}
         </Reorder.Container>
