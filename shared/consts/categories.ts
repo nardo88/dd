@@ -28,6 +28,7 @@ export enum Categories {
   webRtc = 'webRtc',
   patterns = 'patterns',
   algoritms = 'algoritms',
+  mediasoup = 'mediasoup',
 }
 
 interface ICategory {
@@ -65,6 +66,7 @@ const _categories: ICategory[] = [
   { id: Categories.webRtc, title: 'Web RTC' },
   { id: Categories.patterns, title: 'Паттерны' },
   { id: Categories.algoritms, title: 'Алгоритмы' },
+  { id: Categories.mediasoup, title: 'MediaSoup' },
 ]
 
 export const categories = _categories.sort((a, b) => a.title.localeCompare(b.title))
@@ -88,4 +90,5 @@ export const covers: Partial<Record<Categories, string>> = {
   test: '/img/templates/jest.png',
   patterns: '/img/templates/patterns.png',
   algoritms: '/img/templates/algoritms.png',
+  mediasoup: '/img/templates/mediasoup.png',
 }

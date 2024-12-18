@@ -53,7 +53,9 @@ export function Element<T>({
     const dragBoundingRect = dragItem.getBoundingClientRect()
 
     // получаем расстояние между карточками
-    const space = items[1].getBoundingClientRect().top - items[0].getBoundingClientRect().bottom
+    const space = items[1]
+      ? items[1].getBoundingClientRect().top - items[0].getBoundingClientRect().bottom
+      : 0
 
     // стилизуем выбранный элемент
     dragItem.style.position = 'fixed'
