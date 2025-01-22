@@ -25,9 +25,6 @@ const LoginSlice = createSlice({
       .addCase(loginByEmail.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(loginByEmail.fulfilled, (state) => {
-        state.isLoading = false
-      })
       .addCase(loginByEmail.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload as string
