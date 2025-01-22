@@ -6,6 +6,12 @@
   border-radius: 4px;
   font-size: 14px;
   line-height: 130%;
+
+  &:disabled {
+    color: var(--color-border);
+    background-color: var(--color-secondary);
+    cursor: default;
+  }
 }
 
 .primary {

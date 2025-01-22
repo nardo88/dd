@@ -16,7 +16,7 @@ import { Button } from '@shared/ui/Button/Button'
 import { useStore } from 'react-redux'
 import { ReduxStoreWithManager } from '@app/redux'
 import { Text, TextVariant } from '@shared/ui/Text/Text'
-import { Loader } from '@shared/ui/Loader/Loader'
+import { Loader, LoaderVariants } from '@shared/ui/Loader/Loader'
 import { validateSignUp } from '../../modules/helpers/validate'
 import cls from './Signup.module.scss'
 import { signUpThunk } from '@features/Signup/modules/services/signUpThunk'
@@ -27,7 +27,7 @@ const Signup: FC = () => {
   const password = useAppSelector(getPassword)
   const repeatPassword = useAppSelector(getRepeatPassword)
   const result = useAppSelector(signUpResult)
-  const isloading = useAppSelector(getIsLoadingSignUp)
+  const isLoading = useAppSelector(getIsLoadingSignUp)
   const error = useAppSelector(getErrorSignUp)
   const validate = useAppSelector(signUpValidate)
   const store = useStore() as ReduxStoreWithManager
@@ -63,7 +63,7 @@ const Signup: FC = () => {
           value={email}
           onChange={(v) => dispatch(signupAction.changeEmail(v))}
           label="Email"
-          disabled={isloading}
+          disabled={isLoading}
           errorText={validate?.email}
         />
         <Input
@@ -71,7 +71,7 @@ const Signup: FC = () => {
           onChange={(v) => dispatch(signupAction.changePassword(v))}
           label="Пароль"
           type={InputTypes.PASSWORD}
-          disabled={isloading}
+          disabled={isLoading}
           errorText={validate?.password || null}
         />
         <Input
@@ -79,11 +79,11 @@ const Signup: FC = () => {
           onChange={(v) => dispatch(signupAction.changeRepeatPassword(v))}
           label="Повторите пароль"
           type={InputTypes.PASSWORD}
-          disabled={isloading}
+          disabled={isLoading}
           errorText={validate?.repeatPassword || null}
         />
         <div className={cls.btnWrapper}>
-          {isloading ? (
+          {isLoading ? (
             <div className={cls.loaderWrapper}>
               <Loader />
             </div>
@@ -92,7 +92,12 @@ const Signup: FC = () => {
               <Link className={cls.link} href={'/signin'}>
                 Войти
               </Link>
-              <Button type="submit">Зарегистрироваться</Button>
+              <Button className={cls.submitBtn} disabled={isLoading} type="submit">
+                {isLoading && (
+                  <Loader variant={LoaderVariants.SECONDARY} className={cls.btnLoader} />
+                )}
+                Зарегистрироваться
+              </Button>
             </>
           )}
         </div>

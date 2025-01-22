@@ -1,6 +1,6 @@
 import { FC, FormEvent, useEffect } from 'react'
 import { Input, InputTypes } from '@shared/ui/Input'
-import { getError, getLogin, getpassword } from '../../modules/selectors'
+import { getError, getIsLoading, getLogin, getpassword } from '../../modules/selectors'
 import cls from './Login.module.scss'
 import { useSelector, useStore } from 'react-redux'
 import { useAppDispatch } from '@shared/hooks/redux'
@@ -10,11 +10,13 @@ import Link from 'next/link'
 import { ReduxStoreWithManager } from '@app/redux'
 import { loginByEmail } from '@features/Login/modules/asyncThunk'
 import { Text, TextVariant } from '@shared/ui/Text/Text'
+import { Loader, LoaderVariants } from '@shared/ui/Loader/Loader'
 
 export const Login: FC = () => {
   const login = useSelector(getLogin)
   const password = useSelector(getpassword)
   const error = useSelector(getError)
+  const isLoading = useSelector(getIsLoading)
   const dispatch = useAppDispatch()
   const store = useStore() as ReduxStoreWithManager
 
@@ -39,18 +41,27 @@ export const Login: FC = () => {
     <div className={cls.login}>
       <form className={cls.form} onSubmit={submitHandler}>
         {error && <Text variant={TextVariant.ERROR}>{error}</Text>}
-        <Input value={login} onChange={(v) => dispatch(loginAction.changeLogin(v))} label="Email" />
+        <Input
+          disabled={isLoading}
+          value={login}
+          onChange={(v) => dispatch(loginAction.changeLogin(v))}
+          label="Email"
+        />
         <Input
           value={password}
           onChange={(v) => dispatch(loginAction.changePassword(v))}
           label="Пароль"
           type={InputTypes.PASSWORD}
+          disabled={isLoading}
         />
         <div className={cls.btnWrapper}>
           <Link className={cls.link} href={'/signup'}>
             Зарегистрироваться
           </Link>
-          <Button type="submit">Войти</Button>
+          <Button className={cls.submitBtn} disabled={isLoading} type="submit">
+            {isLoading && <Loader variant={LoaderVariants.SECONDARY} className={cls.btnLoader} />}
+            Войти
+          </Button>
         </div>
       </form>
     </div>

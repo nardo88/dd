@@ -1,32 +1,55 @@
 .signup {
-    margin-top: var(--navbar-height);
+  margin-top: var(--navbar-height);
 }
 
 .form {
-    display: grid;
-    row-gap: 20px;
-    width: 100%;
-    max-width: 550px;
-    margin: 0 auto;
-    box-shadow: var(--shadow);
-    border-radius: 8px;
-    padding: 25px 20px;
+  display: grid;
+  row-gap: 20px;
+  width: 100%;
+  max-width: 550px;
+  margin: 0 auto;
+  box-shadow: var(--shadow);
+  border-radius: 8px;
+  padding: 25px 20px;
 }
 
 .btnWrapper {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .link {
-    color: var(--color-primary);
-    text-decoration: underline;
+  color: var(--color-primary);
+  text-decoration: underline;
 }
 
 .loaderWrapper {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.submitBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btnLoader {
+  span {
+    width: 25px;
+    height: 25px;
+  }
+
+  span:before {
+    display: none;
+  }
+
+  span:after {
+    top: 0;
+    left: 0;
+  }
 }
