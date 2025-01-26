@@ -65,6 +65,7 @@ const Signup: FC = () => {
           label="Email"
           disabled={isLoading}
           errorText={validate?.email}
+          type={InputTypes.EMAIL}
         />
         <Input
           value={password}

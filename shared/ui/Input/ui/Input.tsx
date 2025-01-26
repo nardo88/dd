@@ -6,6 +6,7 @@ import cls from './Input.module.scss'
 export enum InputTypes {
   TEXT = 'text',
   PASSWORD = 'password',
+  EMAIL = 'email',
 }
 
 interface InputProps {
@@ -40,9 +41,7 @@ export const Input = memo(
         <input
           className={cls.input}
           value={value}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onChange(e.target.value)
-          }
+          onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e.target.value)}
           placeholder={placeholder}
           name={name}
           type={type}

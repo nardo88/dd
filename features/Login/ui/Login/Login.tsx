@@ -43,6 +43,7 @@ export const Login: FC = () => {
         {error && <Text variant={TextVariant.ERROR}>{error}</Text>}
         <Input
           disabled={isLoading}
+          type={InputTypes.EMAIL}
           value={login}
           onChange={(v) => dispatch(loginAction.changeLogin(v))}
           label="Email"
