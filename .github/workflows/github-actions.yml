@@ -4,7 +4,7 @@ on:
     branches: [master]
   pull_request:
     branches: [master]
-jobs: # Список задач
+jobs:
   CI: # Название задачи
     runs-on: ubuntu-latest # Указываем операционную систему в которой будут выполняться задачи
     strategy:
