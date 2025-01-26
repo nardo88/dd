@@ -39,7 +39,7 @@ export const Login: FC = () => {
 
   return (
     <div className={cls.login}>
-      <form className={cls.form} onSubmit={submitHandler}>
+      <form className={cls.form} onSubmit={submitHandler} autoComplete="on">
         {error && <Text variant={TextVariant.ERROR}>{error}</Text>}
         <Input
           disabled={isLoading}
