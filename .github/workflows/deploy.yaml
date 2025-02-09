@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v4
       - name: install deps
         run: yarn install
-      - name: Cache deps
+      - name: cache deps
 				uses: actions/cache@v4
         with:
 					path: ~/.npm # путь где будут храниться пакеты
