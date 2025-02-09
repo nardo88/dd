@@ -53,5 +53,5 @@ jobs:
           yarn install
           yarn build
           pm2 delete dd || true  # Игнорировать ошибку, если процесс не существует
-          pm2 start ./ecosystemConfig.json
+          pm2 start /etc/home/nardo/dd/ecosystemConfig.json
           EOF
