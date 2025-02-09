@@ -8,17 +8,17 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - name: get code
+      - name: Get code
         uses: actions/checkout@v4
 
-      - name: install deps
+      - name: Install deps
         run: yarn install
 
-      - name: cache deps
-				uses: actions/cache@v4
-        with: 
-				  path: ~/.npm # путь где будут храниться пакеты
-				  key: node-modules-${{ hashFiles('**/yarn.lock')}} # задаем ключ
+      - name: Cache deps
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm # Путь, где будут храниться пакеты
+          key: node-modules-${{ hashFiles('**/yarn.lock') }} # Задаем ключ
 
-      - name: linter
+      - name: Run linter
         run: yarn lint
