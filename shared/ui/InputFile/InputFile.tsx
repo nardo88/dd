@@ -40,6 +40,7 @@ export const InputFile: FC<InputFileProps> = (props) => {
         (error: any) => {
           switch (error?.code) {
             case 'storage/unauthorized':
+              // eslint-disable-next-line quotes
               console.log("User doesn't have permission to access the object")
               break
             case 'storage/canceled':
