@@ -1,0 +1,16 @@
+name: Deploy
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  Lint:
+  runs-on: ubuntu-latest
+  steps:
+    - name: get code
+      uses: actions/checkout@v4
+    - name: install deps
+      run: yarn install
+    - name: linter
+      run: yarn lint
