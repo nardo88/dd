@@ -40,8 +40,13 @@ jobs:
       - name: Check Node.js and PM2 versions
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+          echo user name
+          who
+          echo node version
           node -v
+          echo yarn version
           yarn -v
+          echo pm2 version
           pm2 -v
           EOF
 
