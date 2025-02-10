@@ -43,7 +43,6 @@ jobs:
           nvm use 20
           cd /home/nardo/dd
           git pull origin main
-          cat /etc/home/nardo/dd/ecosystemConfig.json
           yarn install
           yarn build
           pm2 delete dd || true  # Игнорировать ошибку, если процесс не существует
