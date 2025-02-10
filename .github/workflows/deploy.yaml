@@ -32,11 +32,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Use Node.js 20 # Укажите нужную версию Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-
       - name: Install SSH key
         uses: webfactory/ssh-agent@v0.7.0
         with:
@@ -45,6 +40,9 @@ jobs:
       - name: Deploy to server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+          source ~/.bashrc 
+          echo "Node.js version: $(node -v)"  # Добавьте для проверки
+          echo "NVM_DIR: $NVM_DIR" # Проверьте переменную окружения NVM
           cd /home/nardo/dd
           git pull origin main
           yarn install
