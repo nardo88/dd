@@ -37,20 +37,6 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Check Node.js and PM2 versions
-        run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-          nvm use 20
-          echo user name
-          who
-          echo node version
-          node -v
-          echo yarn version
-          yarn -v
-          echo pm2 version
-          pm2 -v
-          EOF
-
       - name: Deploy to server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
@@ -61,5 +47,5 @@ jobs:
           yarn install
           yarn build
           pm2 delete dd || true  # Игнорировать ошибку, если процесс не существует
-          pm2 start /home/nardo/dd/ecosystemConfig.json
+          pm2 start /home/nardo/dd/ecosystem.config.json
           EOF
