@@ -54,7 +54,9 @@ jobs:
       - name: Deploy to server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-          nvm use 20
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # Загружаем nvm
+          nvm use 20  # Указываем версию Node.js
           cd /home/nardo/dd
           git pull origin main
           cat /etc/home/nardo/dd/ecosystemConfig.json
