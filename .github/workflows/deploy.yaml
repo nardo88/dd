@@ -29,7 +29,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: nextjs-build
-          path: .next
+          path: |
+            .next
+            package.json
+            yarn.lock
+            ecosystem.config.json
           retention-days: 1
 
   deploy:
@@ -44,7 +48,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: nextjs-build
-          path: .next
+          path: ./artifact
 
       - name: Deploy to Server
         uses: appleboy/ssh-action@v0.1.7
@@ -57,8 +61,7 @@ jobs:
             mkdir -p /home/nardo/dd
             pm2 stop dd || true
             cd /home/nardo/dd
-            rm -rf .next node_modules
-            rsync -avz --delete --exclude='.git' --exclude='.github' $GITHUB_WORKSPACE/ /home/nardo/dd/
-            rsync -avz --delete $GITHUB_WORKSPACE/.next /home/nardo/dd/
+            rm -rf .next node_modules package.json yarn.lock ecosystem.config.json
+            rsync -avz --delete $GITHUB_WORKSPACE/artifact/ /home/nardo/dd/
             yarn install --frozen-lockfile
             pm2 restart ecosystem.config.json || pm2 start ecosystem.config.json
