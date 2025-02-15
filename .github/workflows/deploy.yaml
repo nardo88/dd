@@ -19,6 +19,8 @@ jobs:
           script: |
             pm2 stop dd || true
             cd /home/nardo/dd
+            nvm use 20.18.0
+            node -v
             git pull
             yarn install
             yarn build
