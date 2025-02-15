@@ -17,11 +17,13 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            pm2 stop dd || true
-            cd /home/nardo/dd
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
             nvm use 20.18.0
             node -v
-            git pull
+            pm2 stop dd || true
+            cd /home/nardo/dd
+            git pull origin main
             yarn install
             yarn build
             pm2 restart ecosystem.config.json || pm2 start ecosystem.config.json
