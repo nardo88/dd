@@ -50,6 +50,11 @@ jobs:
           name: nextjs-build
           path: ./artifact
 
+      - name: Check downloaded artifact
+        run: |
+          echo "List of files in the artifact directory:"
+          ls -l ./artifact
+
       - name: Deploy to Server
         uses: appleboy/ssh-action@v0.1.7
         with:
