@@ -25,16 +25,6 @@ jobs:
       - name: Build project
         run: yarn build
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: nextjs-build
-          path: |
-            package.json
-            yarn.lock
-            ecosystem.config.json
-          retention-days: 1
-
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -42,17 +32,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: nextjs-build
-          path: ./artifact
-
-      - name: Check downloaded artifact
-        run: |
-          echo "List of files in the artifact directory:"
-          ls -l ./artifact
 
       - name: Deploy to Server
         uses: appleboy/ssh-action@v0.1.7
@@ -74,10 +53,12 @@ jobs:
             # Очищаем старые файлы, если они есть
             rm -rf .next node_modules package.json yarn.lock ecosystem.config.json
 
-            # Копируем файлы из артефакта в корень проекта
-            cp -r $GITHUB_WORKSPACE/artifact/* /home/nardo/dd/
+            # Копируем файлы на сервер
+            scp $GITHUB_WORKSPACE/package.json nardo@${{ secrets.SERVER_IP }}:/home/nardo/dd/package.json
+            scp $GITHUB_WORKSPACE/yarn.lock nardo@${{ secrets.SERVER_IP }}:/home/nardo/dd/yarn.lock
+            scp $GITHUB_WORKSPACE/ecosystem.config.json nardo@${{ secrets.SERVER_IP }}:/home/nardo/dd/ecosystem.config.json
 
-            # Копируем папку .next с локальной машины
+            # Копируем папку .next с локальной машины на сервер
             scp -r $GITHUB_WORKSPACE/.next nardo@${{ secrets.SERVER_IP }}:/home/nardo/dd/.next
 
             # Устанавливаем зависимости
