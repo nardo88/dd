@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,10 +17,27 @@ jobs:
           yarn install
           yarn build
 
-      - name: Debug files
-        run: |
-          ls -la
-          ls -la .next/
+      - name: Save build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-files
+          path: |
+            .next/
+            public/
+            package.json
+            yarn.lock
+            ecosystem.config.js
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: production-files
+          path: ./production-files
 
       - name: Copy production files to server via SSH
         uses: appleboy/scp-action@v0.1.7
@@ -29,12 +46,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: |
-            .next/
-            public/
-            package.json
-            yarn.lock
-            ecosystem.config.js
+          source: ./production-files/*
           target: /home/nardo/dd/production
 
       - name: SSH command to update and restart app
