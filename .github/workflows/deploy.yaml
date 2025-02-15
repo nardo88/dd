@@ -17,6 +17,11 @@ jobs:
           yarn install
           yarn build
 
+      - name: Debug files
+        run: |
+          ls -la
+          ls -la .next/
+
       - name: Copy production files to server via SSH
         uses: appleboy/scp-action@v0.1.7
         with:
