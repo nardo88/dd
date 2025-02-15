@@ -6,25 +6,6 @@ on:
       - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: 'yarn'
-
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
-
-      - name: Build project
-        run: yarn build
-
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -41,28 +22,9 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            # Создаём директорию, если её нет
-            mkdir -p /home/nardo/dd
-
-            # Останавливаем процесс, если он запущен
             pm2 stop dd || true
-
-            # Переходим в папку проекта
             cd /home/nardo/dd
-
-            # Очищаем старые файлы, если они есть
-            rm -rf .next node_modules package.json yarn.lock ecosystem.config.json
-
-            # Копируем файлы на сервер
-            scp $GITHUB_WORKSPACE/package.json nardo@${{ secrets.SERVER_IP }}:/home/nardo/dd/package.json
-            scp $GITHUB_WORKSPACE/yarn.lock nardo@${{ secrets.SERVER_IP }}:/home/nardo/dd/yarn.lock
-            scp $GITHUB_WORKSPACE/ecosystem.config.json nardo@${{ secrets.SERVER_IP }}:/home/nardo/dd/ecosystem.config.json
-
-            # Копируем папку .next с локальной машины на сервер
-            scp -r $GITHUB_WORKSPACE/.next nardo@${{ secrets.SERVER_IP }}:/home/nardo/dd/.next
-
-            # Устанавливаем зависимости
-            yarn install --frozen-lockfile
-
-            # Перезапускаем PM2
+            git pull
+            yarn install
+            yarn build
             pm2 restart ecosystem.config.json || pm2 start ecosystem.config.json
