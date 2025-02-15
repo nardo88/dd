@@ -19,9 +19,7 @@ export const CodeEditor: FC<CodeEditorProps> = (props) => {
         defaultLanguage="typescript"
         defaultValue={value}
         onChange={(value) => {
-          if (value) {
-            onChange(value)
-          }
+          if (value) onChange(value)
         }}
         theme="vs-dark"
       />
