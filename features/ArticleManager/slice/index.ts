@@ -15,7 +15,7 @@ const initialState: ArticleManagerState = {
 }
 
 const ArticleEditorSlice = createSlice({
-  name: 'articleManagerSlice',
+  name: 'ArticleEditorSliceya',
   initialState,
   reducers: {
     changeTitleFilter(state, action: PayloadAction<string>) {
@@ -45,12 +45,14 @@ const ArticleEditorSlice = createSlice({
         state.isLoading = true
         state.error = null
       })
-      .addCase(getArticleList.fulfilled, (state) => {
-        state.isLoading = false
-      })
       .addCase(getArticleList.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload as string
+      })
+      .addCase(getArticleList.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.articles = action.payload.list
+        state.total = action.payload.total
       })
       .addCase(remove.pending, (state) => {
         state.isLoading = true

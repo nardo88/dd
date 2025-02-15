@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IPreviewList, SidebarState } from '../types'
+import { preview } from '../async/preview'
 
 const initialState: SidebarState = {
   error: null,
@@ -10,7 +11,7 @@ const initialState: SidebarState = {
 }
 
 const SidebarSlice = createSlice({
-  name: 'catalogSlice',
+  name: 'sidebarSlice',
   initialState,
   reducers: {
     toggleSidebar(state, action: PayloadAction<boolean>) {
@@ -26,6 +27,19 @@ const SidebarSlice = createSlice({
         state.activeCategory = action.payload
       }
     },
+  },
+  extraReducers(builder) {
+    builder.addCase(preview.pending, (state) => {
+      state.error = null
+      state.isLoading = true
+    })
+    builder.addCase(preview.fulfilled, (state) => {
+      state.isLoading = false
+    })
+    builder.addCase(preview.rejected, (state, action) => {
+      state.isLoading = false
+      state.error = action.payload as string
+    })
   },
 })
 

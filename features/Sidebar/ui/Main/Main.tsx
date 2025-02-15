@@ -19,6 +19,13 @@ export const Sidebar: FC = () => {
   const toggleIsOpen = () => dispatch(sidebarAction.toggleSidebar(!isOpen))
 
   useEffect(() => {
+    store.reducerManager.add('sidebar', sidebarReducer)
+    return () => {
+      store.reducerManager.remove('sidebar')
+    }
+  }, [store])
+
+  useEffect(() => {
     const hideSidebar = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
         e.stopPropagation()
@@ -32,13 +39,6 @@ export const Sidebar: FC = () => {
       window.removeEventListener('click', hideSidebar)
     }
   }, [])
-
-  useEffect(() => {
-    store.reducerManager.add('sidebar', sidebarReducer)
-    return () => {
-      store.reducerManager.remove('sidebar')
-    }
-  }, [store])
 
   useEffect(() => {
     dispatch(preview())

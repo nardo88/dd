@@ -10,10 +10,6 @@ import { getArticleList } from '../../asyncThunk/getArticleList'
 import cls from './Main.module.scss'
 import { Loader } from '@shared/ui/Loader/Loader'
 
-interface MainProps {
-  className?: string
-}
-
 export const Main: FC = () => {
   const dispatch = useAppDispatch()
   const store = useStore() as ReduxStoreWithManager
@@ -21,6 +17,13 @@ export const Main: FC = () => {
   const page = useAppSelector(getCurrentPage)
   const category = useAppSelector(getCategoryFilter)
   const isLoading = useAppSelector(getIsLoading)
+
+  useEffect(() => {
+    store.reducerManager.add('articleManager', articleManagerReducer)
+    return () => {
+      store.reducerManager.remove('articleManager')
+    }
+  }, [store])
 
   useEffect(() => {
     dispatch(
@@ -31,13 +34,6 @@ export const Main: FC = () => {
       })
     )
   }, [page, category, title])
-
-  useEffect(() => {
-    store.reducerManager.add('articleManager', articleManagerReducer)
-    return () => {
-      store.reducerManager.remove('articleManager')
-    }
-  }, [store])
 
   return (
     <div className={cls.Main}>

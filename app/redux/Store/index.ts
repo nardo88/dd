@@ -13,6 +13,7 @@ const reducerManager = createReducerManager(rootReducer)
 const store = configureStore({
   reducer: reducerManager.reduce as Reducer<CombinedState<StateSchema>>,
   devTools: true,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 })
 
 // @ts-ignore
