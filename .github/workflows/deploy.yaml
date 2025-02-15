@@ -30,7 +30,6 @@ jobs:
         with:
           name: nextjs-build
           path: |
-            .next/
             package.json
             yarn.lock
             ecosystem.config.json
@@ -77,6 +76,9 @@ jobs:
 
             # Копируем файлы из артефакта в корень проекта
             cp -r $GITHUB_WORKSPACE/artifact/* /home/nardo/dd/
+
+            # Копируем папку .next с локальной машины
+            scp -r $GITHUB_WORKSPACE/.next nardo@${{ secrets.SERVER_IP }}:/home/nardo/dd/.next
 
             # Устанавливаем зависимости
             yarn install --frozen-lockfile
