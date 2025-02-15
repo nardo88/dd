@@ -58,10 +58,23 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            # Создаём директорию, если её нет
             mkdir -p /home/nardo/dd
+
+            # Останавливаем процесс, если он запущен
             pm2 stop dd || true
+
+            # Переходим в папку проекта
             cd /home/nardo/dd
+
+            # Очищаем старые файлы, если они есть
             rm -rf .next node_modules package.json yarn.lock ecosystem.config.json
-            rsync -avz --delete $GITHUB_WORKSPACE/artifact/ /home/nardo/dd/
+
+            # Копируем файлы из артефакта в корень проекта
+            cp -r $GITHUB_WORKSPACE/artifact/* /home/nardo/dd/
+
+            # Устанавливаем зависимости
             yarn install --frozen-lockfile
+
+            # Перезапускаем PM2
             pm2 restart ecosystem.config.json || pm2 start ecosystem.config.json
