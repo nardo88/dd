@@ -1,4 +1,4 @@
-name: Deploy to VPC
+name: Deploy to VPS
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
           yarn build
 
       - name: Copy production files to server via SSH
-        uses: appleboy/scp-action@v1
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SSH_USERNAME }}
@@ -33,7 +33,7 @@ jobs:
           target: /home/nardo/dd/production
 
       - name: SSH command to update and restart app
-        uses: appleboy/ssh-action@v1
+        uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SSH_USERNAME }}
