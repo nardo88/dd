@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4 # Обновленный checkout action
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4 # Обновленный setup-node
         with:
           node-version: 18
           cache: 'yarn'
@@ -25,7 +25,7 @@ jobs:
         run: yarn build
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4 # Обновленный upload-artifact
         with:
           name: nextjs-build
           path: |
@@ -33,13 +33,14 @@ jobs:
             package.json
             yarn.lock
             ecosystem.config.json
+          compression-level: 0 # Ускоряет загрузку/выгрузку артефактов
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
     steps:
       - name: Download artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4 # Обновленный download-artifact
         with:
           name: nextjs-build
           path: nextjs-build
