@@ -3,16 +3,17 @@ name: Deploy Next.js App
 on:
   push:
     branches:
-      - main # Укажите нужную ветку для деплоя
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
@@ -21,31 +22,31 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Build Next.js app
+      - name: Build project
         run: yarn build
 
-      - name: Upload build artifacts
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: nextjs-build
-          path: |
-            .next
-            package.json
-            yarn.lock
-            ecosystem.config.json
-          compression-level: 0
+          path: .next
+          retention-days: 1
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
+
     steps:
-      - name: Download artifacts
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: nextjs-build
-          path: nextjs-build
+          path: .next
 
-      - name: Ensure deployment directory exists
+      - name: Deploy to Server
         uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.SERVER_IP }}
@@ -54,27 +55,10 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             mkdir -p /home/nardo/dd
-
-      - name: Deploy files to server
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SSH_USERNAME }}
-          port: ${{ secrets.SSH_PORT }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: 'nextjs-build/*'
-          target: '/home/nardo/dd'
-          strip_components: 1 # Убирает промежуточную папку nextjs-build
-
-      - name: Install dependencies and restart application
-        uses: appleboy/ssh-action@v0.1.7
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SSH_USERNAME }}
-          port: ${{ secrets.SSH_PORT }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
+            pm2 stop dd || true
             cd /home/nardo/dd
-            ls -la  # Проверяем, что файлы реально скопировались
+            rm -rf .next node_modules
+            rsync -avz --delete --exclude='.git' --exclude='.github' $GITHUB_WORKSPACE/ /home/nardo/dd/
+            rsync -avz --delete $GITHUB_WORKSPACE/.next /home/nardo/dd/
             yarn install --frozen-lockfile
             pm2 restart ecosystem.config.json || pm2 start ecosystem.config.json
