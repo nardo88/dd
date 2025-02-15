@@ -1,62 +1,67 @@
-name: Deploy to VPS
+name: Deploy Next.js App
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main # Укажите нужную ветку для деплоя
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-      - name: Install dependencies and build
-        run: |
-          yarn install
-          yarn build
-
-      - name: Save build artifacts
-        uses: actions/upload-artifact@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          name: production-files
+          node-version: 18
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build Next.js app
+        run: yarn build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: nextjs-build
           path: |
-            .next/
-            public/
+            .next
             package.json
             yarn.lock
-            ecosystem.config.js
+            ecosystem.config.json
 
   deploy:
     runs-on: ubuntu-latest
     needs: build
-
     steps:
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
         with:
-          name: production-files
-          path: ./production-files
+          name: nextjs-build
+          path: nextjs-build
 
-      - name: Copy production files to server via SSH
+      - name: Deploy to server via SSH
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SSH_USERNAME }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: ./production-files/*
-          target: /home/nardo/dd/production
+          source: 'nextjs-build/*'
+          target: '/home/nardo/dd'
 
-      - name: SSH command to update and restart app
-        uses: appleboy/ssh-action@v1.2.0
+      - name: Install dependencies and restart application
+        uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.SERVER_IP }}
           username: ${{ secrets.SSH_USERNAME }}
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /home/nardo/dd/production
-            yarn install --production
-            pm2 restart ecosystem.config.js --env production || pm2 start ecosystem.config.js --env production
+            cd /home/nardo/dd
+            yarn install --frozen-lockfile
+            pm2 restart ecosystem.config.json || pm2 start ecosystem.config.json

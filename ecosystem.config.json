@@ -3,7 +3,7 @@
   "script": "node_modules/.bin/next start -p 3000",
   "instances": "1",
   "autorestart": true,
-  "cwd": "/home/nardo/dd/production",
+  "cwd": "/home/nardo/dd",
   "watch": false,
   "max_memory_restart": "1G",
   "ODE_ENV": "production"
