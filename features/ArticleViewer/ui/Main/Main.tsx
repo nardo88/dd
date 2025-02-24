@@ -7,8 +7,9 @@ import { ReduxStoreWithManager } from '@app/redux'
 import { articleReducer } from '../../modules/slice'
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
 import { getArticle } from '../../modules/asyncThunk'
-import { getArticleBody } from '../../modules/selectors'
+import { getArticleBody, getIsLoading } from '../../modules/selectors'
 import { BodyOutput } from '@shared/ui/Body'
+import { Loader } from '@shared/ui/Loader/Loader'
 
 export const Main: FC = () => {
   const store = useStore() as ReduxStoreWithManager
@@ -17,6 +18,7 @@ export const Main: FC = () => {
   const { id } = query
 
   const article = useAppSelector(getArticleBody)
+  const isLoading = useAppSelector(getIsLoading)
 
   useEffect(() => {
     if (id) {
@@ -35,7 +37,8 @@ export const Main: FC = () => {
     <div className={cls.Main}>
       <Sidebar />
       <div className={cls.content}>
-        <BodyOutput body={article} />
+        {isLoading && <Loader className={cls.loader} />}
+        {!isLoading && <BodyOutput body={article} />}
       </div>
     </div>
   )
