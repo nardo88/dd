@@ -1,7 +1,11 @@
 .img {
   max-width: 860px;
-  width: 100%;
+
   border-radius: 4px;
   border: 1px solid var(--color-secondary);
   object-fit: contain;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 }

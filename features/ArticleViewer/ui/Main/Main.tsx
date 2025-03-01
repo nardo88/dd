@@ -10,6 +10,8 @@ import { getArticle } from '../../modules/asyncThunk'
 import { getArticleBody, getIsLoading } from '../../modules/selectors'
 import { BodyOutput } from '@shared/ui/Body'
 import { Loader } from '@shared/ui/Loader/Loader'
+import { getSessionData } from '@entities/User'
+import Link from 'next/link'
 
 export const Main: FC = () => {
   const store = useStore() as ReduxStoreWithManager
@@ -19,6 +21,7 @@ export const Main: FC = () => {
 
   const article = useAppSelector(getArticleBody)
   const isLoading = useAppSelector(getIsLoading)
+  const { userData } = useAppSelector(getSessionData)
 
   useEffect(() => {
     if (id) {
@@ -37,6 +40,11 @@ export const Main: FC = () => {
     <div className={cls.Main}>
       <Sidebar />
       <div className={cls.content}>
+        {userData?.roles.includes('admin') && (
+          <Link className={cls.edit} href={`/editor/${id}`}>
+            Редактировать
+          </Link>
+        )}
         {isLoading && <Loader className={cls.loader} />}
         {!isLoading && <BodyOutput body={article} />}
       </div>

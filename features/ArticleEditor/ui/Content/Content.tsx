@@ -34,9 +34,16 @@ export const Content: FC<{ id?: string }> = ({ id }) => {
     }
   }
 
+  const preview = () => {
+    window.open(`/article/${id}`)
+  }
+
   return (
     <div className={cls.Content}>
       <div className={cls.top}>
+        <Button className={cls.saveBtn} onClick={preview}>
+          Предпросмотр
+        </Button>
         <Button className={cls.saveBtn} onClick={save}>
           Сохранить
         </Button>

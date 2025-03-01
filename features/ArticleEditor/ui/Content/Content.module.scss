@@ -1,8 +1,9 @@
-.saveBtn {
-  margin-left: auto;
-  display: block;
-}
-
 .body {
   margin-top: 20px;
+}
+
+.top {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
 }
