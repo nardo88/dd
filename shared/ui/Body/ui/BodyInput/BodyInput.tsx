@@ -4,16 +4,10 @@ import { classNames } from '@shared/helpers/classNames'
 import { BodyItemType, IBody } from '../../types'
 import { Plus } from '@shared/ui/Icons/Plus'
 import { Button, ButtonVariant } from '@shared/ui/Button/Button'
-import { bodyVariantsTitle, variants } from '../../const'
+import { variants } from '../../const'
 import { createId } from '@shared/helpers/createId/createId'
-import { MediumEditor } from '@shared/ui/MediumEditor'
-import { Text, TextVariant } from '@shared/ui/Text/Text'
-import { Remove } from '@shared/ui/Icons/Remove'
-import { InputFile } from '@shared/ui/InputFile/InputFile'
-import { MarkDownEditor } from '@shared/ui/MarkDownEditor'
-import { CodeEditor } from '@shared/ui/CodeEditor/CodeEditor'
-import { Input } from '@shared/ui/Input'
 import { Reorder } from '@shared/ui/Reorder'
+import { BodyInputItem } from '../BodyInputItem/BodyInputItem'
 
 interface BodyInputProps {
   className?: string
@@ -23,6 +17,7 @@ interface BodyInputProps {
 
 export const BodyInput: FC<BodyInputProps> = (props) => {
   const { className, body, onChange } = props
+  console.log('body: ', body)
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [down, setDown] = useState<boolean>(false)
   const ref = useRef<HTMLDivElement | null>(null)
@@ -39,16 +34,12 @@ export const BodyInput: FC<BodyInputProps> = (props) => {
     }
   }
 
-  const removeItem = (id: string) => {
-    onChange(body.filter((i) => i._id !== id))
-  }
-
-  const changeValue = (id: string, value: string) => {
-    onChange(body.map((i) => (i._id === id ? { ...i, value } : i)))
-  }
-
   useEffect(() => {
     window.addEventListener('click', hideList)
+
+    return () => {
+      window.removeEventListener('click', hideList)
+    }
   }, [])
 
   useEffect(() => {
@@ -69,46 +60,11 @@ export const BodyInput: FC<BodyInputProps> = (props) => {
           {body.map((item, index) => (
             <Reorder.Element
               key={item._id}
-              className={cls.bodyItem}
               keyField="_id"
               index={index}
               data={body}
               setData={onChange}>
-              <div className={cls.topContent}>
-                <Text variant={TextVariant.HELPER}>{bodyVariantsTitle[item.type]}</Text>
-                <Button variant={ButtonVariant.ICON} onClick={() => removeItem(item._id)}>
-                  <Remove />
-                </Button>
-              </div>
-              <div onPointerDown={(e) => e.stopPropagation()}>
-                {item.type === 'text' && (
-                  <MediumEditor
-                    value={item.value}
-                    onChange={(value) => changeValue(item._id, value)}
-                  />
-                )}
-
-                {['image', 'file', 'video'].includes(item.type) && (
-                  <InputFile
-                    url={item.value}
-                    type={item.type}
-                    onChange={(v) => changeValue(item._id, v)}
-                    remove={() => changeValue(item._id, '')}
-                  />
-                )}
-
-                {item.type === 'markdown' && (
-                  <MarkDownEditor value={item.value} onChange={(v) => changeValue(item._id, v)} />
-                )}
-
-                {item.type === 'code' && (
-                  <CodeEditor value={item.value} onChange={(v) => changeValue(item._id, v)} />
-                )}
-
-                {item.type === 'frame' && (
-                  <Input value={item.value} onChange={(v) => changeValue(item._id, v)} />
-                )}
-              </div>
+              <BodyInputItem body={body} onChange={onChange} {...item} index={index} />
             </Reorder.Element>
           ))}
         </Reorder.Container>
