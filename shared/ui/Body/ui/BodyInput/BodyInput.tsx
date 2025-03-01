@@ -17,7 +17,6 @@ interface BodyInputProps {
 
 export const BodyInput: FC<BodyInputProps> = (props) => {
   const { className, body, onChange } = props
-  console.log('body: ', body)
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [down, setDown] = useState<boolean>(false)
   const ref = useRef<HTMLDivElement | null>(null)
