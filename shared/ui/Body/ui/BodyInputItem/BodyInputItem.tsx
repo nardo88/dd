@@ -1,7 +1,7 @@
 import { Text, TextVariant } from '@shared/ui/Text/Text'
 import cls from './BodyInputItem.module.scss'
 import { BodyItemType, IBody } from '../../types'
-import { FC, useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { bodyVariantsTitle, variants } from '../../const'
 import { Button, ButtonVariant } from '@shared/ui/Button/Button'
 import { Plus } from '@shared/ui/Icons/Plus'
@@ -15,12 +15,13 @@ import { CodeEditor } from '@shared/ui/CodeEditor/CodeEditor'
 import { Input } from '@shared/ui/Input'
 
 interface IBodyInputItemProps extends IBody {
+  index: number
   body: IBody[]
   onChange: (body: IBody[]) => void
 }
 
 export const BodyInputItem: FC<IBodyInputItemProps> = (props) => {
-  const { body, onChange, _id, type, value } = props
+  const { body, onChange, _id, type, value, index } = props
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [down, setDown] = useState<boolean>(false)
 
@@ -36,34 +37,65 @@ export const BodyInputItem: FC<IBodyInputItemProps> = (props) => {
   }
 
   const addItem = (type: BodyItemType) => {
-    onChange([...body, { _id: createId(), type, value: '' }])
+    const newBody = [...body]
+    newBody.splice(index + 1, 0, { _id: createId(), type, value: '' })
+    onChange(newBody)
     setIsOpen(false)
   }
+
+  const hideList = (e: MouseEvent) => {
+    if (ref.current && !ref.current.contains(e.target as Node)) {
+      setIsOpen(false)
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('click', hideList)
+    window.addEventListener('pointerdown', hideList)
+
+    return () => {
+      window.removeEventListener('click', hideList)
+      window.removeEventListener('pointerdown', hideList)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (listRef.current && ref.current) {
+      setDown(
+        window.innerHeight <
+          Number(
+            Math.floor(ref.current?.getBoundingClientRect()?.top) + listRef.current?.offsetHeight
+          )
+      )
+    }
+  }, [isOpen])
 
   return (
     <div className={cls.bodyItem}>
       <div className={cls.topContent}>
         <Text variant={TextVariant.HELPER}>{bodyVariantsTitle[type]}</Text>
-        <div className={cls.topBtnWrapper}>
-          <div className={cls.addBetween} ref={ref}>
-            <Button variant={ButtonVariant.ICON} onClick={() => setIsOpen((p) => !p)}>
-              <Plus />
-            </Button>
-            <div
-              ref={listRef}
-              className={classNames(cls.variants, { [cls.isOpen]: isOpen })}
-              style={{
-                transform: `translateY(${down ? '-125%' : '0'})`,
-              }}>
-              <ul className={cls.variantList}>
-                {variants.map((item) => (
-                  <li key={item.id} className={cls.variantItem} onClick={() => addItem(item.id)}>
-                    {item.title}
-                  </li>
-                ))}
-              </ul>
+        <div className={cls.topBtnWrapper} onPointerDown={(e) => e.stopPropagation()}>
+          {index !== body.length - 1 && (
+            <div className={cls.addBetween} ref={ref}>
+              <Button variant={ButtonVariant.ICON} onClick={() => setIsOpen((p) => !p)}>
+                <Plus />
+              </Button>
+              <div
+                ref={listRef}
+                className={classNames(cls.variants, { [cls.isOpen]: isOpen })}
+                style={{
+                  transform: `translateY(${down ? '-125%' : '0'})`,
+                }}>
+                <ul className={cls.variantList}>
+                  {variants.map((item) => (
+                    <li key={item.id} className={cls.variantItem} onClick={() => addItem(item.id)}>
+                      {item.title}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-          </div>
+          )}
           <Button variant={ButtonVariant.ICON} onClick={() => removeItem(_id)}>
             <Remove />
           </Button>

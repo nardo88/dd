@@ -17,6 +17,7 @@ interface BodyInputProps {
 
 export const BodyInput: FC<BodyInputProps> = (props) => {
   const { className, body, onChange } = props
+  console.log('body: ', body)
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [down, setDown] = useState<boolean>(false)
   const ref = useRef<HTMLDivElement | null>(null)
@@ -63,7 +64,7 @@ export const BodyInput: FC<BodyInputProps> = (props) => {
               index={index}
               data={body}
               setData={onChange}>
-              <BodyInputItem body={body} onChange={onChange} {...item} />
+              <BodyInputItem body={body} onChange={onChange} {...item} index={index} />
             </Reorder.Element>
           ))}
         </Reorder.Container>
