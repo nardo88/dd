@@ -16,3 +16,5 @@ export const getBody = (state: StateSchema) => state.articleEditor?.article.body
 export const getValidate = (state: StateSchema) => state.articleEditor?.validate || null
 
 export const getIsLoading = (state: StateSchema) => state.articleEditor?.isLoading || false
+
+export const getOrder = (state: StateSchema) => state.articleEditor?.article?.order || ''

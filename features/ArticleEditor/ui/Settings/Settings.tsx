@@ -2,14 +2,9 @@ import { FC } from 'react'
 import cls from './Settings.module.scss'
 import { OptionType, Select } from '@shared/ui/Select/Select'
 import { categories } from '@shared/consts/categories'
-import { Input } from '@shared/ui/Input'
+import { Input, InputTypes } from '@shared/ui/Input'
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
-import {
-  getCategory,
-  getDescription,
-  getImage,
-  getTitle,
-} from '../../modules/selectors'
+import { getCategory, getDescription, getImage, getOrder, getTitle } from '../../modules/selectors'
 import { articleEditorAction } from '../../modules/slice'
 import { InputFile } from '@shared/ui/InputFile/InputFile'
 
@@ -22,6 +17,7 @@ export const Settings: FC<SettingsProps> = () => {
   const title = useAppSelector(getTitle)
   const description = useAppSelector(getDescription)
   const image = useAppSelector(getImage)
+  const order = useAppSelector(getOrder)
   const dispatch = useAppDispatch()
 
   const changeCategory = (v: OptionType) => {
@@ -39,6 +35,10 @@ export const Settings: FC<SettingsProps> = () => {
   const changeImage = (v: string) => {
     dispatch(articleEditorAction.setImage(v))
   }
+  const changeOrder = (v: string) => {
+    if (Number(v) <= 0) return
+    dispatch(articleEditorAction.setOrder(v))
+  }
 
   return (
     <div className={cls.Settings}>
@@ -49,10 +49,12 @@ export const Settings: FC<SettingsProps> = () => {
         onChange={changeCategory}
       />
       <Input value={title} label="Заголовок" onChange={changeTitle} />
+      <Input value={description} label="Краткое описание" onChange={changeDescription} />
       <Input
-        value={description}
-        label="Краткое описание"
-        onChange={changeDescription}
+        value={order}
+        type={InputTypes.NUMBER}
+        label="Порядковый номер"
+        onChange={changeOrder}
       />
       <InputFile
         label="Обложка"

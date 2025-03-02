@@ -8,6 +8,7 @@ export interface IArticle {
   description: string
   image: string
   body: IBody[]
+  order: number
   createdAt: number
   updatedAt: number
 }

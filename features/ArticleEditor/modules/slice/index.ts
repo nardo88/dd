@@ -13,6 +13,7 @@ const initialState: ArticleEditorState = {
     description: '',
     image: null,
     title: '',
+    order: '',
   },
   validate: null,
   error: null,
@@ -45,6 +46,9 @@ const ArticleEditorSlice = createSlice({
     },
     setValidate(state, action: PayloadAction<IValidateErrors | null>) {
       state.validate = action.payload
+    },
+    setOrder(state, action: PayloadAction<string>) {
+      state.article.order = action.payload
     },
   },
   extraReducers(builder) {

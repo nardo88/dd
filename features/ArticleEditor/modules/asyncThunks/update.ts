@@ -25,7 +25,8 @@ export const update = createAsyncThunk<void, IOptions, IThunkAPI>(
         title: articleEditor?.article.title,
         body: articleEditor?.article.body,
         description: articleEditor?.article.description,
-        image: articleEditor?.article.image,
+        image: articleEditor?.article?.image,
+        order: articleEditor?.article?.order ? Number(articleEditor.article.order) : null,
       })
 
       addNotification({ message: 'Статья успешно сохранена', type: 'success', delay: 3000 })

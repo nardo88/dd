@@ -6,10 +6,11 @@ export type TabVariant = 'settings' | 'content'
 export interface IArticleData
   extends Omit<
     IArticle,
-    'category' | 'image' | '_id' | 'createdAt' | 'updatedAt' | 'userId'
+    'category' | 'image' | '_id' | 'createdAt' | 'updatedAt' | 'userId' | 'order'
   > {
   category: null | string
   image: null | string
+  order?: string
 }
 
 export interface ArticleEditorState {
