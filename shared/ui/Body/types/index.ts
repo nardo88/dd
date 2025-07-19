@@ -6,6 +6,7 @@ export type BodyItemType =
   | 'file'
   | 'frame'
   | 'code'
+  | 'terminal'
 
 export interface IBody {
   _id: string

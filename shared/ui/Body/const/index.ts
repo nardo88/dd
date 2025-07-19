@@ -8,6 +8,7 @@ export const bodyVariantsTitle: Record<BodyItemType, string> = {
   file: 'Файл',
   frame: 'Фрейм',
   code: 'Код',
+  terminal: 'Терминал',
 }
 
 export const variants: Array<{ id: BodyItemType; title: string }> = [
@@ -18,4 +19,5 @@ export const variants: Array<{ id: BodyItemType; title: string }> = [
   { id: 'file', title: 'Файл' },
   { id: 'frame', title: 'Фрейм' },
   { id: 'code', title: 'Код' },
+  { id: 'terminal', title: 'Терминал' },
 ]

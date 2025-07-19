@@ -119,7 +119,9 @@ export const BodyInputItem: FC<IBodyInputItemProps> = (props) => {
 
         {type === 'code' && <CodeEditor value={value} onChange={(v) => changeValue(_id, v)} />}
 
-        {type === 'frame' && <Input value={value} onChange={(v) => changeValue(_id, v)} />}
+        {['frame', 'terminal'].includes(type) && (
+          <Input value={value} onChange={(v) => changeValue(_id, v)} />
+        )}
       </div>
     </div>
   )
