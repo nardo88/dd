@@ -22,6 +22,11 @@ const Portal: React.FC<PortalProps> = (props) => {
     if (container?.lastElementChild) {
       const lastElementChild = container.lastElementChild as HTMLElement
       lastElementChild.style.zIndex = String(portalAmount)
+    } else {
+      setTimeout(() => {
+        const c = document.getElementById('portal-root')?.lastElementChild as HTMLElement
+        c.style.zIndex = String(portalAmount)
+      })
     }
     return (): void => {
       if (isFixedBody) {
