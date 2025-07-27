@@ -1,7 +1,7 @@
 import { Text, TextVariant } from '@shared/ui/Text/Text'
 import cls from './BodyInputItem.module.scss'
-import { BodyItemType, IBody } from '../../types'
-import { FC, useEffect, useRef, useState } from 'react'
+import { BodyItemType, IBody, IBodySetting } from '../../types'
+import { FC, useCallback, useEffect, useRef, useState } from 'react'
 import { bodyVariantsTitle, variants } from '../../const'
 import { Button, ButtonVariant } from '@shared/ui/Button/Button'
 import { Plus } from '@shared/ui/Icons/Plus'
@@ -13,6 +13,8 @@ import { InputFile } from '@shared/ui/InputFile/InputFile'
 import { MarkDownEditor } from '@shared/ui/MarkDownEditor'
 import { CodeEditor } from '@shared/ui/CodeEditor/CodeEditor'
 import { Input } from '@shared/ui/Input'
+import { Setting } from '../Setting/Setting'
+import { SettingIcon } from '@shared/ui/Icons/SettingIcon'
 
 interface IBodyInputItemProps extends IBody {
   index: number
@@ -21,8 +23,9 @@ interface IBodyInputItemProps extends IBody {
 }
 
 export const BodyInputItem: FC<IBodyInputItemProps> = (props) => {
-  const { body, onChange, _id, type, value, index } = props
+  const { body, onChange, _id, type, value, index, settings } = props
   const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [isPopupOpen, setIsPopupOpen] = useState(false)
   const [down, setDown] = useState<boolean>(false)
 
   const ref = useRef<HTMLDivElement | null>(null)
@@ -48,6 +51,16 @@ export const BodyInputItem: FC<IBodyInputItemProps> = (props) => {
       setIsOpen(false)
     }
   }
+
+  const changeSetting = (field: keyof IBodySetting, value: string | boolean) => {
+    onChange(
+      body.map((i) =>
+        i._id === _id ? { ...i, settings: { ...(i.settings || {}), [field]: value } } : i
+      )
+    )
+  }
+
+  const closePopup = useCallback(() => setIsPopupOpen(false), [])
 
   useEffect(() => {
     window.addEventListener('click', hideList)
@@ -96,6 +109,11 @@ export const BodyInputItem: FC<IBodyInputItemProps> = (props) => {
               </div>
             </div>
           )}
+          {['code'].includes(type) && (
+            <Button variant={ButtonVariant.ICON} onClick={() => setIsPopupOpen(true)}>
+              <SettingIcon />
+            </Button>
+          )}
           <Button variant={ButtonVariant.ICON} onClick={() => removeItem(_id)}>
             <Remove />
           </Button>
@@ -117,11 +135,18 @@ export const BodyInputItem: FC<IBodyInputItemProps> = (props) => {
           <MarkDownEditor value={value} onChange={(v) => changeValue(_id, v)} />
         )}
 
-        {type === 'code' && <CodeEditor value={value} onChange={(v) => changeValue(_id, v)} />}
+        {type === 'code' && (
+          <CodeEditor
+            language={settings?.language || 'typescript'}
+            value={value}
+            onChange={(v) => changeValue(_id, v)}
+          />
+        )}
 
         {['frame', 'terminal'].includes(type) && (
           <Input value={value} onChange={(v) => changeValue(_id, v)} />
         )}
+        {isPopupOpen && <Setting settings={settings} onChange={changeSetting} close={closePopup} />}
       </div>
     </div>
   )

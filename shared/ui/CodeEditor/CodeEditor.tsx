@@ -7,21 +7,32 @@ interface CodeEditorProps {
   className?: string
   value: string
   onChange: (value: string) => void
+  language?: LanguagesType
 }
 
+export type LanguagesType = 'python' | 'php' | 'typescript' | 'javascript'
+
 export const CodeEditor: FC<CodeEditorProps> = (props) => {
-  const { className, onChange, value } = props
+  const { className, onChange, value, language = 'typescript' } = props
 
   return (
-    <div className={classNames(cls.CodeEditor, {}, [className])}>
+    <div className={classNames(cls.codeEditor, {}, [className])}>
       <Editor
-        height="500px"
-        defaultLanguage="typescript"
-        defaultValue={value}
-        onChange={(value) => {
-          if (value) onChange(value)
-        }}
+        key={language}
+        defaultLanguage={language}
+        language={language}
+        value={value}
+        onChange={(value) => onChange(value || '')}
         theme="vs-dark"
+        options={{
+          fontFamily: 'JetBrains Mono',
+          fontSize: 14,
+          lineHeight: 24,
+          minimap: { enabled: true },
+          scrollBeyondLastLine: false,
+          renderWhitespace: 'none',
+          automaticLayout: true,
+        }}
       />
     </div>
   )

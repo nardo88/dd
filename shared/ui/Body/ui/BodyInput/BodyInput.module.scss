@@ -35,8 +35,9 @@
 }
 
 .content {
-  display: grid;
-  gap: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .itemTitle {

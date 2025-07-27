@@ -1,0 +1,10 @@
+.setting {
+  & > div > div {
+    overflow: visible;
+  }
+}
+
+.content {
+  display: grid;
+  gap: 16px;
+}

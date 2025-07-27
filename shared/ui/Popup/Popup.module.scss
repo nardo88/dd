@@ -1,0 +1,130 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.fadeIn {
+  animation: fadeIn 0.3s forwards;
+
+  & > div {
+    animation: fadeInBlock 0.3s forwards;
+  }
+}
+
+.popup {
+  position: relative;
+  width: 70%;
+  max-width: 704px;
+  padding: 40px 0;
+  cursor: default;
+  background: var(--color-white);
+  border-radius: 4px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    height: 100vh;
+    max-height: inherit;
+    padding: 20px 0;
+    overflow: auto;
+  }
+}
+
+.content {
+  height: max-content;
+  max-height: 80vh;
+  padding: 0 40px;
+  margin-top: 12px;
+  overflow: hidden auto;
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar {
+    width: 3px;
+    height: 8px;
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-secondary);
+    border-radius: 10px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 20px;
+  }
+}
+
+.popupHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+
+  @media (max-width: 768px) {
+    padding: 0 20px;
+  }
+}
+
+.closeBtn {
+  margin-left: auto;
+  cursor: pointer;
+
+  & > path {
+    stroke: var(--color-primary);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeInBlock {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOutBlock {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+
+.hidePopup {
+  animation: fadeOut 0.3s forwards;
+
+  & > div {
+    animation: fadeOutBlock 0.3s forwards;
+  }
+}

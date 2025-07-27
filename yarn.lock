@@ -547,6 +547,11 @@
   resolved "https://registry.yarnpkg.com/@firebase/webchannel-wrapper/-/webchannel-wrapper-1.0.1.tgz#0b62c9f47f557a5b4adc073bb0a47542ce6af4c4"
   integrity sha512-jmEnr/pk0yVkA7mIlHNnxCi+wWzOFUg0WyIotgkKAb2u1J7fAeDBcVNSTjTihbAYNusCLQdW5s9IJ5qwnEufcQ==
 
+"@fontsource/jetbrains-mono@^5.2.6":
+  version "5.2.6"
+  resolved "https://registry.yarnpkg.com/@fontsource/jetbrains-mono/-/jetbrains-mono-5.2.6.tgz#1a78f8ef6fa206f619298cbefd769ab4ef1279f4"
+  integrity sha512-nz//dBr99hXZmHp10wgNI00qThWImkzRR5PQjvRM+rpmuHO5rYBJCqPPWufidCvmkkryXx/GOP/lgqsM3R3Org==
+
 "@grpc/grpc-js@~1.9.0":
   version "1.9.15"
   resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.9.15.tgz#433d7ac19b1754af690ea650ab72190bd700739b"
@@ -5613,6 +5618,16 @@ xtend@^4.0.0, xtend@~4.0.1:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.2.tgz#bb72779f5fa465186b1f438f674fa347fdb5db54"
   integrity sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==
+
+xterm-addon-fit@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/xterm-addon-fit/-/xterm-addon-fit-0.8.0.tgz#48ca99015385141918f955ca7819e85f3691d35f"
+  integrity sha512-yj3Np7XlvxxhYF/EJ7p3KHaMt6OdwQ+HDu573Vx1lRXsVxOcnVJs51RgjZOouIZOczTsskaS+CpXspK81/DLqw==
+
+xterm@^5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/xterm/-/xterm-5.3.0.tgz#867daf9cc826f3d45b5377320aabd996cb0fce46"
+  integrity sha512-8QqjlekLUFTrU6x7xck1MsPzPA571K5zNqWm0M0oroYEWVOptZ0+ubQSkQ3uxIEhcIHRujJy6emDWX4A7qyFzg==
 
 y18n@^5.0.5:
   version "5.0.8"
