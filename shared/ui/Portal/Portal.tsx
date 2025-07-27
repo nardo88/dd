@@ -1,9 +1,9 @@
-import React, { useLayoutEffect, useState } from 'react'
+import React, { ReactNode, useLayoutEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 type PortalProps = {
   appendTo?: HTMLElement
-  children: React.ReactElement
+  children: ReactNode
   isFixedBody?: boolean
 }
 
@@ -47,7 +47,7 @@ const Portal: React.FC<PortalProps> = (props) => {
 
   if (!container) return null
 
-  return createPortal(children, container as HTMLElement)
+  return createPortal(children as any, container as HTMLElement)
 }
 
 export default Portal
