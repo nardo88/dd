@@ -1,10 +1,10 @@
 import { FC } from 'react'
 import cls from './Setting.module.scss'
 import { Popup } from '@shared/ui/Popup/Popup'
-import { IBodySetting } from '../../types'
 import { Select } from '@shared/ui/Select/Select'
-import { LanguagesType } from '@shared/ui/CodeEditor/CodeEditor'
 import { Checkbox } from '@shared/ui/Checkbox/Checkbox'
+import { LanguageVariants } from '@shared/types/body'
+import { IBodySetting } from '../../types'
 
 interface ISettingProps {
   close: () => void
@@ -12,7 +12,7 @@ interface ISettingProps {
   onChange: (field: keyof IBodySetting, value: string | boolean) => void
 }
 
-const options: Array<{ id: LanguagesType; title: string }> = [
+const options: Array<{ id: LanguageVariants; title: string }> = [
   { id: 'javascript', title: 'JavaScript' },
   { id: 'typescript', title: 'TypeScript' },
   { id: 'python', title: 'Python' },

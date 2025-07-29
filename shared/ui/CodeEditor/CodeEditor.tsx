@@ -2,15 +2,14 @@ import { FC } from 'react'
 import cls from './CodeEditor.module.scss'
 import { classNames } from '@shared/helpers/classNames'
 import { Editor } from '@monaco-editor/react'
+import { LanguageVariants } from '@shared/types/body'
 
 interface CodeEditorProps {
   className?: string
   value: string
   onChange: (value: string) => void
-  language?: LanguagesType
+  language?: LanguageVariants
 }
-
-export type LanguagesType = 'python' | 'php' | 'typescript' | 'javascript'
 
 export const CodeEditor: FC<CodeEditorProps> = (props) => {
   const { className, onChange, value, language = 'typescript' } = props
@@ -29,7 +28,7 @@ export const CodeEditor: FC<CodeEditorProps> = (props) => {
           fontSize: 14,
           lineHeight: 24,
           minimap: { enabled: true },
-          scrollBeyondLastLine: false,
+          scrollBeyondLastLine: true,
           renderWhitespace: 'none',
           automaticLayout: true,
         }}

@@ -1,4 +1,4 @@
-import { LanguagesType } from '@shared/ui/CodeEditor/CodeEditor'
+import { LanguageVariants } from '@shared/types/body'
 
 export type BodyItemType =
   | 'markdown'
@@ -11,7 +11,7 @@ export type BodyItemType =
   | 'terminal'
 
 export interface IBodySetting {
-  language?: LanguagesType
+  language?: LanguageVariants
   needTerminal?: boolean
   canEdit?: boolean
 }

@@ -1,5 +1,9 @@
 .code {
   position: relative;
+
+  * {
+    font-family: 'JetBrains Mono', monospace !important;
+  }
 }
 
 .copyBtn {

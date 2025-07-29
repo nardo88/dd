@@ -22,7 +22,7 @@ export const BodyOutput: FC<BodyOutputProps> = (props) => {
         <div key={item._id}>
           {item.type === 'text' && <MediumText value={item.value} />}
           {item.type === 'image' && <Image src={item.value} />}
-          {['code', 'terminal'].includes(item.type) && <Code value={item.value} />}
+          {['code', 'terminal'].includes(item.type) && <Code {...item} />}
           {item.type === 'video' && <Video src={item.value} />}
           {item.type === 'frame' && <IFrame src={item.value} />}
           {item.type === 'markdown' && <MarkdownViewer value={item.value} />}

@@ -38,3 +38,8 @@ ul {
     color: var(--color-secondary);
   }
 }
+
+.xterm .xterm-viewport {
+  overflow-y: auto !important;
+  scrollbar-gutter: stable;
+}
