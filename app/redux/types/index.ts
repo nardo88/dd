@@ -15,6 +15,7 @@ import { ArticleManagerState } from '@features/ArticleManager'
 import { SidebarState } from '@features/Sidebar'
 import { ArticleState } from '@features/ArticleViewer'
 import { NotificationSchema } from '@entities/Notifications'
+import { SandboxState } from '@entities/Sandbox'
 
 // тип store
 export type RootState = ReturnType<typeof store.getState>
@@ -35,6 +36,7 @@ export interface StateSchema {
   articleManager?: ArticleManagerState
   sidebar?: SidebarState
   article?: ArticleState
+  sandbox?: SandboxState
 }
 
 export type StateSchemaKey = keyof StateSchema

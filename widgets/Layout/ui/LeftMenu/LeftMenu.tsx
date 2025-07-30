@@ -24,6 +24,11 @@ export const LeftMenu: FC = () => {
         title: 'Профиль',
       },
       {
+        id: 'sandbox',
+        click: () => push('/sandbox'),
+        title: 'Песочница',
+      },
+      {
         id: 'logout',
         click: () => dispatch(sessionAction.logout()),
         title: 'Выйти',

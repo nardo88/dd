@@ -1,0 +1,58 @@
+.sidebar {
+  border-right: 1px solid var(--color-border);
+  transition: width 0.3s ease-in-out;
+  width: 51px;
+  box-shadow: -3px 0px 5px 5px rgba(0, 0, 0, 0.2);
+  height: calc(100vh - var(--navbar-height));
+}
+.opened {
+  width: 350px;
+}
+
+.top {
+  display: flex;
+  justify-content: flex-end;
+  border-bottom: 1px solid var(--color-border);
+  padding: 10px;
+}
+
+.toggleBtn {
+  width: 30px;
+  height: 30px;
+}
+
+.icon {
+  transform: rotate(-90deg);
+  transition: transform 0.3s ease-in-out;
+}
+.openIcon {
+  transform: rotate(90deg);
+}
+
+.linkWrapper {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out;
+}
+.isVisible {
+  visibility: visible;
+  opacity: 1;
+}
+
+.linkItem {
+  padding: 10px;
+  display: flex;
+  text-decoration: none;
+  color: var(--color-secondary);
+  font-size: 16px;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--color-border);
+    color: var(--color-white);
+  }
+}
+.active {
+  background: var(--color-success) !important;
+  color: var(--color-white);
+}
