@@ -14,6 +14,8 @@ export const Main: FC = () => {
 
   useEffect(() => {
     store.reducerManager.add('sandbox', sandboxReducer)
+    store.dispatch({ type: 'sandbox' })
+
     return () => {
       store.reducerManager.remove('sandbox')
     }

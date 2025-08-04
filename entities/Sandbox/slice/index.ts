@@ -6,7 +6,7 @@ import { SandboxState } from '../types'
 
 const initialState: SandboxState = {
   language: 'typescript',
-  isOpen: true,
+  isOpen: false,
 }
 
 const sandboxSlice = createSlice({
