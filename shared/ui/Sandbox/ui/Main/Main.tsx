@@ -1,9 +1,12 @@
 import { FC } from 'react'
+
 import { classNames } from '@shared/helpers/classNames'
 import { LanguageVariants } from '@shared/types/body'
 
-import cls from './Main.module.scss'
+import { JavaScript } from '../JavaScript/JavaScript'
 import { TypeScript } from '../TypeScript/TypeScript'
+
+import cls from './Main.module.scss'
 
 interface IMainProps {
   className?: string
@@ -18,6 +21,7 @@ export const Main: FC<IMainProps> = (props) => {
   return (
     <div className={classNames(cls.main, {}, [className])}>
       {language === 'typescript' && <TypeScript {...props} />}
+      {language === 'javascript' && <JavaScript {...props} />}
     </div>
   )
 }

@@ -18,7 +18,6 @@ export const Sidebar: FC = () => {
   const dispatch = useAppDispatch()
 
   const toggleHandler = () => {
-    console.log(1)
     dispatch(sandboxAction.toggleSidebar())
   }
   return (

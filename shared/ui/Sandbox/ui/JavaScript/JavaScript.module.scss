@@ -1,0 +1,15 @@
+.main {
+  display: grid;
+  gap: 16px;
+}
+
+.btnWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+
+  button {
+    padding: 6px 11px;
+  }
+}
