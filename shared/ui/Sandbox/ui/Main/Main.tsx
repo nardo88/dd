@@ -4,6 +4,7 @@ import { classNames } from '@shared/helpers/classNames'
 import { LanguageVariants } from '@shared/types/body'
 
 import { JavaScript } from '../JavaScript/JavaScript'
+import Python from '../Python/Python'
 import { TypeScript } from '../TypeScript/TypeScript'
 
 import cls from './Main.module.scss'
@@ -22,6 +23,7 @@ export const Main: FC<IMainProps> = (props) => {
     <div className={classNames(cls.main, {}, [className])}>
       {language === 'typescript' && <TypeScript {...props} />}
       {language === 'javascript' && <JavaScript {...props} />}
+      {language === 'python' && <Python {...props} />}
     </div>
   )
 }

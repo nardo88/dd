@@ -1,1 +1,1 @@
-export { Main as Sandbox } from './ui/Main/Main'
+export { AsyncMain as Sandbox } from './ui/Main/Main.async'
