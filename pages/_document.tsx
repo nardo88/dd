@@ -17,6 +17,7 @@ export default function Document() {
           src="https://cdn.jsdelivr.net/pyodide/v0.28.0/full/pyodide.js"
           strategy="beforeInteractive"
         />
+        <Script src="/cdn/php-wasm.mjs" type="module" strategy="beforeInteractive" />
       </Head>
       <body>
         <Main />
