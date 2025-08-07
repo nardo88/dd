@@ -1,4 +1,4 @@
 import { StateSchema } from '@app/redux'
 
-export const getLanguage = (state: StateSchema) => state.sandbox?.language || 'typescript'
-export const getIsOpen = (state: StateSchema) => !!state.sandbox?.isOpen
+export const getFilterTitle = (state: StateSchema) => state.sandbox?.filters?.title || ''
+export const getStackTitle = (state: StateSchema) => state.sandbox?.filters?.type || 'all'

@@ -1,0 +1,12 @@
+.main {
+  margin: 30px auto 0;
+  max-width: 1200px;
+  display: grid;
+  gap: 16px;
+}
+
+.btnWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

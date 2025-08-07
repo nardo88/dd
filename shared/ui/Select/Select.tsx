@@ -1,10 +1,11 @@
 import { RefObject, useEffect, useRef, useState } from 'react'
 
+import { classNames } from '@shared/helpers/classNames'
 import { Text, TextVariant } from '@shared/ui/Text/Text'
 
-import cls from './Select.module.scss'
 import { ArrowBottom } from '../Icons/ArrowBottom'
-import { classNames } from '@shared/helpers/classNames'
+
+import cls from './Select.module.scss'
 
 export type OptionType = { id: string; title: string }
 
@@ -69,7 +70,8 @@ export const Select = (props: PropsType) => {
         <label
           className={classNames(cls.label, {
             [cls.error]: errorText && errorText.length > 0,
-          })}>
+          })}
+        >
           {label}
         </label>
       )}
@@ -81,7 +83,8 @@ export const Select = (props: PropsType) => {
           [cls.error]: errorText && errorText.length > 0,
           [cls.cup]: !!options.length,
         })}
-        onClick={() => options.length && !disabled && setIsOpen(!isOpen)}>
+        onClick={() => options.length && !disabled && setIsOpen(!isOpen)}
+      >
         <span>
           {placeholder && !value ? placeholder : ''}
           {value?.title || ''}
@@ -105,7 +108,8 @@ export const Select = (props: PropsType) => {
       {haveError && errorText && (
         <Text
           className={classNames(cls.errorText, {}, [errorClassName])}
-          variant={TextVariant.ERROR}>
+          variant={TextVariant.ERROR}
+        >
           {errorText || ''}
         </Text>
       )}

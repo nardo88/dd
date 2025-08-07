@@ -1,0 +1,39 @@
+.dropListButton {
+  width: fit-content;
+  position: relative;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  svg {
+    width: 18px;
+    height: 18px;
+    path {
+      stroke: var(--color-white);
+    }
+  }
+}
+
+.dropDown {
+  position: absolute;
+  right: 0;
+  top: 102%;
+  box-shadow: 0 0 8px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  min-width: 100%;
+  overflow: hidden;
+}
+
+.listItem {
+  padding: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--color-border);
+    color: var(--color-white);
+  }
+}

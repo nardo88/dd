@@ -2,10 +2,13 @@ import { FC, useEffect } from 'react'
 import { useStore } from 'react-redux'
 
 import { ReduxStoreWithManager } from '@app/redux'
+import { getFilterTitle } from '@entities/Sandbox/selectors'
 import { sandboxReducer } from '@entities/Sandbox/slice'
 
-import { Content } from '../Content/Content'
-import { Sidebar } from '../Sidebar/Sidebar'
+import { useAppSelector } from '@shared/hooks/redux'
+
+import { FilterBlock } from '../FilterBlock/FilterBlock'
+import { Table } from '../Table/Table'
 
 import cls from './Main.module.scss'
 
@@ -23,8 +26,8 @@ export const Main: FC = () => {
 
   return (
     <div className={cls.main}>
-      <Sidebar />
-      <Content />
+      <FilterBlock />
+      <Table />
     </div>
   )
 }

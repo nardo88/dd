@@ -1,23 +1,25 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-import { LanguageVariants } from '@shared/types/body'
-
-import { SandboxState } from '../types'
+import { defaultFilter } from '../consts'
+import { SandboxState, StackType } from '../types'
 
 const initialState: SandboxState = {
-  language: 'typescript',
-  isOpen: false,
+  currentPage: 1,
+  data: [],
+  filters: defaultFilter,
+  isLoading: false,
+  total: 0,
 }
 
 const sandboxSlice = createSlice({
   name: 'sandbox',
   initialState,
   reducers: {
-    toggleSidebar(state) {
-      state.isOpen = !state.isOpen
+    changeTitleFilter(state, action: PayloadAction<string>) {
+      state.filters.title = action.payload
     },
-    setLanguage(state, action: PayloadAction<LanguageVariants>) {
-      state.language = action.payload
+    changeStackFilter(state, action: PayloadAction<StackType>) {
+      state.filters.type = action.payload
     },
   },
 })

@@ -1,8 +1,17 @@
-import { LanguageVariants } from '@shared/types/body'
+import { OptionType } from '@shared/ui/Select/Select'
 
-export const links: Array<{ path: LanguageVariants; title: string }> = [
-  { path: 'python', title: 'Python' },
-  { path: 'javascript', title: 'JavaScript' },
-  { path: 'typescript', title: 'TypeScript' },
-  { path: 'php', title: 'PHP' },
+import { IFilter } from '../types'
+
+export const defaultFilter: IFilter = {
+  title: '',
+  type: 'all',
+}
+
+export const stackOptions: OptionType[] = [
+  { id: 'all', title: 'Все' },
+  { id: 'python', title: 'Python' },
+  { id: 'javascript', title: 'JavaScript' },
+  { id: 'typescript', title: 'TypeScript' },
+  { id: 'php', title: 'PHP' },
+  { id: 'web', title: 'WEB' },
 ]

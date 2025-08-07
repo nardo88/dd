@@ -1,0 +1,9 @@
+.filterBlock {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: end;
+}
+.addBtn {
+  margin-left: auto;
+}
