@@ -7,8 +7,6 @@ import { Sandbox } from '@shared/ui/Sandbox'
 
 import cls from './Main.module.scss'
 
-const language = ['python', 'javascript', 'typescript', 'php']
-
 export const Main: FC = () => {
   const router = useRouter()
   const { type } = router.query
@@ -21,9 +19,7 @@ export const Main: FC = () => {
         <Button onClick={() => router.push('/sandbox')}>Назад</Button>
         <Button>Сохранить</Button>
       </div>
-      {language.includes(type?.toString()) && (
-        <Sandbox language={type.toString() as Stacks} canRun />
-      )}
+      <Sandbox language={type.toString() as Stacks} canRun />
     </div>
   )
 }

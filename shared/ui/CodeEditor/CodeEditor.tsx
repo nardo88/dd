@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import { Editor } from '@monaco-editor/react'
+import { emmetHTML } from 'emmet-monaco-es'
 
 import { classNames } from '@shared/helpers/classNames'
 import { Stacks } from '@shared/types/sandbox'
@@ -17,11 +18,18 @@ interface CodeEditorProps {
 export const CodeEditor: FC<CodeEditorProps> = (props) => {
   const { className, onChange, value, language = 'typescript' } = props
 
+  const handleEditorDidMount = (editor: any, monaco: any) => {
+    if (language === 'html') {
+      emmetHTML(monaco)
+    }
+  }
+
   return (
     <div className={classNames(cls.codeEditor, {}, [className])}>
       <Editor
         key={language}
         defaultLanguage={language}
+        onMount={handleEditorDidMount}
         language={language}
         value={value}
         onChange={(value) => onChange(value || '')}
