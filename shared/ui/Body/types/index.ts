@@ -1,4 +1,4 @@
-import { LanguageVariants } from '@shared/types/body'
+import { Stacks } from '@shared/types/sandbox'
 
 export type BodyItemType =
   | 'markdown'
@@ -11,7 +11,7 @@ export type BodyItemType =
   | 'terminal'
 
 export interface IBodySetting {
-  language?: LanguageVariants
+  language?: Stacks
   needTerminal?: boolean
   canEdit?: boolean
 }

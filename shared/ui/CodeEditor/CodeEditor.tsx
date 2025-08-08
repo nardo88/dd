@@ -1,14 +1,17 @@
 import { FC } from 'react'
-import cls from './CodeEditor.module.scss'
-import { classNames } from '@shared/helpers/classNames'
+
 import { Editor } from '@monaco-editor/react'
-import { LanguageVariants } from '@shared/types/body'
+
+import { classNames } from '@shared/helpers/classNames'
+import { Stacks } from '@shared/types/sandbox'
+
+import cls from './CodeEditor.module.scss'
 
 interface CodeEditorProps {
   className?: string
   value: string
   onChange: (value: string) => void
-  language?: LanguageVariants
+  language?: Stacks
 }
 
 export const CodeEditor: FC<CodeEditorProps> = (props) => {

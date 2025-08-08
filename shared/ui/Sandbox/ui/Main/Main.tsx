@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 import { classNames } from '@shared/helpers/classNames'
-import { LanguageVariants } from '@shared/types/body'
+import { Stacks } from '@shared/types/sandbox'
 
 import { JavaScript } from '../JavaScript/JavaScript'
 import { Php } from '../Php/Php'
@@ -12,7 +12,7 @@ import cls from './Main.module.scss'
 
 interface IMainProps {
   className?: string
-  language: LanguageVariants
+  language: Stacks
   code?: string
   canRun?: boolean
 }

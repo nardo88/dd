@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic'
 import { type FC, useCallback, useEffect, useRef, useState } from 'react'
 
-import { LanguageVariants } from '@shared/types/body'
+import { Stacks } from '@shared/types/sandbox'
 import { Button } from '@shared/ui/Button/Button'
 import { CodeEditor } from '@shared/ui/CodeEditor/CodeEditor'
 import { type ITerminalRef, Terminal } from '@shared/ui/Terminal/Terminal'
@@ -9,7 +9,7 @@ import { type ITerminalRef, Terminal } from '@shared/ui/Terminal/Terminal'
 import cls from './Python.module.scss'
 
 interface IJavaScriptProps {
-  language: LanguageVariants
+  language: Stacks
   code?: string
   canRun?: boolean
 }

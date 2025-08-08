@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router'
 import { FC } from 'react'
 
+import { Stacks } from '@shared/types/sandbox'
 import { Button } from '@shared/ui/Button/Button'
 import { Sandbox } from '@shared/ui/Sandbox'
 
@@ -20,7 +21,9 @@ export const Main: FC = () => {
         <Button onClick={() => router.push('/sandbox')}>Назад</Button>
         <Button>Сохранить</Button>
       </div>
-      {language.includes(type?.toString()) && <Sandbox language={type} canRun />}
+      {language.includes(type?.toString()) && (
+        <Sandbox language={type.toString() as Stacks} canRun />
+      )}
     </div>
   )
 }

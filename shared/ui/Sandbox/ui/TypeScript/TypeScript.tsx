@@ -1,14 +1,16 @@
 import { FC, useEffect, useRef, useState } from 'react'
+
 import * as ts from 'typescript'
-import { LanguageVariants } from '@shared/types/body'
-import { CodeEditor } from '@shared/ui/CodeEditor/CodeEditor'
+
+import { Stacks } from '@shared/types/sandbox'
 import { Button } from '@shared/ui/Button/Button'
+import { CodeEditor } from '@shared/ui/CodeEditor/CodeEditor'
 import { ITerminalRef, Terminal } from '@shared/ui/Terminal/Terminal'
 
 import cls from './TypeScript.module.scss'
 
 interface ITypeScriptProps {
-  language: LanguageVariants
+  language: Stacks
   code?: string
   canRun?: boolean
 }
