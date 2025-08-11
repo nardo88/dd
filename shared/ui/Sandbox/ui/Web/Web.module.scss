@@ -43,3 +43,38 @@
 
     }
 }
+
+.iconWrapper{
+    container-name: wrapper;
+    container-type: inline-size;
+    
+}
+
+.stackIcon{
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    line-height: 1;
+    padding: 3px;
+    background: var(--color-secondary);
+    color: var(--color-white);
+    user-select: none;
+
+    svg{
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@container wrapper (max-width: 60px) {
+    .stackIcon{
+        display: none;
+    }
+
+}
+
+.frame{
+    width: 100%;
+    
+}

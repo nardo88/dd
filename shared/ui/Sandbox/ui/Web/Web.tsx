@@ -1,7 +1,10 @@
-import { FC, PointerEvent, useRef, useState } from 'react'
+import { FC, PointerEvent, useEffect, useRef, useState } from 'react'
 
 import { classNames } from '@shared/helpers/classNames'
 import { CodeEditor } from '@shared/ui/CodeEditor/CodeEditor'
+import { Css } from '@shared/ui/Icons/Css'
+import { HTML } from '@shared/ui/Icons/Html'
+import { Js } from '@shared/ui/Icons/Js'
 
 import cls from './Web.module.scss'
 
@@ -31,12 +34,15 @@ export const Web: FC<IWebProps> = (props) => {
 
     const target = _target === 'html' ? htmlRef.current : cssRef.current
     const inside = _target === 'html' ? cssRef.current : jsRef.current
+    const wrapper = container.current
     const posX = ev.clientX
     const s = target.getBoundingClientRect()
     const c = inside.getBoundingClientRect()
+    const w = wrapper.getBoundingClientRect()
 
     function dragMove(event: globalThis.PointerEvent) {
-      if (!htmlRef.current) return
+      if (!htmlRef.current || event.clientX - w.left < 20 || w.left + w.width - event.clientX < 20)
+        return
       const diff = event.clientX - posX
 
       target.style.width = `${s.width + diff}px`
@@ -53,11 +59,19 @@ export const Web: FC<IWebProps> = (props) => {
     document.onpointerup = dragEnd
   }
 
+  useEffect(() => {}, [])
+
   return (
     <div className={cls.web}>
       <div className={cls.codeBlock} ref={container}>
         <div ref={htmlRef} className={classNames(cls.codeSection)}>
           <div className={cls.codeWrapper}>
+            <div className={cls.iconWrapper}>
+              <span className={cls.stackIcon}>
+                HTML
+                <HTML />
+              </span>
+            </div>
             <CodeEditor value={html} onChange={setHtml} language="html" />
           </div>
         </div>
@@ -68,6 +82,12 @@ export const Web: FC<IWebProps> = (props) => {
         />
         <div ref={cssRef} className={classNames(cls.codeSection)}>
           <div className={cls.codeWrapper}>
+            <div className={cls.iconWrapper}>
+              <span className={cls.stackIcon}>
+                CSS
+                <Css />
+              </span>
+            </div>
             <CodeEditor value={css} onChange={setCss} language="css" />
           </div>
         </div>
@@ -78,11 +98,19 @@ export const Web: FC<IWebProps> = (props) => {
         />
         <div ref={jsRef} className={classNames(cls.codeSection)}>
           <div className={cls.codeWrapper}>
+            <div className={cls.iconWrapper}>
+              <span className={cls.stackIcon}>
+                JS
+                <Js />
+              </span>
+            </div>
             <CodeEditor value={javaScript} onChange={setJavaScript} language="javascript" />
           </div>
         </div>
       </div>
-      <div className={cls.result}>result</div>
+      <div className={cls.result}>
+        <iframe className={cls.frame} />
+      </div>
     </div>
   )
 }
