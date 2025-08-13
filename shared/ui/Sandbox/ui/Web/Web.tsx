@@ -6,13 +6,38 @@ import { Css } from '@shared/ui/Icons/Css'
 import { HTML } from '@shared/ui/Icons/Html'
 import { Js } from '@shared/ui/Icons/Js'
 
+import { PreviewFrame } from '../PreviewFrame/PreviewFrame'
+
 import cls from './Web.module.scss'
 
 interface IWebProps {
   code?: string
 }
 
-export const Web: FC<IWebProps> = (props) => {
+const getLogWrapper = (javaScript: string) => `
+(function() {
+  const methods = ['log', 'error', 'warn', 'info'];
+  methods.forEach(method => {
+    const original = console[method];
+    console[method] = function(...args) {
+      window.parent.postMessage({
+        type: 'iframe-log',
+        level: method,
+        args
+      }, '*');
+      original.apply(console, args);
+    };
+  });
+})();
+
+try {
+  ${javaScript}
+} catch(e) {
+  console.error('Execution error:', e);
+}
+`
+
+export const Web: FC<IWebProps> = () => {
   const [html, setHtml] = useState('')
   const [css, setCss] = useState('')
   const [javaScript, setJavaScript] = useState('')
@@ -21,6 +46,7 @@ export const Web: FC<IWebProps> = (props) => {
   const htmlRef = useRef<HTMLDivElement>(null)
   const cssRef = useRef<HTMLDivElement>(null)
   const jsRef = useRef<HTMLDivElement>(null)
+  const frame = useRef<HTMLIFrameElement>(null)
 
   const onPointerDown = (ev: PointerEvent, _target: 'html' | 'css') => {
     if (
@@ -59,7 +85,40 @@ export const Web: FC<IWebProps> = (props) => {
     document.onpointerup = dragEnd
   }
 
-  useEffect(() => {}, [])
+  // useEffect(() => {
+  //   if (!frame.current) return
+
+  //   const parser = new DOMParser()
+  //   const doc = parser.parseFromString(html, 'text/html')
+
+  //   const style = document.createElement('style')
+  //   style.textContent = css
+
+  //   if (!doc.head) {
+  //     const head = doc.createElement('head')
+  //     doc.documentElement.insertBefore(head, doc.body)
+  //   }
+  //   doc.head.appendChild(style)
+
+  //   const script = document.createElement('script')
+  //   script.textContent = getLogWrapper(javaScript || '')
+  //   if (!doc.body) {
+  //     const body = doc.createElement('body')
+  //     doc.documentElement.appendChild(body)
+  //   }
+  //   doc.body.appendChild(script)
+
+  //   const serializer = new XMLSerializer()
+  //   const finalHtml = serializer.serializeToString(doc)
+
+  //   const blob = new Blob([finalHtml], { type: 'text/html' })
+  //   const src = URL.createObjectURL(blob)
+  //   frame.current.src = src
+
+  //   return () => {
+  //     if (frame.current?.src) URL.revokeObjectURL(frame.current?.src)
+  //   }
+  // }, [html, css, javaScript])
 
   return (
     <div className={cls.web}>
@@ -109,7 +168,7 @@ export const Web: FC<IWebProps> = (props) => {
         </div>
       </div>
       <div className={cls.result}>
-        <iframe className={cls.frame} />
+        <PreviewFrame css={css} html={html} javaScript={javaScript} />
       </div>
     </div>
   )
