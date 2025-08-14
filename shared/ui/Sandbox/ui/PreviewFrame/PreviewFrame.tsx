@@ -1,4 +1,6 @@
-import React, { useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
+
+import cls from './PreviewFrame.module.scss'
 
 interface PreviewFrameProps {
   html: string // Полный HTML пользователя

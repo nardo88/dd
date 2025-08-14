@@ -22,6 +22,9 @@ export const CodeEditor: FC<CodeEditorProps> = (props) => {
     if (language === 'html') {
       emmetHTML(monaco)
     }
+    window.addEventListener('resize', () => {
+      editor.layout()
+    })
   }
 
   return (
@@ -33,6 +36,7 @@ export const CodeEditor: FC<CodeEditorProps> = (props) => {
         language={language}
         value={value}
         onChange={(value) => onChange(value || '')}
+        height="100%" // <— вот это важно
         theme="vs-dark"
         options={{
           fontFamily: 'JetBrains Mono',

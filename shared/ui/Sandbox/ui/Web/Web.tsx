@@ -14,41 +14,19 @@ interface IWebProps {
   code?: string
 }
 
-const getLogWrapper = (javaScript: string) => `
-(function() {
-  const methods = ['log', 'error', 'warn', 'info'];
-  methods.forEach(method => {
-    const original = console[method];
-    console[method] = function(...args) {
-      window.parent.postMessage({
-        type: 'iframe-log',
-        level: method,
-        args
-      }, '*');
-      original.apply(console, args);
-    };
-  });
-})();
-
-try {
-  ${javaScript}
-} catch(e) {
-  console.error('Execution error:', e);
-}
-`
-
-export const Web: FC<IWebProps> = () => {
+export const Web: FC<IWebProps> = (props) => {
+  const { code } = props
   const [html, setHtml] = useState('')
   const [css, setCss] = useState('')
   const [javaScript, setJavaScript] = useState('')
 
   const container = useRef<HTMLDivElement>(null)
+  const result = useRef<HTMLDivElement>(null)
   const htmlRef = useRef<HTMLDivElement>(null)
   const cssRef = useRef<HTMLDivElement>(null)
   const jsRef = useRef<HTMLDivElement>(null)
-  const frame = useRef<HTMLIFrameElement>(null)
 
-  const onPointerDown = (ev: PointerEvent, _target: 'html' | 'css') => {
+  const codeColumnResize = (ev: PointerEvent, _target: 'html' | 'css') => {
     if (
       ev?.buttons !== 1 ||
       !container.current ||
@@ -57,6 +35,8 @@ export const Web: FC<IWebProps> = () => {
       !cssRef.current
     )
       return
+
+    ev.preventDefault()
 
     const target = _target === 'html' ? htmlRef.current : cssRef.current
     const inside = _target === 'html' ? cssRef.current : jsRef.current
@@ -85,40 +65,70 @@ export const Web: FC<IWebProps> = () => {
     document.onpointerup = dragEnd
   }
 
-  // useEffect(() => {
-  //   if (!frame.current) return
+  const codeBlockResize = (ev: PointerEvent) => {
+    if (!container.current || !result.current) return
 
-  //   const parser = new DOMParser()
-  //   const doc = parser.parseFromString(html, 'text/html')
+    ev.preventDefault()
+    ;(ev.target as HTMLElement).setPointerCapture(ev.pointerId) // фиксируем указатель
+    document.body.style.userSelect = 'none'
 
-  //   const style = document.createElement('style')
-  //   style.textContent = css
+    const wrapper = container.current
+    const frame = result.current
+    const startY = ev.clientY
+    const startHeight = wrapper.offsetHeight
+    const frameHeight = frame.offsetHeight
 
-  //   if (!doc.head) {
-  //     const head = doc.createElement('head')
-  //     doc.documentElement.insertBefore(head, doc.body)
-  //   }
-  //   doc.head.appendChild(style)
+    const dragMove = (event: globalThis.PointerEvent) => {
+      const dif = event.clientY - startY
+      const height = startHeight + dif
+      const fHeight = frameHeight - dif
+      if (height < 100 || height > 500) return
+      wrapper.style.height = `${height}px`
+      frame.style.height = `${fHeight}px`
+    }
 
-  //   const script = document.createElement('script')
-  //   script.textContent = getLogWrapper(javaScript || '')
-  //   if (!doc.body) {
-  //     const body = doc.createElement('body')
-  //     doc.documentElement.appendChild(body)
-  //   }
-  //   doc.body.appendChild(script)
+    const dragEnd = () => {
+      document.body.style.userSelect = ''
+      ;(ev.target as HTMLElement).releasePointerCapture(ev.pointerId)
+      window.removeEventListener('pointermove', dragMove)
+      window.removeEventListener('pointerup', dragEnd)
+      window.removeEventListener('pointercancel', dragEnd)
+    }
 
-  //   const serializer = new XMLSerializer()
-  //   const finalHtml = serializer.serializeToString(doc)
+    window.addEventListener('pointermove', dragMove)
+    window.addEventListener('pointerup', dragEnd)
+    window.addEventListener('pointercancel', dragEnd)
+  }
 
-  //   const blob = new Blob([finalHtml], { type: 'text/html' })
-  //   const src = URL.createObjectURL(blob)
-  //   frame.current.src = src
+  const resultBlockResize = (ev: PointerEvent) => {
+    if (!result.current) return
 
-  //   return () => {
-  //     if (frame.current?.src) URL.revokeObjectURL(frame.current?.src)
-  //   }
-  // }, [html, css, javaScript])
+    ev.preventDefault()
+    ;(ev.target as HTMLElement).setPointerCapture(ev.pointerId) // фиксируем указатель
+    document.body.style.userSelect = 'none'
+
+    const wrapper = result.current
+    const startY = ev.clientY
+    const startHeight = wrapper.offsetHeight
+
+    const dragMove = (event: globalThis.PointerEvent) => {
+      const height = startHeight + (event.clientY - startY)
+      if (height < 100 || height > 500) return
+      wrapper.style.height = `${height}px`
+    }
+
+    const dragEnd = () => {
+      document.body.style.userSelect = ''
+      ;(ev.target as HTMLElement).releasePointerCapture(ev.pointerId)
+      window.removeEventListener('pointermove', dragMove)
+      window.removeEventListener('pointerup', dragEnd)
+      window.removeEventListener('pointercancel', dragEnd)
+    }
+
+    window.addEventListener('pointermove', dragMove)
+    window.addEventListener('pointerup', dragEnd)
+    window.addEventListener('pointercancel', dragEnd)
+  }
 
   return (
     <div className={cls.web}>
@@ -131,12 +141,17 @@ export const Web: FC<IWebProps> = () => {
                 <HTML />
               </span>
             </div>
-            <CodeEditor value={html} onChange={setHtml} language="html" />
+            <CodeEditor
+              className={cls.codeEditor}
+              value={html}
+              onChange={setHtml}
+              language="html"
+            />
           </div>
         </div>
         <div
           className={cls.resizer}
-          onPointerDown={(e) => onPointerDown(e, 'html')}
+          onPointerDown={(e) => codeColumnResize(e, 'html')}
           draggable={false}
         />
         <div ref={cssRef} className={classNames(cls.codeSection)}>
@@ -147,12 +162,12 @@ export const Web: FC<IWebProps> = () => {
                 <Css />
               </span>
             </div>
-            <CodeEditor value={css} onChange={setCss} language="css" />
+            <CodeEditor className={cls.codeEditor} value={css} onChange={setCss} language="css" />
           </div>
         </div>
         <div
           className={cls.resizer}
-          onPointerDown={(e) => onPointerDown(e, 'css')}
+          onPointerDown={(e) => codeColumnResize(e, 'css')}
           draggable={false}
         />
         <div ref={jsRef} className={classNames(cls.codeSection)}>
@@ -163,12 +178,21 @@ export const Web: FC<IWebProps> = () => {
                 <Js />
               </span>
             </div>
-            <CodeEditor value={javaScript} onChange={setJavaScript} language="javascript" />
+            <CodeEditor
+              className={cls.codeEditor}
+              value={javaScript}
+              onChange={setJavaScript}
+              language="javascript"
+            />
           </div>
         </div>
       </div>
-      <div className={cls.result}>
-        <PreviewFrame css={css} html={html} javaScript={javaScript} />
+      <div className={cls.codeResizer} onPointerDown={codeBlockResize} />
+      <div className={cls.result} ref={result}>
+        <div className={cls.frameWrapper}>
+          <PreviewFrame css={css} html={html} javaScript={javaScript} />
+        </div>
+        <div className={cls.frameResizer} onPointerDown={resultBlockResize} />
       </div>
     </div>
   )
