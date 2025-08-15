@@ -2,10 +2,7 @@ import { FC, useEffect } from 'react'
 import { useStore } from 'react-redux'
 
 import { ReduxStoreWithManager } from '@app/redux'
-import { getFilterTitle } from '@entities/Sandbox/selectors'
 import { sandboxReducer } from '@entities/Sandbox/slice'
-
-import { useAppSelector } from '@shared/hooks/redux'
 
 import { FilterBlock } from '../FilterBlock/FilterBlock'
 import { Table } from '../Table/Table'

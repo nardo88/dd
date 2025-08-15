@@ -1,7 +1,5 @@
 import { useEffect, useRef } from 'react'
 
-import cls from './PreviewFrame.module.scss'
-
 interface PreviewFrameProps {
   html: string // Полный HTML пользователя
   css: string // CSS пользователя

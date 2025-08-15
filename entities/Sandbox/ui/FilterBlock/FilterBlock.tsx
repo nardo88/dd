@@ -25,11 +25,11 @@ export const FilterBlock: FC = () => {
 
   const options = useMemo(
     (): OptionsType[] => [
-      { id: 'python', title: 'Python', onClick: () => router.push(`/sandbox/python`) },
-      { id: 'javascript', title: 'JavaScript', onClick: () => router.push(`/sandbox/javascript`) },
-      { id: 'typescript', title: 'TypeScript', onClick: () => router.push(`/sandbox/typescript`) },
-      { id: 'php', title: 'PHP', onClick: () => router.push(`/sandbox/php`) },
-      { id: 'web', title: 'Web', onClick: () => router.push(`/sandbox/web`) },
+      { id: 'python', title: 'Python', onClick: () => router.push('/sandbox/python') },
+      { id: 'javascript', title: 'JavaScript', onClick: () => router.push('/sandbox/javascript') },
+      { id: 'typescript', title: 'TypeScript', onClick: () => router.push('/sandbox/typescript') },
+      { id: 'php', title: 'PHP', onClick: () => router.push('/sandbox/php') },
+      { id: 'web', title: 'Web', onClick: () => router.push('/sandbox/web') },
     ],
     []
   )
