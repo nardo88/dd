@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect, useRef } from 'react'
 
 import { Editor } from '@monaco-editor/react'
 import { emmetHTML } from 'emmet-monaco-es'
@@ -13,22 +13,52 @@ interface CodeEditorProps {
   value: string
   onChange: (value: string) => void
   language?: Stacks
+  wrapper?: HTMLElement | null
 }
 
 export const CodeEditor: FC<CodeEditorProps> = (props) => {
-  const { className, onChange, value, language = 'typescript' } = props
+  const { className, onChange, value, language = 'typescript', wrapper } = props
+
+  const editorRef = useRef<any>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
 
   const handleEditorDidMount = (editor: any, monaco: any) => {
+    editorRef.current = editor
     if (language === 'html') {
       emmetHTML(monaco)
     }
-    window.addEventListener('resize', () => {
-      editor.layout()
-    })
   }
 
+  useEffect(() => {
+    if (!containerRef.current) return
+    const container = containerRef.current
+
+    const resizeObserver = new ResizeObserver(() => {
+      if (editorRef.current) {
+        editorRef.current.layout()
+      }
+    })
+
+    resizeObserver.observe(container)
+    return () => resizeObserver.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const resizeHandler = () => {
+      if (editorRef.current) {
+        editorRef.current.layout()
+      }
+    }
+
+    window.addEventListener('resize', resizeHandler)
+
+    return () => {
+      window.removeEventListener('resize', resizeHandler)
+    }
+  }, [wrapper])
+
   return (
-    <div className={classNames(cls.codeEditor, {}, [className])}>
+    <div className={classNames(cls.codeEditor, {}, [className])} ref={containerRef}>
       <Editor
         key={language}
         defaultLanguage={language}
@@ -36,7 +66,7 @@ export const CodeEditor: FC<CodeEditorProps> = (props) => {
         language={language}
         value={value}
         onChange={(value) => onChange(value || '')}
-        height="100%" // <— вот это важно
+        height="100%"
         theme="vs-dark"
         options={{
           fontFamily: 'JetBrains Mono',

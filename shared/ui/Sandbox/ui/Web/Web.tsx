@@ -16,6 +16,11 @@ interface IWebProps {
 
 type SectionTypes = 'html' | 'css' | 'js'
 
+const minMax = {
+  html: { min: 25, max: 31 },
+  css: { min: 31, max: 37 },
+}
+
 export const Web: FC<IWebProps> = (props) => {
   const { code } = props
   const [html, setHtml] = useState('')
@@ -45,18 +50,26 @@ export const Web: FC<IWebProps> = (props) => {
     const inside = _target === 'html' ? cssRef.current : jsRef.current
     const wrapper = container.current
     const posX = ev.clientX
-    const s = target.getBoundingClientRect()
-    const c = inside.getBoundingClientRect()
+    const t = target.getBoundingClientRect()
+    const i = inside.getBoundingClientRect()
     const w = wrapper.getBoundingClientRect()
 
     function dragMove(event: globalThis.PointerEvent) {
-      if (!htmlRef.current || event.clientX - w.left < 30 || w.left + w.width - event.clientX < 30)
-        return
-      const diff = event.clientX - posX
-      if (s.width + diff < 30 || c.width - diff < 30) return
+      const percentDiff = ((event.clientX - posX) / w.width) * 100
+      const pixelDif = event.clientX - posX
 
-      target.style.width = `${s.width + diff}px`
-      inside.style.width = `${c.width - diff}px`
+      const cPercent = (t.width / w.width) * 100
+      const iPercent = (i.width / w.width) * 100
+
+      // if (t.width + pixelDif < minMax[_target].min || i.width - pixelDif < minMax[_target].max)
+      //   return
+
+      console.log({
+        current: t.width + pixelDif,
+      })
+
+      target.style.width = `${cPercent + percentDiff}%`
+      inside.style.width = `${iPercent - percentDiff}%`
     }
 
     document.onpointermove = dragMove
@@ -136,63 +149,44 @@ export const Web: FC<IWebProps> = (props) => {
 
   const collapseSection = (section: SectionTypes) => {
     setCurrent((p) => (p === section ? null : section))
-    //
-
-    //
-
-    // const targetRect = target.getBoundingClientRect()
-    //
-
-    // if (targetRect!.width < 35) {
-    //
-    // } else {
-    //   const width = Math.ceil(wrapperRect.width / 3)
-    //   cssRef.current.style.width = `${width}px`
-    //   jsRef.current.style.width = `${width}px`
-    //   htmlRef.current.style.width = `${width}px`
-    // }
   }
 
-  useEffect(() => {
-    if (!container.current || !htmlRef.current || !cssRef.current || !jsRef.current) return
-    const wrapper = container.current
-    const wrapperRect = wrapper.getBoundingClientRect()
-    if (!current) {
-      const width = Math.ceil(wrapperRect.width / 3)
-      cssRef.current.style.width = `${width}px`
-      jsRef.current.style.width = `${width}px`
-      htmlRef.current.style.width = `${width}px`
-    } else {
-      const map = new Map<string, HTMLDivElement>()
-      map.set('html', htmlRef.current)
-      map.set('css', cssRef.current)
-      map.set('js', jsRef.current)
-      const target = map.get(current)
-      if (!target) return
-      map.delete(current)
-      const width = wrapperRect.width - 70
-      target.style.width = `${width}px`
-      map.forEach((item) => {
-        item.style.width = '30px'
-      })
-    }
-  }, [current])
+  // useEffect(() => {
+  //   if (!container.current || !htmlRef.current || !cssRef.current || !jsRef.current) return
+  //   const wrapper = container.current
+  //   const wrapperRect = wrapper.getBoundingClientRect()
+  //   if (!current) {
+  //     const width = Math.ceil(wrapperRect.width / 3)
+  //     cssRef.current.style.width = `${width}px`
+  //     jsRef.current.style.width = `${width}px`
+  //     htmlRef.current.style.width = `${width}px`
+  //   } else {
+  //     const map = new Map<string, HTMLDivElement>()
+  //     map.set('html', htmlRef.current)
+  //     map.set('css', cssRef.current)
+  //     map.set('js', jsRef.current)
+  //     const target = map.get(current)
+  //     if (!target) return
+  //     map.delete(current)
+  //     const width = wrapperRect.width - 85
+  //     target.style.width = `${width}px`
+  //     map.forEach((item) => {
+  //       item.style.width = '25px'
+  //     })
+  //   }
+  // }, [current])
 
   return (
     <div className={cls.web}>
       <div className={cls.codeBlock} ref={container}>
-        <div
-          className={cls.resizer}
-          onDoubleClick={() => collapseSection('html')}
-          draggable={false}
-        />
         <div ref={htmlRef} className={classNames(cls.codeSection)}>
           <div className={cls.codeWrapper}>
-            <div className={cls.iconWrapper}>
+            <div className={cls.iconWrapper} onClick={() => collapseSection('html')}>
               <span className={cls.stackIcon}>HTML</span>
               <HTML />
             </div>
             <CodeEditor
+              wrapper={container.current}
               className={cls.codeEditor}
               value={html}
               onChange={setHtml}
@@ -200,34 +194,41 @@ export const Web: FC<IWebProps> = (props) => {
             />
           </div>
         </div>
-        <div
-          className={cls.resizer}
-          onPointerDown={(e) => codeColumnResize(e, 'html')}
-          onDoubleClick={() => collapseSection('css')}
-          draggable={false}
-        />
+
         <div ref={cssRef} className={classNames(cls.codeSection)}>
+          <div
+            className={classNames(cls.resizer, {}, [cls.columnResizer])}
+            onPointerDown={(e) => codeColumnResize(e, 'html')}
+            draggable={false}
+          />
           <div className={cls.codeWrapper}>
-            <div className={cls.iconWrapper}>
+            <div className={cls.iconWrapper} onClick={() => collapseSection('css')}>
               <span className={cls.stackIcon}>CSS</span>
               <Css />
             </div>
-            <CodeEditor className={cls.codeEditor} value={css} onChange={setCss} language="css" />
+            <CodeEditor
+              wrapper={container.current}
+              className={cls.codeEditor}
+              value={css}
+              onChange={setCss}
+              language="css"
+            />
           </div>
         </div>
-        <div
-          className={cls.resizer}
-          onPointerDown={(e) => codeColumnResize(e, 'css')}
-          onDoubleClick={() => collapseSection('js')}
-          draggable={false}
-        />
+
         <div ref={jsRef} className={classNames(cls.codeSection)}>
+          <div
+            className={classNames(cls.resizer, {}, [cls.columnResizer])}
+            onPointerDown={(e) => codeColumnResize(e, 'css')}
+            draggable={false}
+          />
           <div className={cls.codeWrapper}>
-            <div className={cls.iconWrapper}>
+            <div className={cls.iconWrapper} onClick={() => collapseSection('js')}>
               <span className={cls.stackIcon}>JS</span>
               <Js />
             </div>
             <CodeEditor
+              wrapper={container.current}
               className={cls.codeEditor}
               value={javaScript}
               onChange={setJavaScript}
@@ -235,7 +236,7 @@ export const Web: FC<IWebProps> = (props) => {
             />
           </div>
         </div>
-        <div className={cls.resizer} draggable={false} />
+        <div className={classNames(cls.resizer, {}, [cls.rightBorder])} draggable={false} />
       </div>
       <div className={cls.codeResizer} onPointerDown={codeBlockResize} />
       <div className={cls.result} ref={result}>
