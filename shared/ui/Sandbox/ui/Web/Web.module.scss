@@ -37,7 +37,7 @@
 }
 
 .resizer {
-  width: 8px;
+  width: 12px;
   flex-shrink: 0;
   position: relative;
   z-index: 1;
@@ -121,6 +121,7 @@
 .rightBorder {
   position: absolute;
   right: 0;
+  width: 3px;
   top: 0;
   bottom: 0;
   cursor: default;

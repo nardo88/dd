@@ -19,6 +19,7 @@ type SectionTypes = 'html' | 'css' | 'js'
 const minMax = {
   html: { min: 25, max: 31 },
   css: { min: 31, max: 37 },
+  js: { min: 36 },
 }
 
 export const Web: FC<IWebProps> = (props) => {
@@ -34,7 +35,7 @@ export const Web: FC<IWebProps> = (props) => {
   const cssRef = useRef<HTMLDivElement>(null)
   const jsRef = useRef<HTMLDivElement>(null)
 
-  const codeColumnResize = (ev: PointerEvent, _target: 'html' | 'css') => {
+  const codeColumnResize = (ev: PointerEvent, target: 'html' | 'css') => {
     if (
       ev?.buttons !== 1 ||
       !container.current ||
@@ -46,30 +47,47 @@ export const Web: FC<IWebProps> = (props) => {
 
     ev.preventDefault()
 
-    const target = _target === 'html' ? htmlRef.current : cssRef.current
-    const inside = _target === 'html' ? cssRef.current : jsRef.current
+    const html = htmlRef.current
+    const css = cssRef.current
+    const js = jsRef.current
     const wrapper = container.current
+
     const posX = ev.clientX
-    const t = target.getBoundingClientRect()
-    const i = inside.getBoundingClientRect()
-    const w = wrapper.getBoundingClientRect()
+    const htmlW = html.getBoundingClientRect().width
+    const cssW = css.getBoundingClientRect().width
+    const jsW = js.getBoundingClientRect().width
+    const wrapperW = wrapper.getBoundingClientRect().width
 
     function dragMove(event: globalThis.PointerEvent) {
-      const percentDiff = ((event.clientX - posX) / w.width) * 100
+      // Разница в процентах
+      const percentDiff = ((event.clientX - posX) / wrapperW) * 100
+      // разница в пикселях
       const pixelDif = event.clientX - posX
-
-      const cPercent = (t.width / w.width) * 100
-      const iPercent = (i.width / w.width) * 100
-
-      // if (t.width + pixelDif < minMax[_target].min || i.width - pixelDif < minMax[_target].max)
-      //   return
-
-      console.log({
-        current: t.width + pixelDif,
-      })
-
-      target.style.width = `${cPercent + percentDiff}%`
-      inside.style.width = `${iPercent - percentDiff}%`
+      if (target === 'html') {
+        const htmlPercent = (htmlW / wrapperW) * 100
+        const cssPercent = (cssW / wrapperW) * 100
+        if (htmlW + pixelDif < minMax.html.min) return
+        if (cssW - pixelDif < minMax.css.max) {
+          const jsPercent = (jsW / wrapperW) * 100
+          html.style.width = `${htmlPercent + percentDiff}%`
+          js.style.width = `${jsPercent + cssPercent - percentDiff}%`
+        } else {
+          html.style.width = `${htmlPercent + percentDiff}%`
+          css.style.width = `${cssPercent - percentDiff}%`
+        }
+      }
+      if (target === 'css') {
+        const cssPercent = (cssW / wrapperW) * 100
+        const jsPercent = (jsW / wrapperW) * 100
+        const htmlPercent = (htmlW / wrapperW) * 100
+        if (jsW - pixelDif < minMax.js.min) return
+        js.style.width = `${jsPercent - percentDiff}%`
+        if (cssW + pixelDif < minMax.css.min) {
+          html.style.width = `${htmlPercent + (percentDiff + cssPercent)}%`
+        } else {
+          css.style.width = `${cssPercent + percentDiff}%`
+        }
+      }
     }
 
     document.onpointermove = dragMove
@@ -236,7 +254,6 @@ export const Web: FC<IWebProps> = (props) => {
             />
           </div>
         </div>
-        <div className={classNames(cls.resizer, {}, [cls.rightBorder])} draggable={false} />
       </div>
       <div className={cls.codeResizer} onPointerDown={codeBlockResize} />
       <div className={cls.result} ref={result}>
