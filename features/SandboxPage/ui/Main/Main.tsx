@@ -19,7 +19,7 @@ export const Main: FC = () => {
         <Button onClick={() => router.push('/sandbox')}>Назад</Button>
         <Button>Сохранить</Button>
       </div>
-      <Sandbox language={type.toString() as Stacks} canRun />
+      <Sandbox className={cls.sandbox} language={type.toString() as Stacks} canRun />
     </div>
   )
 }

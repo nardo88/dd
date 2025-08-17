@@ -116,47 +116,16 @@ export const Web: FC<IWebProps> = (props) => {
     document.body.style.userSelect = 'none'
 
     const wrapper = container.current
-    const frame = result.current
     const startY = ev.clientY
-    const startHeight = wrapper.offsetHeight
-    const frameHeight = frame.offsetHeight
+    const startHeight = wrapper.getBoundingClientRect().height
+    console.log('startHeight: ', startHeight)
 
     const dragMove = (event: globalThis.PointerEvent) => {
       const dif = event.clientY - startY
       const height = startHeight + dif
-      const fHeight = frameHeight - dif
-      if (height < 100 || height > 500) return
-      wrapper.style.height = `${height}px`
-      frame.style.height = `${fHeight}px`
-    }
+      console.log('new height', height)
 
-    const dragEnd = () => {
-      document.body.style.userSelect = ''
-      ;(ev.target as HTMLElement).releasePointerCapture(ev.pointerId)
-      window.removeEventListener('pointermove', dragMove)
-      window.removeEventListener('pointerup', dragEnd)
-      window.removeEventListener('pointercancel', dragEnd)
-    }
-
-    window.addEventListener('pointermove', dragMove)
-    window.addEventListener('pointerup', dragEnd)
-    window.addEventListener('pointercancel', dragEnd)
-  }
-
-  const resultBlockResize = (ev: PointerEvent) => {
-    if (!result.current) return
-
-    ev.preventDefault()
-    ;(ev.target as HTMLElement).setPointerCapture(ev.pointerId) // фиксируем указатель
-    document.body.style.userSelect = 'none'
-
-    const wrapper = result.current
-    const startY = ev.clientY
-    const startHeight = wrapper.offsetHeight
-
-    const dragMove = (event: globalThis.PointerEvent) => {
-      const height = startHeight + (event.clientY - startY)
-      if (height < 100 || height > 500) return
+      if (height < 50) return
       wrapper.style.height = `${height}px`
     }
 
@@ -270,7 +239,6 @@ export const Web: FC<IWebProps> = (props) => {
         <div className={cls.frameWrapper}>
           <PreviewFrame css={css} html={html} javaScript={javaScript} />
         </div>
-        <div className={cls.frameResizer} onPointerDown={resultBlockResize} />
       </div>
     </div>
   )
