@@ -52,6 +52,10 @@ export const Web: FC<IWebProps> = (props) => {
     const js = jsRef.current
     const wrapper = container.current
 
+    html.classList.remove(cls.transition)
+    css.classList.remove(cls.transition)
+    js.classList.remove(cls.transition)
+
     const posX = ev.clientX
     const htmlW = html.getBoundingClientRect().width
     const cssW = css.getBoundingClientRect().width
@@ -95,6 +99,10 @@ export const Web: FC<IWebProps> = (props) => {
     function dragEnd() {
       document.onpointerup = null
       document.onpointermove = null
+
+      html.classList.add(cls.transition)
+      css.classList.add(cls.transition)
+      js.classList.add(cls.transition)
     }
 
     document.onpointerup = dragEnd
@@ -169,35 +177,37 @@ export const Web: FC<IWebProps> = (props) => {
     setCurrent((p) => (p === section ? null : section))
   }
 
-  // useEffect(() => {
-  //   if (!container.current || !htmlRef.current || !cssRef.current || !jsRef.current) return
-  //   const wrapper = container.current
-  //   const wrapperRect = wrapper.getBoundingClientRect()
-  //   if (!current) {
-  //     const width = Math.ceil(wrapperRect.width / 3)
-  //     cssRef.current.style.width = `${width}px`
-  //     jsRef.current.style.width = `${width}px`
-  //     htmlRef.current.style.width = `${width}px`
-  //   } else {
-  //     const map = new Map<string, HTMLDivElement>()
-  //     map.set('html', htmlRef.current)
-  //     map.set('css', cssRef.current)
-  //     map.set('js', jsRef.current)
-  //     const target = map.get(current)
-  //     if (!target) return
-  //     map.delete(current)
-  //     const width = wrapperRect.width - 85
-  //     target.style.width = `${width}px`
-  //     map.forEach((item) => {
-  //       item.style.width = '25px'
-  //     })
-  //   }
-  // }, [current])
+  useEffect(() => {
+    if (!container.current || !htmlRef.current || !cssRef.current || !jsRef.current) return
+    const wrapperW = container.current.getBoundingClientRect().width
+    const map = new Map<string, HTMLDivElement>()
+    map.set('html', htmlRef.current)
+    map.set('css', cssRef.current)
+    map.set('js', jsRef.current)
+    if (!current) {
+      map.forEach((item) => {
+        item.style.width = '33.333%'
+      })
+    } else {
+      const target = map.get(current)
+      if (!target) return
+      map.delete(current)
+      const width = wrapperW - 50
+      target.style.width = `${width}px`
+      map.forEach((item, i) => {
+        if (i === 'html') {
+          item.style.width = '25px'
+        } else {
+          item.style.width = '35px'
+        }
+      })
+    }
+  }, [current])
 
   return (
     <div className={cls.web}>
       <div className={cls.codeBlock} ref={container}>
-        <div ref={htmlRef} className={classNames(cls.codeSection)}>
+        <div ref={htmlRef} className={classNames(cls.codeSection, {}, [cls.transition])}>
           <div className={cls.codeWrapper}>
             <div className={cls.iconWrapper} onClick={() => collapseSection('html')}>
               <span className={cls.stackIcon}>HTML</span>
@@ -213,7 +223,7 @@ export const Web: FC<IWebProps> = (props) => {
           </div>
         </div>
 
-        <div ref={cssRef} className={classNames(cls.codeSection)}>
+        <div ref={cssRef} className={classNames(cls.codeSection, {}, [cls.transition])}>
           <div
             className={classNames(cls.resizer, {}, [cls.columnResizer])}
             onPointerDown={(e) => codeColumnResize(e, 'html')}
@@ -234,7 +244,7 @@ export const Web: FC<IWebProps> = (props) => {
           </div>
         </div>
 
-        <div ref={jsRef} className={classNames(cls.codeSection)}>
+        <div ref={jsRef} className={classNames(cls.codeSection, {}, [cls.transition])}>
           <div
             className={classNames(cls.resizer, {}, [cls.columnResizer])}
             onPointerDown={(e) => codeColumnResize(e, 'css')}

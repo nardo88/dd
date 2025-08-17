@@ -24,6 +24,10 @@
   }
 }
 
+.transition {
+  transition: width 0.3s;
+}
+
 .codeWrapper {
   width: 100%;
   flex: 1;
