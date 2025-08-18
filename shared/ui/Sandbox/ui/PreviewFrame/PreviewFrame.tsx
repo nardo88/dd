@@ -1,50 +1,23 @@
 import { useEffect, useRef } from 'react'
 
+import { createId } from '@shared/helpers/createId/createId'
+
+import { getLogWrapper } from '../../modules/getLogWrapper'
+import { ILog } from '../../types'
+
 interface PreviewFrameProps {
   html: string // Полный HTML пользователя
   css: string // CSS пользователя
   javaScript: string // JS пользователя
   className?: string
   getRef: (ref: HTMLIFrameElement) => void
+  addLog: (log: ILog) => void
 }
 
 export const PreviewFrame: React.FC<PreviewFrameProps> = (props) => {
-  const { html, css, javaScript, className, getRef } = props
+  const { html, css, javaScript, className, getRef, addLog } = props
 
   const frameRef = useRef<HTMLIFrameElement>(null)
-
-  // Функция для обёртки JS с логированием
-  const getLogWrapper = (code: string) => `
-    (function() {
-      const serialize = (value) => {
-        if (value instanceof Element) return value.outerHTML;
-        try { return JSON.stringify(value); } catch { return String(value); }
-      };
-
-      ['log','info','warn','error'].forEach(level => {
-        const orig = console[level]?.bind(console);
-        console[level] = (...args) => {
-          const serializedArgs = args.map(serialize);
-          window.parent.postMessage({ source: 'iframe-log', level, args: serializedArgs }, '*');
-          orig?.(...args);
-        }
-      });
-
-      window.addEventListener('error', e => {
-        window.parent.postMessage({ source: 'iframe-error', message: e.message }, '*');
-      });
-      window.addEventListener('unhandledrejection', e => {
-        window.parent.postMessage({ source: 'iframe-error', message: e.reason?.toString() }, '*');
-      });
-
-      try {
-        ${code}
-      } catch (e) {
-        console.error(e);
-        window.parent.postMessage({ source: 'iframe-error', message: e.message }, '*');
-      }
-    })();
-  `
 
   useEffect(() => {
     if (!frameRef.current) return
@@ -84,13 +57,20 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = (props) => {
   // Приём сообщений из iframe
   useEffect(() => {
     const handleMessage = (e: MessageEvent) => {
-      const { source, level, args, message } = e.data || {}
-      if (source === 'iframe-log') {
-        console.log(...args)
-        // ;(console[level as keyof Console] ?? console.log)('[iframe log]', ...args)
+      const { source, _level, args, message } = e.data || {}
+      if (source === 'iframe-log' && args?.length) {
+        addLog({
+          id: createId(),
+          type: 'info',
+          message: args.join(), // args будет массив строк из одного элемента
+        })
       }
       if (source === 'iframe-error') {
-        console.error('[iframe error]', message)
+        addLog({
+          id: createId(),
+          type: 'error',
+          message,
+        })
       }
     }
     window.addEventListener('message', handleMessage)

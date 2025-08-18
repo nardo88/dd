@@ -1,11 +1,13 @@
 import { FC, PointerEvent, useEffect, useRef, useState } from 'react'
 
 import { classNames } from '@shared/helpers/classNames'
+import useDebounce from '@shared/hooks/useDebounce'
 import { CodeEditor } from '@shared/ui/CodeEditor/CodeEditor'
 import { Css } from '@shared/ui/Icons/Css'
 import { HTML } from '@shared/ui/Icons/Html'
 import { Js } from '@shared/ui/Icons/Js'
 
+import { IAllCode } from '../../types'
 import { ResultBlock } from '../ResultBlock/ResultBlock'
 
 import cls from './Web.module.scss'
@@ -28,6 +30,7 @@ export const Web: FC<IWebProps> = (props) => {
   const [css, setCss] = useState('')
   const [javaScript, setJavaScript] = useState('')
   const [current, setCurrent] = useState<SectionTypes | null>(null)
+  const [allCode, setAllCode] = useState<IAllCode>({ css, html, javaScript })
 
   const container = useRef<HTMLDivElement>(null)
   const result = useRef<HTMLDivElement>(null)
@@ -35,6 +38,12 @@ export const Web: FC<IWebProps> = (props) => {
   const cssRef = useRef<HTMLDivElement>(null)
   const jsRef = useRef<HTMLDivElement>(null)
   const web = useRef<HTMLDivElement>(null)
+
+  const changeAllCode = (field: keyof IAllCode, value: string) => {
+    setAllCode((p) => ({ ...p, [field]: value }))
+  }
+
+  const debounce = useDebounce(changeAllCode, 1000)
 
   const codeColumnResize = (ev: PointerEvent, target: 'html' | 'css') => {
     if (
@@ -203,7 +212,10 @@ export const Web: FC<IWebProps> = (props) => {
                 wrapper={container.current}
                 className={cls.codeEditor}
                 value={html}
-                onChange={setHtml}
+                onChange={(value) => {
+                  setHtml(value)
+                  debounce('html', value)
+                }}
                 language="html"
               />
             </div>
@@ -224,7 +236,10 @@ export const Web: FC<IWebProps> = (props) => {
                 wrapper={container.current}
                 className={cls.codeEditor}
                 value={css}
-                onChange={setCss}
+                onChange={(value) => {
+                  setCss(value)
+                  debounce('css', value)
+                }}
                 language="css"
               />
             </div>
@@ -245,7 +260,10 @@ export const Web: FC<IWebProps> = (props) => {
                 wrapper={container.current}
                 className={cls.codeEditor}
                 value={javaScript}
-                onChange={setJavaScript}
+                onChange={(value) => {
+                  setJavaScript(value)
+                  debounce('javaScript', value)
+                }}
                 language="javascript"
               />
             </div>
@@ -253,13 +271,7 @@ export const Web: FC<IWebProps> = (props) => {
         </div>
         <div className={cls.rowResizer} onPointerDown={resultBlockResize} />
       </div>
-      <ResultBlock
-        ref={result}
-        css={css}
-        html={html}
-        javaScript={javaScript}
-        className={cls.result}
-      />
+      <ResultBlock ref={result} code={allCode} className={cls.result} />
     </div>
   )
 }

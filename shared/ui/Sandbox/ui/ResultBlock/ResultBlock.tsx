@@ -4,6 +4,7 @@ import {
   MutableRefObject,
   PointerEvent,
   forwardRef,
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -14,6 +15,7 @@ import { Browser } from '@shared/ui/Icons/Browser'
 import { TerminalIcon } from '@shared/ui/Icons/TerminalIcon'
 import { Terminal } from '@shared/ui/Terminal/Terminal'
 
+import { IAllCode, ILog } from '../../types'
 import { PreviewFrame } from '../PreviewFrame/PreviewFrame'
 import { SimpleTerminal } from '../SimpleTerminal/SimpleTerminal'
 
@@ -21,16 +23,15 @@ import cls from './ResultBlock.module.scss'
 
 interface IResultBlockProps {
   className?: string
-  css: string
-  html: string
-  javaScript: string
+  code: IAllCode
 }
 
 export const ResultBlock = forwardRef<HTMLDivElement, IResultBlockProps>((props, ref) => {
-  const { className, css, html, javaScript } = props
+  const { className, code } = props
+  const { css, html, javaScript } = code
 
   const [activeTerminal, setActiveTerminal] = useState(false)
-  const [logs, setLogs] = useState<string[]>([])
+  const [logs, setLogs] = useState<ILog[]>([])
 
   const frameRef = useRef<HTMLIFrameElement | null>(null)
   const terminalRef = useRef<HTMLIFrameElement | null>(null)
@@ -73,6 +74,22 @@ export const ResultBlock = forwardRef<HTMLDivElement, IResultBlockProps>((props,
     window.addEventListener('pointercancel', dragEnd)
   }
 
+  const clear = useCallback(() => {
+    setLogs([])
+  }, [])
+
+  const addLog = (log: ILog) => {
+    setLogs((p) => [...p, log])
+    setTimeout(() => {
+      if (!terminalRef.current) return
+      const list = terminalRef.current.childNodes[1] as Element
+      // @ts-ignore
+      window.list = list
+      console.log(1)
+      list.scrollTo(0, list.clientHeight + 999)
+    })
+  }
+
   useEffect(() => {
     if (!frameRef.current) return
     if (activeTerminal) {
@@ -91,6 +108,7 @@ export const ResultBlock = forwardRef<HTMLDivElement, IResultBlockProps>((props,
           css={css}
           html={html}
           javaScript={javaScript}
+          addLog={addLog}
         />
         {activeTerminal && (
           <SimpleTerminal
@@ -98,6 +116,7 @@ export const ResultBlock = forwardRef<HTMLDivElement, IResultBlockProps>((props,
             messages={logs}
             ref={terminalRef}
             resizeHandler={resize}
+            clearHandler={clear}
           />
         )}
       </div>

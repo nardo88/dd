@@ -8,4 +8,38 @@
   color: var(--color-border);
   border-bottom: 1px solid var(--color-border);
   cursor: row-resize;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.list {
+  height: calc(100% - 26px);
+  overflow-y: auto;
+}
+
+.message {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.info {
+  pre {
+    margin: 0 !important;
+  }
+}
+
+.error {
+  padding: 16px;
+  color: var(--color-white);
+  background: var(--color-error);
+}
+
+.clear {
+  cursor: pointer;
+  border-radius: 4px;
+  background: var(--color-border);
+  color: var(--color-white);
+  font-size: 12px;
+  padding: 3px 9px;
+  line-height: 1;
 }
