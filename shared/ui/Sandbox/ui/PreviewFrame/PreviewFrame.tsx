@@ -4,9 +4,10 @@ interface PreviewFrameProps {
   html: string // Полный HTML пользователя
   css: string // CSS пользователя
   javaScript: string // JS пользователя
+  className?: string
 }
 
-export const PreviewFrame: React.FC<PreviewFrameProps> = ({ html, css, javaScript }) => {
+export const PreviewFrame: React.FC<PreviewFrameProps> = ({ html, css, javaScript, className }) => {
   const frameRef = useRef<HTMLIFrameElement>(null)
 
   // Функция для обёртки JS с логированием
@@ -93,5 +94,11 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = ({ html, css, javaScrip
     return () => window.removeEventListener('message', handleMessage)
   }, [])
 
-  return <iframe ref={frameRef} style={{ width: '100%', height: '100%', border: 'none' }} />
+  return (
+    <iframe
+      className={className}
+      ref={frameRef}
+      style={{ width: '100%', height: '100%', border: 'none', minHeight: 0 }}
+    />
+  )
 }
