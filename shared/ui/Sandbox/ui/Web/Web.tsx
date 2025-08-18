@@ -6,7 +6,7 @@ import { Css } from '@shared/ui/Icons/Css'
 import { HTML } from '@shared/ui/Icons/Html'
 import { Js } from '@shared/ui/Icons/Js'
 
-import { PreviewFrame } from '../PreviewFrame/PreviewFrame'
+import { ResultBlock } from '../ResultBlock/ResultBlock'
 
 import cls from './Web.module.scss'
 
@@ -139,7 +139,7 @@ export const Web: FC<IWebProps> = (props) => {
       const newResultPercent = 100 - newCodePercent
 
       if (wrapperHeight * (newCodePercent / 100) <= 40) return
-      if (wrapperHeight * (newResultPercent / 100) <= 11) return
+      if (wrapperHeight * (newResultPercent / 100) <= 33) return
 
       code.style.height = `${newCodePercent}%`
       res.style.height = `${newResultPercent}%`
@@ -253,12 +253,13 @@ export const Web: FC<IWebProps> = (props) => {
         </div>
         <div className={cls.rowResizer} onPointerDown={resultBlockResize} />
       </div>
-      <div className={cls.result} ref={result}>
-        <div className={cls.frameWrapper}>
-          <PreviewFrame className={cls.frame} css={css} html={html} javaScript={javaScript} />
-        </div>
-        <div className={cls.frameBottom} />
-      </div>
+      <ResultBlock
+        ref={result}
+        css={css}
+        html={html}
+        javaScript={javaScript}
+        className={cls.result}
+      />
     </div>
   )
 }
