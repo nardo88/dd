@@ -1,4 +1,13 @@
-import { FC, forwardRef, useEffect, useRef, useState } from 'react'
+import {
+  FC,
+  ForwardedRef,
+  MutableRefObject,
+  PointerEvent,
+  forwardRef,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 
 import { classNames } from '@shared/helpers/classNames'
 import { Browser } from '@shared/ui/Icons/Browser'
@@ -23,15 +32,53 @@ export const ResultBlock = forwardRef<HTMLDivElement, IResultBlockProps>((props,
   const [activeTerminal, setActiveTerminal] = useState(false)
   const [logs, setLogs] = useState<string[]>([])
 
-  const frame = useRef<HTMLIFrameElement | null>(null)
-  const terminal = useRef<HTMLIFrameElement | null>(null)
+  const frameRef = useRef<HTMLIFrameElement | null>(null)
+  const terminalRef = useRef<HTMLIFrameElement | null>(null)
+
+  const resize = (ev: PointerEvent) => {
+    if (ev?.buttons !== 1 || !frameRef.current || !terminalRef.current || !ref) return
+
+    ev.preventDefault()
+    ;(ev.target as HTMLElement).setPointerCapture(ev.pointerId) // фиксируем указатель
+    document.body.style.userSelect = 'none'
+
+    const refObject = ref as MutableRefObject<HTMLDivElement>
+    const wrapper = refObject.current
+    const frame = frameRef.current
+    const terminal = terminalRef.current
+
+    const tHeight = terminal.getBoundingClientRect().height
+    const wHeight = wrapper.getBoundingClientRect().height
+
+    const posY = ev.clientY
+
+    function dragMove(event: globalThis.PointerEvent) {
+      const pixelDif = posY - event.clientY
+      const terminalHeight = tHeight + pixelDif
+      if (terminalHeight < 25 || terminalHeight > wHeight - 34) return
+      terminal.style.height = `${terminalHeight}px`
+      frame.style.height = `calc(100% - ${terminalHeight}px)`
+    }
+
+    const dragEnd = () => {
+      document.body.style.userSelect = ''
+      ;(ev.target as HTMLElement).releasePointerCapture(ev.pointerId)
+      window.removeEventListener('pointermove', dragMove)
+      window.removeEventListener('pointerup', dragEnd)
+      window.removeEventListener('pointercancel', dragEnd)
+    }
+
+    window.addEventListener('pointermove', dragMove)
+    window.addEventListener('pointerup', dragEnd)
+    window.addEventListener('pointercancel', dragEnd)
+  }
 
   useEffect(() => {
-    if (!frame.current) return
+    if (!frameRef.current) return
     if (activeTerminal) {
-      frame.current.style.height = 'calc(100% - 285px)'
+      frameRef.current.style.height = 'calc(100% - 285px)'
     } else {
-      frame.current.style.height = 'calc(100% - 35px)'
+      frameRef.current.style.height = 'calc(100% - 35px)'
     }
   }, [activeTerminal])
 
@@ -39,16 +86,19 @@ export const ResultBlock = forwardRef<HTMLDivElement, IResultBlockProps>((props,
     <div className={classNames(cls.result, {}, [className])} ref={ref}>
       <div className={cls.frameWrapper}>
         <PreviewFrame
-          getRef={(r) => (frame.current = r)}
+          getRef={(r) => (frameRef.current = r)}
           className={cls.frame}
           css={css}
           html={html}
           javaScript={javaScript}
         />
         {activeTerminal && (
-          <>
-            <SimpleTerminal className={cls.logs} messages={logs} ref={terminal} />
-          </>
+          <SimpleTerminal
+            className={cls.logs}
+            messages={logs}
+            ref={terminalRef}
+            resizeHandler={resize}
+          />
         )}
       </div>
       <div className={cls.frameBottom}>
