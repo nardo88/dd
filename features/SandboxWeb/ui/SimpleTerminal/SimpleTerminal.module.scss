@@ -25,6 +25,10 @@
 
 .message {
   border-bottom: 1px solid var(--color-border);
+
+  * {
+    font-family: 'JetBrains Mono', monospace !important;
+  }
 }
 
 .info {

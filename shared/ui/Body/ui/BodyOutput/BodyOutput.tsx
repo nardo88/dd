@@ -1,13 +1,16 @@
 import { FC } from 'react'
-import cls from './BodyOutput.module.scss'
+
 import { classNames } from '@shared/helpers/classNames'
+import { MarkdownViewer } from '@shared/ui/MarkdownViewer'
+
 import { IBody } from '../..'
 import { MediumText } from '../../../MediumText'
-import { Image } from '../Image/Image'
 import { AsyncCode as Code } from '../Code/Code.async'
-import { Video } from '../Video/Video'
 import { IFrame } from '../IFrame/IFrame'
-import { MarkdownViewer } from '@shared/ui/MarkdownViewer'
+import { Image } from '../Image/Image'
+import { Video } from '../Video/Video'
+
+import cls from './BodyOutput.module.scss'
 
 interface BodyOutputProps {
   className?: string
@@ -32,7 +35,8 @@ export const BodyOutput: FC<BodyOutputProps> = (props) => {
               href={item.value}
               className={cls.downLoad}
               target="_blank"
-              rel="noreferrer">
+              rel="noreferrer"
+            >
               Скачать файл
             </a>
           )}

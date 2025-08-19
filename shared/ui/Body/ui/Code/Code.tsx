@@ -1,11 +1,14 @@
 import { FC, useEffect, useRef, useState } from 'react'
-import { classNames } from '@shared/helpers/classNames'
-import { TimeOutType } from '@shared/types/timeOut'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
-import cls from './Code.module.scss'
-import { IBody } from '../../types'
+
+import { classNames } from '@shared/helpers/classNames'
+import { TimeOutType } from '@shared/types/timeOut'
 import { Sandbox } from '@shared/ui/Sandbox'
+
+import { IBody } from '../../types'
+
+import cls from './Code.module.scss'
 
 export const Code: FC<IBody> = (props) => {
   const { value, settings } = props
@@ -32,7 +35,8 @@ export const Code: FC<IBody> = (props) => {
         <>
           <button
             className={classNames(cls.copyBtn, { [cls.isCopied]: isCopied })}
-            onClick={clickHandler}>
+            onClick={clickHandler}
+          >
             {isCopied ? 'Copied' : 'Copy'}
           </button>
           <SyntaxHighlighter language={settings?.language || 'typescript'} style={oneDark}>

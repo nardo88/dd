@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react'
 
-import { getAllCode } from '@features/SandboxWeb/selectors'
-
+import { compileTS } from '@shared/helpers/compileTS'
 import { createId } from '@shared/helpers/createId/createId'
 import { useAppSelector } from '@shared/hooks/redux'
 
 import { getLogWrapper } from '../../helpers/getLogWrapper'
+import { getAllCode, getSettings } from '../../selectors'
 import { ILog } from '../../types'
 
 import cls from './PreviewFrame.module.scss'
@@ -18,6 +18,7 @@ interface PreviewFrameProps {
 export const PreviewFrame: React.FC<PreviewFrameProps> = (props) => {
   const { getRef, addLog } = props
   const { css, html, javaScript } = useAppSelector(getAllCode)
+  const { useTypeScript } = useAppSelector(getSettings)
 
   const frameRef = useRef<HTMLIFrameElement>(null)
 
@@ -38,7 +39,7 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = (props) => {
 
     // Вставляем JS с логгером
     if (javaScript.trim()) {
-      const scriptTag = `<script>${getLogWrapper(javaScript)}</script>`
+      const scriptTag = `<script>${getLogWrapper(useTypeScript ? compileTS(javaScript) : javaScript)}</script>`
       if (finalHtml.includes('</body>')) {
         finalHtml = finalHtml.replace('</body>', `${scriptTag}</body>`)
       } else {

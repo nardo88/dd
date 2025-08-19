@@ -1,7 +1,6 @@
 import { FC, useEffect, useRef, useState } from 'react'
 
-import * as ts from 'typescript'
-
+import { compileTS } from '@shared/helpers/compileTS'
 import { Button } from '@shared/ui/Button/Button'
 import { CodeEditor } from '@shared/ui/CodeEditor/CodeEditor'
 import { ITerminalRef, Terminal } from '@shared/ui/Terminal/Terminal'
@@ -9,13 +8,6 @@ import { ITerminalRef, Terminal } from '@shared/ui/Terminal/Terminal'
 import { IMainProps } from '../../types'
 
 import cls from './TypeScript.module.scss'
-
-const compileTS = (code: string) => {
-  const result = ts.transpileModule(code, {
-    compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2017 },
-  })
-  return result.outputText
-}
 
 export const TypeScript: FC<IMainProps> = (props) => {
   const { language, code, canRun } = props

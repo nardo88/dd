@@ -11,16 +11,18 @@ import { HTML } from '@shared/ui/Icons/Html'
 import { Js } from '@shared/ui/Icons/Js'
 
 import { minMax } from '../../consts'
-import { getCode, getCurrent } from '../../selectors'
+import { getCode, getCurrent, getSettings } from '../../selectors'
 import { IWebCode, SectionTypes } from '../../types'
 import { ResultBlock } from '../ResultBlock/ResultBlock'
 
 import cls from './Content.module.scss'
 
 export const Content: FC = () => {
+  const dispatch = useAppDispatch()
+
   const code = useAppSelector(getCode)
   const current = useAppSelector(getCurrent)
-  const dispatch = useAppDispatch()
+  const { useTypeScript } = useAppSelector(getSettings)
 
   const container = useRef<HTMLDivElement>(null)
   const result = useRef<HTMLDivElement>(null)
@@ -262,7 +264,7 @@ export const Content: FC = () => {
                   debounce('javaScript', value)
                   dispatch(sandboxWebAction.setCode({ key: 'javaScript', value }))
                 }}
-                language="javascript"
+                language={useTypeScript ? 'typescript' : 'javascript'}
                 onKeyDown={keyDownHandler}
               />
             </div>
