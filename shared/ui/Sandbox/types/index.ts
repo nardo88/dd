@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from 'react'
-
 import { EditorStacks } from '@shared/types/codeEditor'
 
 export type SandboxStacks = Exclude<EditorStacks, 'html' | 'css'>

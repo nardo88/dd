@@ -1,11 +1,13 @@
-import { FC, useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { FC, useEffect, useMemo, useRef, useState } from 'react'
+
+import { getSessionData, sessionAction } from '@entities/User'
+
+import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
+import { ProfileIcon } from '@shared/ui/Icons/Profile'
 
 import cls from './LeftMenu.module.scss'
-import { ProfileIcon } from '@shared/ui/Icons/Profile'
-import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
-import { getSessionData, sessionAction } from '@entities/User'
-import { useRouter } from 'next/router'
 
 export const LeftMenu: FC = () => {
   const { isAuth, isLoad, userData } = useAppSelector(getSessionData)
@@ -25,7 +27,7 @@ export const LeftMenu: FC = () => {
       },
       {
         id: 'sandbox',
-        click: () => push('/sandbox'),
+        click: () => push('/sandbox-list'),
         title: 'Песочница',
       },
       {
@@ -92,7 +94,8 @@ export const LeftMenu: FC = () => {
                   onClick={() => {
                     item.click()
                     closeMenu()
-                  }}>
+                  }}
+                >
                   {item.title}
                 </li>
               ))}

@@ -14,7 +14,7 @@ import { ArticleManagerState } from '@features/ArticleManager'
 import { ArticleState } from '@features/ArticleViewer'
 import { CatalogState } from '@features/Catalog'
 import { LoginInitialState } from '@features/Login'
-import { SandboxState } from '@features/SandboxPage'
+import { SandboxWebState } from '@features/SandboxWeb'
 import { SidebarState } from '@features/Sidebar'
 import { SignupInitialState } from '@features/Signup'
 
@@ -40,7 +40,7 @@ export interface StateSchema {
   sidebar?: SidebarState
   article?: ArticleState
   sandboxList?: SandboxListState
-  sandbox?: SandboxState
+  sandboxWeb?: SandboxWebState
 }
 
 export type StateSchemaKey = keyof StateSchema

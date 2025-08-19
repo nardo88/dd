@@ -9,5 +9,5 @@ interface ITableProps {
 export const Table: FC<ITableProps> = (props) => {
   const { className } = props
 
-  return <div className={cls.table}></div>
+  return <div className={cls.table}>Table</div>
 }

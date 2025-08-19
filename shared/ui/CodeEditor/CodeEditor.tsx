@@ -1,4 +1,4 @@
-import { FC, KeyboardEvent, memo, useEffect, useRef } from 'react'
+import { FC, KeyboardEvent, useEffect, useRef } from 'react'
 
 import { Editor, useMonaco } from '@monaco-editor/react'
 import { emmetHTML } from 'emmet-monaco-es'
