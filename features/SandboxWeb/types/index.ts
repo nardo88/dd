@@ -12,10 +12,17 @@ export interface ILog {
   id: string
 }
 
+export interface ISettings {
+  useTypeScript: boolean
+  useSass: boolean
+}
+
 export interface SandboxWebState {
   code: IWebCode
   allCode: IWebCode
   current: null | SectionTypes
   showTerminal: boolean
   logs: ILog[]
+  settings: ISettings
+  isOpen: boolean
 }

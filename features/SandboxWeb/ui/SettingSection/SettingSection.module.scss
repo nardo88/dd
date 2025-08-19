@@ -1,0 +1,13 @@
+.settingsSection {
+  background: linear-gradient(90deg, rgba(90, 90, 90, 1) 0%, rgba(24, 28, 37, 1) 100%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 10px;
+  border-left: 2px solid var(--color-border);
+}
+
+.title {
+  color: var(--color-white);
+  font-size: 16px;
+}

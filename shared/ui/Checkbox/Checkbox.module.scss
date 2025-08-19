@@ -21,7 +21,6 @@
 .label {
   position: relative;
   display: inline-block;
-  padding-top: 2px;
   padding-left: 8px;
   font-size: 16px;
   line-height: 125%;
@@ -30,31 +29,31 @@
 }
 
 .value {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   border: 1px solid var(--color-border);
   border-radius: 4px;
   position: relative;
-  padding: 6px;
+  padding: 8px;
 
   &:before {
     content: '';
-    width: 12px;
     display: block;
-    height: 12px;
+    width: 14px;
+    height: 14px;
     border-radius: 3px;
     background: var(--color-success);
-    transform: scale(0);
+    transform: translate(-50%, -50%) scale(0);
     position: absolute;
-    left: 2px;
-    top: 2px;
     transition: transform 0.1s ease-in-out;
+    top: 50%;
+    left: 50%;
   }
 }
 
 .value.checked {
   &:before {
-    transform: scale(1);
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 

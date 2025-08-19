@@ -1,10 +1,30 @@
-.btnWrapper {
+.control {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 10px 20px;
+}
 
-  button {
-    padding: 5px 10px;
+.btn {
+  padding: 7px 10px;
+  line-height: 1;
+}
+
+.rightSide {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.setting {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+
+  svg {
+    stroke: var(--color-white);
+    width: 20px;
+    height: 20px;
   }
 }

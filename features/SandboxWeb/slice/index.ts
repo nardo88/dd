@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-import { defaultCode } from '../consts'
-import { ILog, IWebCode, SandboxWebState, SectionTypes } from '../types'
+import { defaultCode, defaultSettings } from '../consts'
+import { ILog, ISettings, IWebCode, SandboxWebState, SectionTypes } from '../types'
 
 const initialState: SandboxWebState = {
   code: defaultCode,
@@ -9,6 +9,8 @@ const initialState: SandboxWebState = {
   current: null,
   showTerminal: false,
   logs: [],
+  settings: defaultSettings,
+  isOpen: false,
 }
 
 const sandboxWebSlice = createSlice({
@@ -34,6 +36,13 @@ const sandboxWebSlice = createSlice({
     },
     addLog(state, action: PayloadAction<ILog>) {
       state.logs.push(action.payload)
+    },
+    setIsOpen(state, action: PayloadAction<boolean>) {
+      state.isOpen = action.payload
+    },
+    setSettings(state, action: PayloadAction<{ key: keyof ISettings; value: boolean }>) {
+      const { key, value } = action.payload
+      state.settings[key] = value
     },
   },
   //   extraReducers(builder) {

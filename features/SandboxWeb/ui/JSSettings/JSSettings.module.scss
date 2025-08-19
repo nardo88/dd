@@ -1,0 +1,7 @@
+.checkbox {
+  & > label {
+    span:nth-of-type(2) {
+      color: var(--color-white);
+    }
+  }
+}

@@ -28,7 +28,8 @@ export const Checkbox: FC<IProps> = ({
         className={classNames(cls.wrapper, {
           [cls.disabled]: disabled,
           [cls.error]: !!errorText,
-        })}>
+        })}
+      >
         <input
           type="checkbox"
           checked={checked}
@@ -37,7 +38,7 @@ export const Checkbox: FC<IProps> = ({
         />
         <span className={classNames(cls.value, { [cls.checked]: checked })} />
 
-        {label && <span className={classNames(cls.label)}>{label}</span>}
+        {label && <span className={cls.label}>{label}</span>}
       </label>
       {errorText && (
         <Text className={classNames(cls.errorText, {}, [])} variant={TextVariant.ERROR}>

@@ -1,0 +1,57 @@
+.settings {
+  & > div {
+    border: 2px solid var(--color-border);
+    background: var(--color-primary);
+
+    & > div:nth-child(1) {
+      p {
+        color: var(--color-white);
+      }
+
+      svg path {
+        fill: var(--color-white);
+        stroke: var(--color-white);
+      }
+    }
+  }
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 16px;
+}
+
+.sidebar {
+}
+
+.menuList {
+}
+
+.menuItem {
+  padding: 7px;
+  line-height: 1;
+  color: var(--color-white);
+  cursor: pointer;
+  border-left: 4px solid transparent;
+  transition: background 0.2s;
+
+  &:hover {
+    background: var(--color-secondary);
+  }
+}
+
+.active {
+  background: var(--color-secondary);
+  border-left-color: var(--color-success);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.saveBtn {
+  margin-left: auto;
+}
