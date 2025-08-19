@@ -9,6 +9,7 @@ import { CodeEditor } from '@shared/ui/CodeEditor/CodeEditor'
 import { Css } from '@shared/ui/Icons/Css'
 import { HTML } from '@shared/ui/Icons/Html'
 import { Js } from '@shared/ui/Icons/Js'
+import { Ts } from '@shared/ui/Icons/Ts'
 
 import { minMax } from '../../consts'
 import { getCode, getCurrent, getSettings } from '../../selectors'
@@ -253,8 +254,8 @@ export const Content: FC = () => {
             />
             <div className={cls.codeWrapper}>
               <div className={cls.iconWrapper} onClick={() => collapseSection('js')}>
-                <span className={cls.stackIcon}>JS</span>
-                <Js />
+                <span className={cls.stackIcon}>{useTypeScript ? 'TS' : 'JS'}</span>
+                {useTypeScript ? <Ts /> : <Js />}
               </div>
               <CodeEditor
                 wrapper={container.current}

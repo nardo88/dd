@@ -3,9 +3,6 @@ import { useStore } from 'react-redux'
 
 import { ReduxStoreWithManager } from '@app/redux'
 
-import { useAppSelector } from '@shared/hooks/redux'
-
-import { getIsOpen } from '../../selectors'
 import { sandboxWebReducer } from '../../slice'
 import { Content } from '../Content/Content'
 import { Control } from '../Control/Control'
