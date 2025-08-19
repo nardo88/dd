@@ -2,18 +2,13 @@ import { FC, useEffect, useRef, useState } from 'react'
 
 import * as ts from 'typescript'
 
-import { Stacks } from '@shared/types/sandbox'
 import { Button } from '@shared/ui/Button/Button'
 import { CodeEditor } from '@shared/ui/CodeEditor/CodeEditor'
 import { ITerminalRef, Terminal } from '@shared/ui/Terminal/Terminal'
 
-import cls from './TypeScript.module.scss'
+import { IMainProps } from '../../types'
 
-interface ITypeScriptProps {
-  language: Stacks
-  code?: string
-  canRun?: boolean
-}
+import cls from './TypeScript.module.scss'
 
 const compileTS = (code: string) => {
   const result = ts.transpileModule(code, {
@@ -22,7 +17,7 @@ const compileTS = (code: string) => {
   return result.outputText
 }
 
-export const TypeScript: FC<ITypeScriptProps> = (props) => {
+export const TypeScript: FC<IMainProps> = (props) => {
   const { language, code, canRun } = props
   const [value, setValue] = useState(code || '')
   const [isRunning, setIsRunning] = useState(false)

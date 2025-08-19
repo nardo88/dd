@@ -1,9 +1,9 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 import { defaultFilter } from '../consts'
-import { SandboxState, StackType } from '../types'
+import { SandboxListState, StackType } from '../types'
 
-const initialState: SandboxState = {
+const initialState: SandboxListState = {
   currentPage: 1,
   data: [],
   filters: defaultFilter,
@@ -11,8 +11,8 @@ const initialState: SandboxState = {
   total: 0,
 }
 
-const sandboxSlice = createSlice({
-  name: 'sandbox',
+const sandboxListSlice = createSlice({
+  name: 'sandboxList',
   initialState,
   reducers: {
     changeTitleFilter(state, action: PayloadAction<string>) {
@@ -24,5 +24,5 @@ const sandboxSlice = createSlice({
   },
 })
 
-export const { actions: sandboxAction } = sandboxSlice
-export const { reducer: sandboxReducer } = sandboxSlice
+export const { actions: sandboxListAction } = sandboxListSlice
+export const { reducer: sandboxListReducer } = sandboxListSlice

@@ -1,19 +1,14 @@
 import { type FC, useRef, useState } from 'react'
 
-import { Stacks } from '@shared/types/sandbox'
 import { Button } from '@shared/ui/Button/Button'
 import { CodeEditor } from '@shared/ui/CodeEditor/CodeEditor'
 import { type ITerminalRef, Terminal } from '@shared/ui/Terminal/Terminal'
 
+import { IMainProps } from '../../types'
+
 import cls from './Php.module.scss'
 
-interface IJavaScriptProps {
-  language: Stacks
-  code?: string
-  canRun?: boolean
-}
-
-export const Php: FC<IJavaScriptProps> = (props) => {
+export const Php: FC<IMainProps> = (props) => {
   const { language, canRun, code } = props
 
   const [value, setValue] = useState(code || '')

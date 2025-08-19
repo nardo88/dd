@@ -1,20 +1,20 @@
-import { Stacks } from '@shared/types/sandbox'
+import { SandboxStacks } from '@shared/ui/Sandbox'
 
-export type StackType = Stacks | 'all'
+export type StackType = SandboxStacks | 'web'
 
 export interface IFilter {
   title: string
-  type: StackType
+  type: StackType | 'all'
 }
 
 export interface IData {
   _id: string
   title: string
-  type: Stacks
+  type: StackType
   updatedAt: number
 }
 
-export interface SandboxState {
+export interface SandboxListState {
   currentPage: number
   total: number
   filters: IFilter

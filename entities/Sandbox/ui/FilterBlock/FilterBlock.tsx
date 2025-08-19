@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { FC, useMemo, useState } from 'react'
 
-import { sandboxAction } from '@entities/Sandbox/slice'
+import { sandboxListAction } from '@entities/Sandbox/slice'
 
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
 import useDebounce from '@shared/hooks/useDebounce'
@@ -35,7 +35,7 @@ export const FilterBlock: FC = () => {
   )
 
   const debounce = useDebounce((v: string) => {
-    dispatch(sandboxAction.changeTitleFilter(v))
+    dispatch(sandboxListAction.changeTitleFilter(v))
   }, 300)
 
   return (
@@ -53,7 +53,7 @@ export const FilterBlock: FC = () => {
         options={stackOptions}
         value={stackOptions.find((i) => i.id === stack)}
         onChange={(v) => {
-          dispatch(sandboxAction.changeStackFilter(v.id as StackType))
+          dispatch(sandboxListAction.changeStackFilter(v.id as StackType))
         }}
       />
       <DropListButton className={cls.addBtn} options={options}>

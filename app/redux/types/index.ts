@@ -1,3 +1,6 @@
+import { NotificationSchema } from '@entities/Notifications'
+import { SandboxListState } from '@entities/Sandbox'
+import { SessionSchema } from '@entities/User'
 import {
   AnyAction,
   CombinedState,
@@ -5,17 +8,17 @@ import {
   Reducer,
   ReducersMapObject,
 } from '@reduxjs/toolkit'
-import store from '../Store'
-import { SessionSchema } from '@entities/User'
-import { LoginInitialState } from '@features/Login'
-import { SignupInitialState } from '@features/Signup'
-import { CatalogState } from '@features/Catalog'
+
 import { ArticleEditorState } from '@features/ArticleEditor'
 import { ArticleManagerState } from '@features/ArticleManager'
-import { SidebarState } from '@features/Sidebar'
 import { ArticleState } from '@features/ArticleViewer'
-import { NotificationSchema } from '@entities/Notifications'
-import { SandboxState } from '@entities/Sandbox'
+import { CatalogState } from '@features/Catalog'
+import { LoginInitialState } from '@features/Login'
+import { SandboxState } from '@features/SandboxPage'
+import { SidebarState } from '@features/Sidebar'
+import { SignupInitialState } from '@features/Signup'
+
+import store from '../Store'
 
 // тип store
 export type RootState = ReturnType<typeof store.getState>
@@ -36,6 +39,7 @@ export interface StateSchema {
   articleManager?: ArticleManagerState
   sidebar?: SidebarState
   article?: ArticleState
+  sandboxList?: SandboxListState
   sandbox?: SandboxState
 }
 

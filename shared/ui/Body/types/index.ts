@@ -1,4 +1,4 @@
-import { Stacks } from '@shared/types/sandbox'
+import { SandboxStacks } from '@shared/ui/Sandbox'
 
 export type BodyItemType =
   | 'markdown'
@@ -11,7 +11,7 @@ export type BodyItemType =
   | 'terminal'
 
 export interface IBodySetting {
-  language?: Stacks
+  language?: SandboxStacks
   needTerminal?: boolean
   canEdit?: boolean
 }

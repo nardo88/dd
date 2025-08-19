@@ -2,8 +2,8 @@ import { FC, useEffect } from 'react'
 import { useStore } from 'react-redux'
 
 import { ReduxStoreWithManager } from '@app/redux'
-import { sandboxReducer } from '@entities/Sandbox/slice'
 
+import { sandboxListReducer } from '../../slice'
 import { FilterBlock } from '../FilterBlock/FilterBlock'
 import { Table } from '../Table/Table'
 
@@ -13,11 +13,11 @@ export const Main: FC = () => {
   const store = useStore() as ReduxStoreWithManager
 
   useEffect(() => {
-    store.reducerManager.add('sandbox', sandboxReducer)
-    store.dispatch({ type: 'sandbox' })
+    store.reducerManager.add('sandboxList', sandboxListReducer)
+    store.dispatch({ type: 'sandboxList' })
 
     return () => {
-      store.reducerManager.remove('sandbox')
+      store.reducerManager.remove('sandboxList')
     }
   }, [store])
 

@@ -1,10 +1,10 @@
-import { FC, useEffect, useRef } from 'react'
+import { FC, KeyboardEvent, memo, useEffect, useRef } from 'react'
 
-import { Editor } from '@monaco-editor/react'
+import { Editor, useMonaco } from '@monaco-editor/react'
 import { emmetHTML } from 'emmet-monaco-es'
 
 import { classNames } from '@shared/helpers/classNames'
-import { Stacks } from '@shared/types/sandbox'
+import { EditorStacks } from '@shared/types/codeEditor'
 
 import cls from './CodeEditor.module.scss'
 
@@ -12,21 +12,27 @@ interface CodeEditorProps {
   className?: string
   value: string
   onChange: (value: string) => void
-  language?: Stacks
+  onKeyDown?: (e: any) => void
+  language?: EditorStacks
   wrapper?: HTMLElement | null
 }
 
-export const CodeEditor: FC<CodeEditorProps> = (props) => {
-  const { className, onChange, value, language = 'typescript', wrapper } = props
+type MonacoInstance = ReturnType<typeof useMonaco>
 
+export const CodeEditor: FC<CodeEditorProps> = (props) => {
+  const { className, onChange, value, language = 'typescript', wrapper, onKeyDown } = props
   const editorRef = useRef<any>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  const handleEditorDidMount = (editor: any, monaco: any) => {
+  const handleEditorDidMount = (editor: MonacoInstance, monaco: any) => {
     editorRef.current = editor
     if (language === 'html') {
       emmetHTML(monaco)
     }
+
+    editor.onKeyDown((e: KeyboardEvent) => {
+      if (onKeyDown) onKeyDown(e)
+    })
   }
 
   useEffect(() => {

@@ -7,16 +7,16 @@ import { Css } from '@shared/ui/Icons/Css'
 import { HTML } from '@shared/ui/Icons/Html'
 import { Js } from '@shared/ui/Icons/Js'
 
-import { IAllCode } from '../../types'
+import { IWebCode, SectionTypes } from '../../types'
 import { ResultBlock } from '../ResultBlock/ResultBlock'
 
-import cls from './Web.module.scss'
+import cls from './Main.module.scss'
 
-interface IWebProps {
-  code?: string
+interface IMainProps {
+  className?: string
+  code: IWebCode
+  onChange: (key: keyof IWebCode, value: string) => void
 }
-
-type SectionTypes = 'html' | 'css' | 'js'
 
 const minMax = {
   html: { min: 25, max: 31 },
@@ -24,13 +24,10 @@ const minMax = {
   js: { min: 36 },
 }
 
-export const Web: FC<IWebProps> = (props) => {
-  const { code } = props
-  const [html, setHtml] = useState('')
-  const [css, setCss] = useState('')
-  const [javaScript, setJavaScript] = useState('')
+export const Main: FC<IMainProps> = (props) => {
+  const { code, onChange } = props
   const [current, setCurrent] = useState<SectionTypes | null>(null)
-  const [allCode, setAllCode] = useState<IAllCode>({ css, html, javaScript })
+  const [allCode, setAllCode] = useState<IWebCode>(code)
 
   const container = useRef<HTMLDivElement>(null)
   const result = useRef<HTMLDivElement>(null)
@@ -39,7 +36,7 @@ export const Web: FC<IWebProps> = (props) => {
   const jsRef = useRef<HTMLDivElement>(null)
   const web = useRef<HTMLDivElement>(null)
 
-  const changeAllCode = (field: keyof IAllCode, value: string) => {
+  const changeAllCode = (field: keyof IWebCode, value: string) => {
     setAllCode((p) => ({ ...p, [field]: value }))
   }
 
@@ -171,6 +168,12 @@ export const Web: FC<IWebProps> = (props) => {
     setCurrent((p) => (p === section ? null : section))
   }
 
+  const keyDownHandler = (e: KeyboardEvent) => {
+    if (e.ctrlKey && e.code === 'KeyS') {
+      e.preventDefault()
+    }
+  }
+
   useEffect(() => {
     if (!container.current || !htmlRef.current || !cssRef.current || !jsRef.current) return
     const wrapperW = container.current.getBoundingClientRect().width
@@ -211,12 +214,13 @@ export const Web: FC<IWebProps> = (props) => {
               <CodeEditor
                 wrapper={container.current}
                 className={cls.codeEditor}
-                value={html}
+                value={code.html}
                 onChange={(value) => {
-                  setHtml(value)
                   debounce('html', value)
+                  onChange('html', value)
                 }}
                 language="html"
+                onKeyDown={keyDownHandler}
               />
             </div>
           </div>
@@ -235,12 +239,13 @@ export const Web: FC<IWebProps> = (props) => {
               <CodeEditor
                 wrapper={container.current}
                 className={cls.codeEditor}
-                value={css}
+                value={code.css}
                 onChange={(value) => {
-                  setCss(value)
                   debounce('css', value)
+                  onChange('css', value)
                 }}
                 language="css"
+                onKeyDown={keyDownHandler}
               />
             </div>
           </div>
@@ -259,12 +264,13 @@ export const Web: FC<IWebProps> = (props) => {
               <CodeEditor
                 wrapper={container.current}
                 className={cls.codeEditor}
-                value={javaScript}
+                value={code.javaScript}
                 onChange={(value) => {
-                  setJavaScript(value)
                   debounce('javaScript', value)
+                  onChange('javaScript', value)
                 }}
                 language="javascript"
+                onKeyDown={keyDownHandler}
               />
             </div>
           </div>

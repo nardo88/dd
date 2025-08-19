@@ -15,7 +15,7 @@ import { Browser } from '@shared/ui/Icons/Browser'
 import { TerminalIcon } from '@shared/ui/Icons/TerminalIcon'
 import { Terminal } from '@shared/ui/Terminal/Terminal'
 
-import { IAllCode, ILog } from '../../types'
+import { ILog, IWebCode } from '../../types'
 import { PreviewFrame } from '../PreviewFrame/PreviewFrame'
 import { SimpleTerminal } from '../SimpleTerminal/SimpleTerminal'
 
@@ -23,7 +23,7 @@ import cls from './ResultBlock.module.scss'
 
 interface IResultBlockProps {
   className?: string
-  code: IAllCode
+  code: IWebCode
 }
 
 export const ResultBlock = forwardRef<HTMLDivElement, IResultBlockProps>((props, ref) => {
@@ -83,9 +83,6 @@ export const ResultBlock = forwardRef<HTMLDivElement, IResultBlockProps>((props,
     setTimeout(() => {
       if (!terminalRef.current) return
       const list = terminalRef.current.childNodes[1] as Element
-      // @ts-ignore
-      window.list = list
-      console.log(1)
       list.scrollTo(0, list.clientHeight + 999)
     })
   }

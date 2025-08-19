@@ -1,16 +1,17 @@
+import { Dispatch, SetStateAction } from 'react'
+
+import { EditorStacks } from '@shared/types/codeEditor'
+
+export type SandboxStacks = Exclude<EditorStacks, 'html' | 'css'>
+
 export interface IExecutorStrategy {
   init: () => void
   run: (code: string) => Promise<string>
 }
 
-export interface IAllCode {
-  javaScript: string
-  html: string
-  css: string
-}
-
-export interface ILog {
-  type: 'info' | 'error'
-  message: string
-  id: string
+export interface IMainProps {
+  className?: string
+  language: SandboxStacks
+  canRun?: boolean
+  code: string
 }
