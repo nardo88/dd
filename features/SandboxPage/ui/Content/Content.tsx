@@ -20,7 +20,12 @@ export const Content: FC<IContentProps> = (props) => {
     <>
       {type === 'web' && <WebSandbox code={code as IWebCode} onChange={() => {}} />}
       {isSandboxStacks(type) && (
-        <Sandbox code={code as string} className={cls.sandbox} language={type as SandboxStacks} />
+        <Sandbox
+          code={typeof code === 'string' ? code : ''}
+          className={cls.sandbox}
+          language={type as SandboxStacks}
+          canRun
+        />
       )}
     </>
   )
