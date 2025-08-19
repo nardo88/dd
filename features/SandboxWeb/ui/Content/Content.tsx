@@ -9,6 +9,7 @@ import { CodeEditor } from '@shared/ui/CodeEditor/CodeEditor'
 import { Css } from '@shared/ui/Icons/Css'
 import { HTML } from '@shared/ui/Icons/Html'
 import { Js } from '@shared/ui/Icons/Js'
+import { SCSS } from '@shared/ui/Icons/SCSS'
 import { Ts } from '@shared/ui/Icons/Ts'
 
 import { minMax } from '../../consts'
@@ -23,7 +24,7 @@ export const Content: FC = () => {
 
   const code = useAppSelector(getCode)
   const current = useAppSelector(getCurrent)
-  const { useTypeScript } = useAppSelector(getSettings)
+  const { useTypeScript, useSass } = useAppSelector(getSettings)
 
   const container = useRef<HTMLDivElement>(null)
   const result = useRef<HTMLDivElement>(null)
@@ -229,8 +230,8 @@ export const Content: FC = () => {
             />
             <div className={cls.codeWrapper}>
               <div className={cls.iconWrapper} onClick={() => collapseSection('css')}>
-                <span className={cls.stackIcon}>CSS</span>
-                <Css />
+                <span className={cls.stackIcon}>{useSass ? 'SCSS' : 'CSS'}</span>
+                {useSass ? <SCSS /> : <Css />}
               </div>
               <CodeEditor
                 wrapper={container.current}
@@ -240,7 +241,7 @@ export const Content: FC = () => {
                   debounce('css', value)
                   dispatch(sandboxWebAction.setCode({ key: 'css', value }))
                 }}
-                language="css"
+                language={useSass ? 'scss' : 'css'}
                 onKeyDown={keyDownHandler}
               />
             </div>

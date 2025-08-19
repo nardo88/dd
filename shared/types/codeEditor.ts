@@ -1,1 +1,1 @@
-export type EditorStacks = 'javascript' | 'php' | 'typescript' | 'python' | 'html' | 'css'
+export type EditorStacks = 'javascript' | 'php' | 'typescript' | 'python' | 'html' | 'css' | 'scss'

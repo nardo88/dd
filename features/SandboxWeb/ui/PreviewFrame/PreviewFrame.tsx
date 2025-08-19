@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react'
 
+import { compileSCSS } from '@shared/helpers/compileSCSS'
 import { compileTS } from '@shared/helpers/compileTS'
 import { createId } from '@shared/helpers/createId/createId'
 import { useAppSelector } from '@shared/hooks/redux'
@@ -18,7 +19,7 @@ interface PreviewFrameProps {
 export const PreviewFrame: React.FC<PreviewFrameProps> = (props) => {
   const { getRef, addLog } = props
   const { css, html, javaScript } = useAppSelector(getAllCode)
-  const { useTypeScript } = useAppSelector(getSettings)
+  const { useTypeScript, useSass } = useAppSelector(getSettings)
 
   const frameRef = useRef<HTMLIFrameElement>(null)
 
@@ -29,7 +30,7 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = (props) => {
 
     // Вставляем CSS
     if (css.trim()) {
-      const styleTag = `<style>${css}</style>`
+      const styleTag = `<style>${useSass ? compileSCSS(css) : css}</style>`
       if (finalHtml.includes('</head>')) {
         finalHtml = finalHtml.replace('</head>', `${styleTag}</head>`)
       } else {
@@ -55,7 +56,7 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = (props) => {
     return () => {
       URL.revokeObjectURL(url)
     }
-  }, [html, css, javaScript])
+  }, [html, css, javaScript, useTypeScript, useSass])
 
   // Приём сообщений из iframe
   useEffect(() => {
