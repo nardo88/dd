@@ -5,6 +5,7 @@ export const defaultCode: IWebCode = { css: '', html: '', javaScript: '' }
 export const defaultSettings: ISettings = {
   useTypeScript: false,
   useSass: false,
+  useReact: false,
 }
 
 export const minMax = {
@@ -12,3 +13,5 @@ export const minMax = {
   css: { min: 31, max: 37 },
   js: { min: 36 },
 }
+
+export const reactRender = '\nReactDOM.createRoot(document.getElementById("root")).render(<App />)'

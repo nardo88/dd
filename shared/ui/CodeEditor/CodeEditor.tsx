@@ -1,6 +1,6 @@
 import { FC, KeyboardEvent, useEffect, useRef } from 'react'
 
-import { Editor, useMonaco } from '@monaco-editor/react'
+import { Editor } from '@monaco-editor/react'
 import { emmetHTML } from 'emmet-monaco-es'
 
 import { classNames } from '@shared/helpers/classNames'
@@ -17,17 +17,31 @@ interface CodeEditorProps {
   wrapper?: HTMLElement | null
 }
 
-type MonacoInstance = ReturnType<typeof useMonaco>
-
 export const CodeEditor: FC<CodeEditorProps> = (props) => {
   const { className, onChange, value, language = 'typescript', wrapper, onKeyDown } = props
   const editorRef = useRef<any>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  const handleEditorDidMount = (editor: MonacoInstance, monaco: any) => {
+  const handleEditorDidMount = (editor: any, monacoInstance: any) => {
     editorRef.current = editor
+
     if (language === 'html') {
-      emmetHTML(monaco)
+      emmetHTML(monacoInstance)
+    }
+
+    // Настройка JSX для TS
+    if (language === 'typescript' && monacoInstance) {
+      monacoInstance.languages.typescript.typescriptDefaults.setCompilerOptions({
+        jsx: monacoInstance.languages.typescript.JsxEmit.React,
+        target: monacoInstance.languages.typescript.ScriptTarget.ESNext,
+        allowJs: true,
+      })
+
+      // Простая заглушка для React/ReactDOM типов
+      monacoInstance.languages.typescript.typescriptDefaults.addExtraLib(`
+        declare module 'react';
+        declare module 'react-dom';
+      `)
     }
 
     editor.onKeyDown((e: KeyboardEvent) => {
@@ -40,9 +54,7 @@ export const CodeEditor: FC<CodeEditorProps> = (props) => {
     const container = containerRef.current
 
     const resizeObserver = new ResizeObserver(() => {
-      if (editorRef.current) {
-        editorRef.current.layout()
-      }
+      editorRef.current?.layout()
     })
 
     resizeObserver.observe(container)
@@ -51,16 +63,11 @@ export const CodeEditor: FC<CodeEditorProps> = (props) => {
 
   useEffect(() => {
     const resizeHandler = () => {
-      if (editorRef.current) {
-        editorRef.current.layout()
-      }
+      editorRef.current?.layout()
     }
 
     window.addEventListener('resize', resizeHandler)
-
-    return () => {
-      window.removeEventListener('resize', resizeHandler)
-    }
+    return () => window.removeEventListener('resize', resizeHandler)
   }, [wrapper])
 
   return (
@@ -68,10 +75,10 @@ export const CodeEditor: FC<CodeEditorProps> = (props) => {
       <Editor
         key={language}
         defaultLanguage={language}
-        onMount={handleEditorDidMount}
         language={language}
         value={value}
-        onChange={(value) => onChange(value || '')}
+        onMount={handleEditorDidMount}
+        onChange={(v) => onChange(v || '')}
         height="100%"
         theme="vs-dark"
         options={{

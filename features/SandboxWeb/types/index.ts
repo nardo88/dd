@@ -15,6 +15,7 @@ export interface ILog {
 export interface ISettings {
   useTypeScript: boolean
   useSass: boolean
+  useReact: boolean
 }
 
 export interface SandboxWebState {

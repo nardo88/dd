@@ -1,3 +1,9 @@
+.jSSettings {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .checkbox {
   & > label {
     span:nth-of-type(2) {

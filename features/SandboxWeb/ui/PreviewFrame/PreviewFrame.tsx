@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react'
 
 import { compileSCSS } from '@shared/helpers/compileSCSS'
-import { compileTS } from '@shared/helpers/compileTS'
 import { createId } from '@shared/helpers/createId/createId'
 import { useAppSelector } from '@shared/hooks/redux'
 
@@ -19,7 +18,7 @@ interface PreviewFrameProps {
 export const PreviewFrame: React.FC<PreviewFrameProps> = (props) => {
   const { getRef, addLog } = props
   const { css, html, javaScript } = useAppSelector(getAllCode)
-  const { useTypeScript, useSass } = useAppSelector(getSettings)
+  const { useTypeScript, useSass, useReact } = useAppSelector(getSettings)
 
   const frameRef = useRef<HTMLIFrameElement>(null)
 
@@ -40,7 +39,20 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = (props) => {
 
     // Вставляем JS с логгером
     if (javaScript.trim()) {
-      const scriptTag = `<script>${getLogWrapper(useTypeScript ? compileTS(javaScript) : javaScript)}</script>`
+      const scriptTag = `
+      ${
+        useReact
+          ? `
+        <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+        <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+        
+        `
+          : ''
+      }
+      
+      <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+      <script type="text/babel" data-presets="env,react,typescript" >${getLogWrapper(javaScript)}</script>
+      `
       if (finalHtml.includes('</body>')) {
         finalHtml = finalHtml.replace('</body>', `${scriptTag}</body>`)
       } else {
@@ -56,7 +68,7 @@ export const PreviewFrame: React.FC<PreviewFrameProps> = (props) => {
     return () => {
       URL.revokeObjectURL(url)
     }
-  }, [html, css, javaScript, useTypeScript, useSass])
+  }, [html, css, javaScript, useTypeScript, useSass, useReact])
 
   // Приём сообщений из iframe
   useEffect(() => {
