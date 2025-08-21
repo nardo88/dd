@@ -5,8 +5,8 @@ export type StackType = SandboxStacks | 'web'
 export interface IData {
   _id: string
   title: string
-  type: StackType
   updatedAt: number
+  stack: 'javaScript' | 'typeScript' | 'react'
 }
 
 export interface SandboxListState {
@@ -15,4 +15,5 @@ export interface SandboxListState {
   filter: string
   isLoading: boolean
   data: IData[]
+  error: null | string
 }
