@@ -9,3 +9,4 @@ export const getTerminalState = (state: StateSchema) => !!state.sandboxWeb?.show
 export const getLogs = (state: StateSchema) => state.sandboxWeb?.logs || []
 export const getIsOpen = (state: StateSchema) => !!state.sandboxWeb?.isOpen
 export const getSettings = (state: StateSchema) => state.sandboxWeb?.settings || defaultSettings
+export const getError = (state: StateSchema) => state.sandboxWeb?.error || null

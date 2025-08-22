@@ -26,4 +26,6 @@ export interface SandboxWebState {
   logs: ILog[]
   settings: ISettings
   isOpen: boolean
+  isLoading: boolean
+  error: string | null
 }
