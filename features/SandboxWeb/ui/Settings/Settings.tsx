@@ -10,10 +10,11 @@ import { Popup } from '@shared/ui/Popup/Popup'
 import { getIsOpen } from '../../selectors'
 import { CSSSettings } from '../CSSSettings/CSSSettings'
 import { JSSettings } from '../JSSettings/JSSettings'
+import { MainSettings } from '../MainSettings/MainSettings'
 
 import cls from './Settings.module.scss'
 
-type MenuVariant = 'css' | 'js'
+type MenuVariant = 'css' | 'js' | 'main'
 
 interface IMenuItem {
   id: MenuVariant
@@ -21,6 +22,7 @@ interface IMenuItem {
 }
 
 const menuList: IMenuItem[] = [
+  { id: 'main', title: 'Общие' },
   { id: 'js', title: 'JS' },
   { id: 'css', title: 'CSS' },
 ]
@@ -29,7 +31,7 @@ export const Settings: FC = () => {
   const dispatch = useAppDispatch()
   const isOpen = useAppSelector(getIsOpen)
 
-  const [active, setActive] = useState<MenuVariant>('js')
+  const [active, setActive] = useState<MenuVariant>('main')
 
   const closeRef = useRef<null | (() => void)>(null)
 
@@ -58,6 +60,7 @@ export const Settings: FC = () => {
           </ul>
         </div>
         <div className={cls.content}>
+          {active === 'main' && <MainSettings />}
           {active === 'js' && <JSSettings />}
           {active === 'css' && <CSSSettings />}
           <Button onClick={() => closeRef.current?.()} className={cls.saveBtn}>

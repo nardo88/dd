@@ -1,6 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 import { getSandboxList } from '../thunks/getSandboxList'
+import { remove } from '../thunks/removeSandbox'
 import { SandboxListState } from '../types'
 
 const initialState: SandboxListState = {
@@ -25,6 +26,7 @@ const sandboxListSlice = createSlice({
   },
   extraReducers(builder) {
     builder
+      // Получение списка
       .addCase(getSandboxList.pending, (state) => {
         state.isLoading = true
       })
@@ -34,6 +36,17 @@ const sandboxListSlice = createSlice({
         state.isLoading = false
       })
       .addCase(getSandboxList.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload as string
+      })
+      // Удаление
+      .addCase(remove.pending, (state) => {
+        state.isLoading = true
+      })
+      .addCase(remove.fulfilled, (state, action) => {
+        state.isLoading = false
+      })
+      .addCase(remove.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload as string
       })

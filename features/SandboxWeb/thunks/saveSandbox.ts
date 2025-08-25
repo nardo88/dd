@@ -11,25 +11,30 @@ interface IThunkAPI {
 }
 
 interface IOptions {
-  callback: (id: string) => void
+  id: string
   addNotification: (opt: INotificationData) => void
 }
 
-export const create = createAsyncThunk<void, IOptions, IThunkAPI>(
-  'create',
+export const save = createAsyncThunk<void, IOptions, IThunkAPI>(
+  'save',
   async (options, thunkApi) => {
+    const { addNotification, id } = options
     try {
       const state = thunkApi.getState() as StateSchema
       const { code, settings, title } = state.sandboxWeb as SandboxWebState
-      const { data } = await api.post<string>('/sandbox/', {
+      await api.put<string>(`/sandbox/${id}`, {
         ...code,
         js: code.javaScript,
         settings,
         title,
       })
-      options.callback(data)
+      addNotification({
+        message: 'Данные успешно сохранены',
+        type: 'success',
+        delay: 3000,
+      })
     } catch (e: any) {
-      options.addNotification({
+      addNotification({
         message: e?.response?.data?.message || e?.message || 'Ошибка сохранения',
         type: 'error',
         delay: 5000,

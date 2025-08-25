@@ -1,0 +1,11 @@
+.mainSettings {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.input {
+  input {
+    color: var(--color-white);
+  }
+}

@@ -4,6 +4,7 @@ import { FC } from 'react'
 import { useNotification } from '@entities/Notifications'
 
 import { sandboxWebAction } from '@features/SandboxWeb/slice'
+import { save } from '@features/SandboxWeb/thunks/saveSandbox'
 
 import { classNames } from '@shared/helpers/classNames'
 import { useAppDispatch } from '@shared/hooks/redux'
@@ -33,7 +34,12 @@ export const Control: FC<IControlProps> = ({ id }) => {
 
   const saveHandler = () => {
     if (id) {
-      console.log()
+      dispatch(
+        save({
+          addNotification,
+          id,
+        })
+      )
     } else {
       dispatch(
         create({

@@ -9,12 +9,20 @@
 }
 
 .imageWrapper {
+  position: relative;
+  overflow: hidden;
   width: 100%;
 
   img {
     width: 100%;
     object-fit: cover;
     border-radius: 4px;
+  }
+
+  &:hover {
+    .removeWrapper {
+      transform: translateX(0px) rotate(0deg);
+    }
   }
 }
 
@@ -35,4 +43,44 @@
   line-height: 1;
   color: var(--color-secondary);
   margin-left: auto;
+}
+
+.removeWrapper {
+  position: absolute;
+  transform: translateX(30px) rotate(180deg);
+  top: 10px;
+  right: 10px;
+  transition: transform 0.3s;
+
+  svg > path {
+    stroke: var(--color-white);
+  }
+}
+
+.popup {
+  & > div {
+    max-width: 550px;
+  }
+}
+
+.popupText {
+  font-size: 24px;
+}
+
+.popupContent {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+
+  svg {
+    fill: var(--color-error);
+  }
+}
+
+.btnWrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 30px;
 }

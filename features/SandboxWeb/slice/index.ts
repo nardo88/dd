@@ -3,6 +3,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { defaultCode, defaultSettings } from '../consts'
 import { create } from '../thunks/createSandbox'
 import { getData } from '../thunks/getData'
+import { save } from '../thunks/saveSandbox'
 import { ILog, ISettings, IWebCode, SandboxWebState, SectionTypes } from '../types'
 
 const initialState: SandboxWebState = {
@@ -15,6 +16,7 @@ const initialState: SandboxWebState = {
   isOpen: false,
   error: null,
   isLoading: false,
+  title: '',
 }
 
 const sandboxWebSlice = createSlice({
@@ -48,6 +50,9 @@ const sandboxWebSlice = createSlice({
       const { key, value } = action.payload
       state.settings[key] = value
     },
+    setTitle(state, action: PayloadAction<string>) {
+      state.title = action.payload
+    },
   },
   extraReducers(builder) {
     builder
@@ -55,10 +60,11 @@ const sandboxWebSlice = createSlice({
         state.isLoading = true
       })
       .addCase(getData.fulfilled, (state, action) => {
-        const { css, html, js, settings } = action.payload
+        const { css, html, js, settings, title } = action.payload
         state.code = { css, javaScript: js, html }
         state.allCode = { css, javaScript: js, html }
         state.settings = settings
+        state.title = title
         state.isLoading = false
       })
       .addCase(getData.rejected, (state, action) => {
@@ -73,6 +79,17 @@ const sandboxWebSlice = createSlice({
         state.isLoading = false
       })
       .addCase(create.rejected, (state, action) => {
+        state.error = action.payload as string
+        state.isLoading = false
+      })
+      .addCase(save.pending, (state) => {
+        state.error = null
+        state.isLoading = true
+      })
+      .addCase(save.fulfilled, (state) => {
+        state.isLoading = false
+      })
+      .addCase(save.rejected, (state, action) => {
         state.error = action.payload as string
         state.isLoading = false
       })

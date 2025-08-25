@@ -7,7 +7,7 @@ import cls from './SettingSection.module.scss'
 
 interface ISettingSectionProps {
   className?: string
-  title: string
+  title?: string
   children: ReactNode
 }
 

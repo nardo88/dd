@@ -25,6 +25,7 @@ export interface SandboxWebState {
   showTerminal: boolean
   logs: ILog[]
   settings: ISettings
+  title: string
   isOpen: boolean
   isLoading: boolean
   error: string | null
