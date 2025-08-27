@@ -13,7 +13,7 @@ import { SCSS } from '@shared/ui/Icons/SCSS'
 import { Ts } from '@shared/ui/Icons/Ts'
 
 import { minMax } from '../../consts'
-import { getCode, getCurrent, getSettings } from '../../selectors'
+import { getCode, getCurrent, getMobileCurrent, getSettings } from '../../selectors'
 import { IWebCode, SectionTypes } from '../../types'
 import { ResultBlock } from '../ResultBlock/ResultBlock'
 
@@ -24,6 +24,7 @@ export const Content: FC = () => {
 
   const code = useAppSelector(getCode)
   const current = useAppSelector(getCurrent)
+  const mobileCurrent = useAppSelector(getMobileCurrent)
   const { useTypeScript, useSass } = useAppSelector(getSettings)
 
   const container = useRef<HTMLDivElement>(null)
@@ -201,8 +202,41 @@ export const Content: FC = () => {
   return (
     <div className={cls.web} ref={web}>
       <div className={cls.code} ref={container}>
+        <div className={cls.mobileTabs}>
+          <div
+            className={classNames(cls.mobileTabItem, {
+              [cls.mobileTabActive]: mobileCurrent === 'html',
+            })}
+            onClick={() => dispatch(sandboxWebAction.setMobileCurrent('html'))}
+          >
+            <HTML />
+          </div>
+          <div
+            className={classNames(cls.mobileTabItem, {
+              [cls.mobileTabActive]: mobileCurrent === 'css',
+            })}
+            onClick={() => dispatch(sandboxWebAction.setMobileCurrent('css'))}
+          >
+            {useSass ? <SCSS /> : <Css />}
+          </div>
+          <div
+            className={classNames(cls.mobileTabItem, {
+              [cls.mobileTabActive]: mobileCurrent === 'js',
+            })}
+            onClick={() => dispatch(sandboxWebAction.setMobileCurrent('js'))}
+          >
+            {useTypeScript ? <Ts /> : <Js />}
+          </div>
+        </div>
         <div className={cls.codeBlock}>
-          <div ref={htmlRef} className={classNames(cls.codeSection, {}, [cls.transition])}>
+          <div
+            ref={htmlRef}
+            className={classNames(
+              cls.codeSection,
+              { [cls.mobileCodeActive]: mobileCurrent === 'html' },
+              [cls.transition]
+            )}
+          >
             <div className={cls.codeWrapper}>
               <div className={cls.iconWrapper} onClick={() => collapseSection('html')}>
                 <span className={cls.stackIcon}>HTML</span>
@@ -222,7 +256,14 @@ export const Content: FC = () => {
             </div>
           </div>
 
-          <div ref={cssRef} className={classNames(cls.codeSection, {}, [cls.transition])}>
+          <div
+            ref={cssRef}
+            className={classNames(
+              cls.codeSection,
+              { [cls.mobileCodeActive]: mobileCurrent === 'css' },
+              [cls.transition]
+            )}
+          >
             <div
               className={classNames(cls.resizer, {}, [cls.columnResizer])}
               onPointerDown={(e) => codeColumnResize(e, 'html')}
@@ -247,7 +288,14 @@ export const Content: FC = () => {
             </div>
           </div>
 
-          <div ref={jsRef} className={classNames(cls.codeSection, {}, [cls.transition])}>
+          <div
+            ref={jsRef}
+            className={classNames(
+              cls.codeSection,
+              { [cls.mobileCodeActive]: mobileCurrent === 'js' },
+              [cls.transition]
+            )}
+          >
             <div
               className={classNames(cls.resizer, {}, [cls.columnResizer])}
               onPointerDown={(e) => codeColumnResize(e, 'css')}

@@ -32,6 +32,10 @@
   &:last-of-type {
     border-right: none;
   }
+
+  @media (max-width: 768px) {
+    width: 0% !important;
+  }
 }
 
 .transition {
@@ -61,6 +65,10 @@
   border-bottom: none;
   touch-action: none;
   user-select: none;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
 .columnResizer {
@@ -80,6 +88,10 @@
   svg {
     width: 18px;
     height: 18px;
+  }
+
+  @media (max-width: 768px) {
+    display: none;
   }
 }
 
@@ -121,5 +133,39 @@
 @container wrapper (max-width: 60px) {
   .stackIcon {
     display: none;
+  }
+}
+
+.mobileTabs {
+  display: none;
+
+  @media (max-width: 768px) {
+    display: flex;
+    padding: 3px;
+  }
+}
+
+.mobileTabItem {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & > svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.mobileTabActive {
+  background: var(--color-black);
+  border-radius: 4px;
+}
+
+.mobileCodeActive {
+  @media (max-width: 768px) {
+    width: 100% !important;
   }
 }

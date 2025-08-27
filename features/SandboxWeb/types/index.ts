@@ -22,6 +22,7 @@ export interface SandboxWebState {
   code: IWebCode
   allCode: IWebCode
   current: null | SectionTypes
+  mobileCurrent: SectionTypes
   showTerminal: boolean
   logs: ILog[]
   settings: ISettings

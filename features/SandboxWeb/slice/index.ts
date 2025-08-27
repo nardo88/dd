@@ -10,6 +10,7 @@ const initialState: SandboxWebState = {
   code: defaultCode,
   allCode: defaultCode,
   current: null,
+  mobileCurrent: 'html',
   showTerminal: false,
   logs: [],
   settings: defaultSettings,
@@ -52,6 +53,9 @@ const sandboxWebSlice = createSlice({
     },
     setTitle(state, action: PayloadAction<string>) {
       state.title = action.payload
+    },
+    setMobileCurrent(state, action: PayloadAction<SectionTypes>) {
+      state.mobileCurrent = action.payload
     },
   },
   extraReducers(builder) {
