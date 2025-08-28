@@ -30,6 +30,7 @@ export enum Categories {
   algoritms = 'algoritms',
   mediasoup = 'mediasoup',
   webassembly = 'webassembly',
+  svg = 'svg',
 }
 
 interface ICategory {
@@ -69,6 +70,7 @@ const _categories: ICategory[] = [
   { id: Categories.algoritms, title: 'Алгоритмы' },
   { id: Categories.mediasoup, title: 'MediaSoup' },
   { id: Categories.webassembly, title: 'WebAssembly' },
+  { id: Categories.svg, title: 'SVG' },
 ]
 
 export const categories = _categories.sort((a, b) => a.title.localeCompare(b.title))
@@ -94,4 +96,5 @@ export const covers: Partial<Record<Categories, string>> = {
   algoritms: '/img/templates/algoritms.png',
   mediasoup: '/img/templates/mediasoup.png',
   webassembly: '/img/templates/webassembly.jpg',
+  svg: '/img/templates/svg.png',
 }
