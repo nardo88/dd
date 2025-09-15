@@ -1,12 +1,14 @@
 import { useDispatch } from 'react-redux'
-import { notificationAction } from '../slice'
+
 import { createId } from '@shared/helpers/createId/createId'
-import { NotificationType } from '../types'
+
+import { notificationAction } from '../slice'
+import { NotificationTimeoutType, NotificationType } from '../types'
 
 export interface INotificationData {
   message: string
-  type: NotificationType
-  delay?: 5000 | 3000
+  type?: NotificationType
+  delay?: NotificationTimeoutType
 }
 
 export const useNotification = () => {
@@ -14,7 +16,7 @@ export const useNotification = () => {
 
   return {
     addNotification: (opt: INotificationData) => {
-      const { message, type, delay } = opt
+      const { message, type = 'info', delay = 3000 } = opt
       dispatch(notificationAction.add({ id: createId(), type, message, delay }))
     },
   }
