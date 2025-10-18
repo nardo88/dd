@@ -85,6 +85,9 @@ export const CodeEditor: FC<CodeEditorProps> = (props) => {
           fontFamily: 'JetBrains Mono',
           fontSize: 14,
           lineHeight: 24,
+          tabSize: 2, // Размер табуляции в пробелах
+          insertSpaces: true, // Использовать пробелы вместо табов
+          detectIndentation: false, // Отключить автоопределение отступов
           minimap: { enabled: true },
           scrollBeyondLastLine: true,
           renderWhitespace: 'none',
