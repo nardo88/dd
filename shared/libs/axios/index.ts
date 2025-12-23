@@ -18,13 +18,13 @@ api.interceptors.response.use(
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
-      !originalRequest.url.includes('/refresh-token')
+      !originalRequest.url.includes('/session/refresh-token')
     ) {
       // originalRequest._retry = true -защита от цикла (что есть refresh тоже вернет 401)
       originalRequest._retry = true
 
       try {
-        await api.get('/refresh-token', { withCredentials: true })
+        await api.get('/session/refresh-token', { withCredentials: true })
         // повторяем запрос если refresh вернул новую пару
         return api(originalRequest)
       } catch (err) {

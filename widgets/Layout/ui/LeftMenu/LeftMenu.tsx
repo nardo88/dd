@@ -5,18 +5,25 @@ import { FC, useEffect, useMemo, useRef, useState } from 'react'
 import { getSessionData, sessionAction } from '@entities/User'
 
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
+import { api } from '@shared/libs/axios'
 import { ProfileIcon } from '@shared/ui/Icons/Profile'
 
 import cls from './LeftMenu.module.scss'
 
 export const LeftMenu: FC = () => {
   const { isAuth, isLoad, userData } = useAppSelector(getSessionData)
+  const dispatch = useAppDispatch()
   const { push } = useRouter()
   const roles = userData?.roles
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const dispatch = useAppDispatch()
   const ref = useRef<HTMLUListElement>(null)
   const closeMenu = () => setIsOpen(false)
+
+  const logout = () => {
+    api.get('/session/logout').catch(() => null)
+    dispatch(sessionAction.logout())
+    push('/signin')
+  }
 
   const menuItems = useMemo(() => {
     const menu = [
@@ -32,7 +39,7 @@ export const LeftMenu: FC = () => {
       },
       {
         id: 'logout',
-        click: () => dispatch(sessionAction.logout()),
+        click: logout,
         title: 'Выйти',
       },
     ]
