@@ -1,7 +1,18 @@
-import { FC, FormEvent, useEffect } from 'react'
 import Link from 'next/link'
-import { Input, InputTypes } from '@shared/ui/Input'
+import { FC, FormEvent, useEffect } from 'react'
+import { useStore } from 'react-redux'
+
+import { ReduxStoreWithManager } from '@app/redux'
+
+import { signUpThunk } from '@features/Signup/modules/services/signUpThunk'
+
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
+import { Button } from '@shared/ui/Button/Button'
+import { Input, InputTypes } from '@shared/ui/Input'
+import { Loader, LoaderVariants } from '@shared/ui/Loader/Loader'
+import { Text } from '@shared/ui/Text/Text'
+
+import { validateSignUp } from '../../modules/helpers/validate'
 import {
   getEmail,
   getErrorSignUp,
@@ -12,14 +23,8 @@ import {
   signUpValidate,
 } from '../../modules/selector'
 import { signupAction, signupReducer } from '../../modules/slice/signupSlice'
-import { Button } from '@shared/ui/Button/Button'
-import { useStore } from 'react-redux'
-import { ReduxStoreWithManager } from '@app/redux'
-import { Text, TextVariant } from '@shared/ui/Text/Text'
-import { Loader, LoaderVariants } from '@shared/ui/Loader/Loader'
-import { validateSignUp } from '../../modules/helpers/validate'
+
 import cls from './Signup.module.scss'
-import { signUpThunk } from '@features/Signup/modules/services/signUpThunk'
 
 const Signup: FC = () => {
   const dispatch = useAppDispatch()
@@ -58,7 +63,7 @@ const Signup: FC = () => {
   return (
     <div className={cls.signup}>
       <form className={cls.form} onSubmit={submitHandler}>
-        {error && <Text variant={TextVariant.ERROR}>{error}</Text>}
+        {error && <Text variant="error">{error}</Text>}
         <Input
           value={email}
           onChange={(v) => dispatch(signupAction.changeEmail(v))}
@@ -103,7 +108,7 @@ const Signup: FC = () => {
           )}
         </div>
         {result && (
-          <Text variant={TextVariant.SUCCESS} className={cls.result}>
+          <Text variant="success" className={cls.result}>
             {result}
           </Text>
         )}

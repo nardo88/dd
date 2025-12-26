@@ -1,6 +1,8 @@
 import { ChangeEvent, memo } from 'react'
-import { Text, TextVariant } from '@shared/ui/Text/Text'
+
 import { classNames } from '@shared/helpers/classNames'
+import { Text } from '@shared/ui/Text/Text'
+
 import cls from './Input.module.scss'
 
 export enum InputTypes {
@@ -50,7 +52,7 @@ export const Input = memo(
           {...options}
         />
         {errorText && (
-          <Text variant={TextVariant.SMALL} className={cls.error}>
+          <Text variant="small" className={cls.error}>
             {errorText}
           </Text>
         )}

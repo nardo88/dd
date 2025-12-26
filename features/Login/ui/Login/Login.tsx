@@ -1,16 +1,21 @@
-import { FC, FormEvent, useEffect } from 'react'
-import { Input, InputTypes } from '@shared/ui/Input'
-import { getError, getIsLoading, getLogin, getpassword } from '../../modules/selectors'
-import cls from './Login.module.scss'
-import { useSelector, useStore } from 'react-redux'
-import { useAppDispatch } from '@shared/hooks/redux'
-import { loginAction, loginReducer } from '../../modules/slice/LoginSlice'
-import { Button } from '@shared/ui/Button/Button'
 import Link from 'next/link'
+import { FC, FormEvent, useEffect } from 'react'
+import { useSelector, useStore } from 'react-redux'
+
 import { ReduxStoreWithManager } from '@app/redux'
+
 import { loginByEmail } from '@features/Login/modules/asyncThunk'
-import { Text, TextVariant } from '@shared/ui/Text/Text'
+
+import { useAppDispatch } from '@shared/hooks/redux'
+import { Button } from '@shared/ui/Button/Button'
+import { Input, InputTypes } from '@shared/ui/Input'
 import { Loader, LoaderVariants } from '@shared/ui/Loader/Loader'
+import { Text } from '@shared/ui/Text/Text'
+
+import { getError, getIsLoading, getLogin, getpassword } from '../../modules/selectors'
+import { loginAction, loginReducer } from '../../modules/slice/LoginSlice'
+
+import cls from './Login.module.scss'
 
 export const Login: FC = () => {
   const login = useSelector(getLogin)
@@ -40,7 +45,7 @@ export const Login: FC = () => {
   return (
     <div className={cls.login}>
       <form className={cls.form} onSubmit={submitHandler} autoComplete="on">
-        {error && <Text variant={TextVariant.ERROR}>{error}</Text>}
+        {error && <Text variant="error">{error}</Text>}
         <Input
           disabled={isLoading}
           type={InputTypes.EMAIL}

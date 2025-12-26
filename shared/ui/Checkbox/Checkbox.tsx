@@ -41,7 +41,7 @@ export const Checkbox: FC<IProps> = ({
         {label && <span className={cls.label}>{label}</span>}
       </label>
       {errorText && (
-        <Text className={classNames(cls.errorText, {}, [])} variant={TextVariant.ERROR}>
+        <Text className={classNames(cls.errorText, {}, [])} variant="error">
           {errorText}
         </Text>
       )}

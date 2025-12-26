@@ -1,12 +1,16 @@
 import { FC, useEffect } from 'react'
 import { useStore } from 'react-redux'
-import { FilterBlock } from '../FilterBlock/FilterBlock'
-import { catalogAction, catalogReducer } from '../../modules/slice'
-import cls from './Main.module.scss'
+
 import { ReduxStoreWithManager } from '@app/redux'
-import { Articles } from '../Articles/Articles'
-import Pagination from '@shared/ui/Pagination/Pagination'
+
+import { Sidebar } from '@features/Sidebar'
+
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
+import { Loader } from '@shared/ui/Loader/Loader'
+import Pagination from '@shared/ui/Pagination/Pagination'
+import { Text } from '@shared/ui/Text/Text'
+
+import { getArticles } from '../../modules/asyncThunk/getArticles'
 import {
   getCurrentPage,
   getError,
@@ -14,10 +18,11 @@ import {
   getTitleFilterValue,
   getTotal,
 } from '../../modules/selectors'
-import { getArticles } from '../../modules/asyncThunk/getArticles'
-import { Loader } from '@shared/ui/Loader/Loader'
-import { Sidebar } from '@features/Sidebar'
-import { Text, TextVariant } from '@shared/ui/Text/Text'
+import { catalogAction, catalogReducer } from '../../modules/slice'
+import { Articles } from '../Articles/Articles'
+import { FilterBlock } from '../FilterBlock/FilterBlock'
+
+import cls from './Main.module.scss'
 
 const PAGE_COUNT = 12
 
@@ -49,7 +54,7 @@ export const Main: FC = () => {
       <div className={cls.content}>
         {isLoading && <Loader className={cls.loader} />}
         {error && (
-          <Text className={cls.error} variant={TextVariant.ERROR}>
+          <Text className={cls.error} variant="error">
             {error}
           </Text>
         )}
