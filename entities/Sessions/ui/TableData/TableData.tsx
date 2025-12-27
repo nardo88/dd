@@ -17,9 +17,7 @@ import { DataType } from '../../types'
 
 import cls from './TableData.module.scss'
 
-interface IProps extends DataType {}
-
-const Session: FC<IProps> = (props) => {
+const Session: FC<DataType> = (props) => {
   const { _id, createdAt, ip, os, ttl } = props
   const dispatch = useAppDispatch()
   const { addNotification } = useNotification()

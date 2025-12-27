@@ -4,7 +4,7 @@ import { emptyArray } from '@shared/consts/common'
 
 import { deleteSession } from '../thunks/deleteSession'
 import { getSessionList } from '../thunks/getSessionList'
-import { DataType, ISessionsSchema } from '../types'
+import { ISessionsSchema } from '../types'
 
 const initialState: ISessionsSchema = {
   error: null,

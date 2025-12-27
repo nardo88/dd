@@ -1,7 +1,7 @@
 import { type FC } from 'react'
 
-import { Text, TextVariant } from '@shared//ui/Text/Text'
 import { classNames } from '@shared/helpers/classNames'
+import { Text } from '@shared/ui/Text/Text'
 
 import cls from './Checkbox.module.scss'
 
