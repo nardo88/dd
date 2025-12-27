@@ -1,12 +1,10 @@
 import { ButtonHTMLAttributes, FC, LegacyRef, ReactNode } from 'react'
-import cls from './Button.module.scss'
+
 import { classNames } from '@shared/helpers/classNames'
 
-export enum ButtonVariant {
-  PRIMARY = 'primary',
-  SECONDARY = 'secondary',
-  ICON = 'icon',
-}
+import cls from './Button.module.scss'
+
+export type ButtonVariant = 'primary' | 'secondary' | 'icon'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string
@@ -19,7 +17,7 @@ export const Button: FC<ButtonProps> = (props) => {
   const {
     className,
     children,
-    variant = ButtonVariant.PRIMARY,
+    variant = 'primary',
     onClick,
     ref,
     type = 'button',
@@ -34,13 +32,14 @@ export const Button: FC<ButtonProps> = (props) => {
       className={classNames(
         cls.Button,
         {
-          [cls.primary]: variant === ButtonVariant.PRIMARY,
-          [cls.secondary]: variant === ButtonVariant.SECONDARY,
-          [cls.icon]: variant === ButtonVariant.ICON,
+          [cls.primary]: variant === 'primary',
+          [cls.secondary]: variant === 'secondary',
+          [cls.icon]: variant === 'icon',
         },
         [className]
       )}
-      {...options}>
+      {...options}
+    >
       {children}
     </button>
   )

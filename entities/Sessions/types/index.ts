@@ -7,4 +7,6 @@ export interface ISessionsSchema {
   error: null | string
 
   data: DataType[]
+  total: number
+  currentPage: number
 }

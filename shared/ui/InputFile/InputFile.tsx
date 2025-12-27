@@ -1,13 +1,17 @@
-import dayjs from 'dayjs'
 import { FC, useEffect, useState } from 'react'
+
+import dayjs from 'dayjs'
+
 import { classNames } from '@shared/helpers/classNames'
+import useFirebase from '@shared/hooks/useFireBase'
 import { BodyItemType, bodyVariantsTitle } from '@shared/ui/Body'
-import { Button, ButtonVariant } from '@shared/ui/Button/Button'
+import { Button } from '@shared/ui/Button/Button'
 import { Remove } from '@shared/ui/Icons/Remove'
 import { Progress } from '@shared/ui/Progress/Progress'
-import useFirebase from '@shared/hooks/useFireBase'
-import cls from './InputFile.module.scss'
+
 import { Upload } from '../Icons/Upload'
+
+import cls from './InputFile.module.scss'
 
 interface InputFileProps {
   className?: string
@@ -74,18 +78,19 @@ export const InputFile: FC<InputFileProps> = (props) => {
       <div className={cls.Control}>
         {url && remove && (
           <Button
-            variant={ButtonVariant.ICON}
+            variant="icon"
             onClick={() => {
               remove()
               setProgress(0)
             }}
             className={cls.controlBtn}
-            title="Удалить">
+            title="Удалить"
+          >
             <Remove fill="var(----color-secondary)" />
           </Button>
         )}
         <div className={cls.InputWrapper}>
-          <Button variant={ButtonVariant.ICON} onClick={remove} className={cls.controlBtn}>
+          <Button variant="icon" onClick={remove} className={cls.controlBtn}>
             <Upload />
           </Button>
           <input

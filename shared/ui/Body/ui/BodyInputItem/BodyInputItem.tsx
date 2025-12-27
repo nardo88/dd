@@ -2,7 +2,7 @@ import { FC, useCallback, useEffect, useRef, useState } from 'react'
 
 import { classNames } from '@shared/helpers/classNames'
 import { createId } from '@shared/helpers/createId/createId'
-import { Button, ButtonVariant } from '@shared/ui/Button/Button'
+import { Button } from '@shared/ui/Button/Button'
 import { CodeEditor } from '@shared/ui/CodeEditor/CodeEditor'
 import { Plus } from '@shared/ui/Icons/Plus'
 import { Remove } from '@shared/ui/Icons/Remove'
@@ -93,7 +93,7 @@ export const BodyInputItem: FC<IBodyInputItemProps> = (props) => {
         <div className={cls.topBtnWrapper} onPointerDown={(e) => e.stopPropagation()}>
           {index !== body.length - 1 && (
             <div className={cls.addBetween} ref={ref}>
-              <Button variant={ButtonVariant.ICON} onClick={() => setIsOpen((p) => !p)}>
+              <Button variant="icon" onClick={() => setIsOpen((p) => !p)}>
                 <Plus />
               </Button>
               <div
@@ -114,11 +114,11 @@ export const BodyInputItem: FC<IBodyInputItemProps> = (props) => {
             </div>
           )}
           {['code'].includes(type) && (
-            <Button variant={ButtonVariant.ICON} onClick={() => setIsPopupOpen(true)}>
+            <Button variant="icon" onClick={() => setIsPopupOpen(true)}>
               <SettingIcon />
             </Button>
           )}
-          <Button variant={ButtonVariant.ICON} onClick={() => removeItem(_id)}>
+          <Button variant="icon" onClick={() => removeItem(_id)}>
             <Remove />
           </Button>
         </div>
