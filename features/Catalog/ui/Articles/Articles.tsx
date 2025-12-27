@@ -1,17 +1,20 @@
 import { FC } from 'react'
-import cls from './Articles.module.scss'
-import { useAppSelector } from '@shared/hooks/redux'
-import { getArticleList } from '../../modules/selectors'
-import { Text, TextVariant } from '@shared/ui/Text/Text'
-import { ArticleCard } from '@shared/ui/ArticleCard/ArticleCard'
+
 import { Categories, covers } from '@shared/consts/categories'
+import { useAppSelector } from '@shared/hooks/redux'
+import { ArticleCard } from '@shared/ui/ArticleCard/ArticleCard'
+import { Text } from '@shared/ui/Text/Text'
+
+import { getArticleList } from '../../modules/selectors'
+
+import cls from './Articles.module.scss'
 
 export const Articles: FC = () => {
   const articles = useAppSelector(getArticleList)
   if (!articles.length)
     return (
       <div className={cls.empty}>
-        <Text className={cls.emptyText} variant={TextVariant.HELPER}>
+        <Text className={cls.emptyText} variant="helper">
           Нет данных для отображения
         </Text>
       </div>

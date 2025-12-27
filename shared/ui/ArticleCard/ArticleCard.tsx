@@ -1,10 +1,13 @@
-import dayjs from 'dayjs'
-import { FC } from 'react'
-import cls from './ArticleCard.module.scss'
 import Link from 'next/link'
-import { classNames } from '@shared/helpers/classNames'
-import { Text, TextVariant } from '../Text/Text'
+import { FC } from 'react'
+
+import dayjs from 'dayjs'
+
 import { categories } from '@shared/consts/categories'
+import { classNames } from '@shared/helpers/classNames'
+import { Text } from '@shared/ui/Text/Text'
+
+import cls from './ArticleCard.module.scss'
 
 interface ArticleCardProps {
   className?: string
@@ -31,8 +34,8 @@ export const ArticleCard: FC<ArticleCardProps> = (props) => {
           <Text className={cls.description}>{description}</Text>
         </div>
         <div className={cls.category}>
-          <Text variant={TextVariant.HELPER}>{cat ? cat.title : category}</Text>
-          <Text variant={TextVariant.SMALL} className={cls.date}>
+          <Text variant="helper">{cat ? cat.title : category}</Text>
+          <Text variant="small" className={cls.date}>
             {dayjs(createdAt).format('DD.MM.YYYY')}
           </Text>
         </div>

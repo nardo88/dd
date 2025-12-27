@@ -1,11 +1,14 @@
 import { FC } from 'react'
-import cls from './TableBlock.module.scss'
+
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
-import { getArticleList, getCurrentPage, getTotal } from '../../selectors'
 import Pagination from '@shared/ui/Pagination/Pagination'
+import { Text } from '@shared/ui/Text/Text'
+
+import { getArticleList, getCurrentPage, getTotal } from '../../selectors'
 import { articleManagerAction } from '../../slice'
-import { Text, TextVariant } from '@shared/ui/Text/Text'
 import { ArticleItem } from '../ArticleItem/ArticleItem'
+
+import cls from './TableBlock.module.scss'
 
 export const TableBlock: FC = () => {
   const dispatch = useAppDispatch()
@@ -21,7 +24,7 @@ export const TableBlock: FC = () => {
   if (!data.length)
     return (
       <div className={cls.TableBlock}>
-        <Text className={cls.empty} variant={TextVariant.HELPER}>
+        <Text className={cls.empty} variant="helper">
           Нет данных для отображения
         </Text>
       </div>

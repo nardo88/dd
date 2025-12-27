@@ -3,7 +3,7 @@ import { type ReactNode, useEffect, useRef } from 'react'
 import { classNames } from '@shared/helpers/classNames'
 import { CloseIcon } from '@shared/ui/Icons/CloseIcon'
 import Portal from '@shared/ui/Portal'
-import { Text, TextVariant } from '@shared/ui/Text/Text'
+import { Text } from '@shared/ui/Text/Text'
 
 import cls from './Popup.module.scss'
 
@@ -76,11 +76,7 @@ export const Popup: React.FC<Props> = (props) => {
         <div onClick={(e) => e.stopPropagation()} className={cls.popup} style={{ maxWidth }}>
           {(title || !!onClose) && (
             <div className={cls.popupHead}>
-              {typeof title === 'string' && (
-                <Text className={cls.title} variant={TextVariant.TEXT}>
-                  {title}
-                </Text>
-              )}
+              {typeof title === 'string' && <Text className={cls.title}>{title}</Text>}
               {typeof title === 'object' && title}
               {!!onClose && displayClose && (
                 <CloseIcon className={cls.closeBtn} onClick={hideModal} />

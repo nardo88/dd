@@ -1,13 +1,16 @@
 import { FC, useEffect, useRef, useState } from 'react'
-import cls from './BodyInput.module.scss'
+
 import { classNames } from '@shared/helpers/classNames'
-import { BodyItemType, IBody } from '../../types'
-import { Plus } from '@shared/ui/Icons/Plus'
-import { Button, ButtonVariant } from '@shared/ui/Button/Button'
-import { variants } from '../../const'
 import { createId } from '@shared/helpers/createId/createId'
+import { Button } from '@shared/ui/Button/Button'
+import { Plus } from '@shared/ui/Icons/Plus'
 import { Reorder } from '@shared/ui/Reorder'
+
+import { variants } from '../../const'
+import { BodyItemType, IBody } from '../../types'
 import { BodyInputItem } from '../BodyInputItem/BodyInputItem'
+
+import cls from './BodyInput.module.scss'
 
 interface BodyInputProps {
   className?: string
@@ -62,17 +65,15 @@ export const BodyInput: FC<BodyInputProps> = (props) => {
               keyField="_id"
               index={index}
               data={body}
-              setData={onChange}>
+              setData={onChange}
+            >
               <BodyInputItem body={body} onChange={onChange} {...item} index={index} />
             </Reorder.Element>
           ))}
         </Reorder.Container>
       )}
       <div className={cls.addSection} ref={ref}>
-        <Button
-          variant={ButtonVariant.ICON}
-          onClick={() => setIsOpen((p) => !p)}
-          className={cls.addBtn}>
+        <Button variant="icon" onClick={() => setIsOpen((p) => !p)} className={cls.addBtn}>
           <Plus />
         </Button>
         <div
@@ -80,7 +81,8 @@ export const BodyInput: FC<BodyInputProps> = (props) => {
           className={classNames(cls.variants, { [cls.isOpen]: isOpen })}
           style={{
             transform: `translateY(${down ? '-125%' : '0'})`,
-          }}>
+          }}
+        >
           <ul className={cls.variantList}>
             {variants.map((item) => (
               <li key={item.id} className={cls.variantItem} onClick={() => addItem(item.id)}>

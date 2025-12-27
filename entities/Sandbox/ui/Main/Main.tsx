@@ -6,7 +6,7 @@ import { ReduxStoreWithManager } from '@app/redux'
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
 import { Loader } from '@shared/ui/Loader/Loader'
 import Pagination from '@shared/ui/Pagination/Pagination'
-import { Text, TextVariant } from '@shared/ui/Text/Text'
+import { Text } from '@shared/ui/Text/Text'
 
 import { PAGE_COUNT } from '../../consts'
 import { getCurrentPage, getError, getFilter, getIsLoading, getTotal } from '../../selectors'
@@ -41,7 +41,7 @@ export const Main: FC = () => {
 
   return (
     <div className={cls.main}>
-      {error && <Text variant={TextVariant.ERROR}>{error}</Text>}
+      {error && <Text variant="error">{error}</Text>}
       {isLoading && <Loader fill className={cls.spinner} />}
       <FilterBlock />
       <Table />

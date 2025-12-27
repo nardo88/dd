@@ -1,7 +1,7 @@
 import { RefObject, useEffect, useRef, useState } from 'react'
 
 import { classNames } from '@shared/helpers/classNames'
-import { Text, TextVariant } from '@shared/ui/Text/Text'
+import { Text } from '@shared/ui/Text/Text'
 
 import { ArrowBottom } from '../Icons/ArrowBottom'
 
@@ -106,10 +106,7 @@ export const Select = (props: PropsType) => {
         </div>
       )}
       {haveError && errorText && (
-        <Text
-          className={classNames(cls.errorText, {}, [errorClassName])}
-          variant={TextVariant.ERROR}
-        >
+        <Text className={classNames(cls.errorText, {}, [errorClassName])} variant="error">
           {errorText || ''}
         </Text>
       )}

@@ -4,13 +4,7 @@ import { classNames } from '@shared/helpers/classNames'
 
 import cls from './Text.module.scss'
 
-export enum TextVariant {
-  TEXT = 'text',
-  ERROR = 'error',
-  SUCCESS = 'success',
-  HELPER = 'helper',
-  SMALL = 'small',
-}
+export type TextVariant = 'text' | 'error' | 'success' | 'helper' | 'small'
 
 interface TextProps {
   className?: string
@@ -20,31 +14,31 @@ interface TextProps {
 }
 
 export const Text: FC<TextProps> = (props) => {
-  const { className, variant = TextVariant.TEXT, children, title } = props
+  const { className, variant = 'text', children, title } = props
   return (
     <>
-      {variant === TextVariant.TEXT && (
+      {variant === 'text' && (
         <p title={title} className={classNames(cls.text, {}, [className])}>
           {children}
         </p>
       )}
-      {variant === TextVariant.ERROR && (
+      {variant === 'error' && (
         <p title={title} className={classNames(cls.text, {}, [cls.error, className])}>
           {children}
         </p>
       )}
-      {variant === TextVariant.SUCCESS && (
+      {variant === 'success' && (
         <p title={title} className={classNames(cls.text, {}, [cls.success, className])}>
           {children}
         </p>
       )}
 
-      {variant === TextVariant.HELPER && (
+      {variant === 'helper' && (
         <p title={title} className={classNames(cls.text, {}, [cls.helper, className])}>
           {children}
         </p>
       )}
-      {variant === TextVariant.SMALL && (
+      {variant === 'small' && (
         <p title={title} className={classNames(cls.text, {}, [cls.small, className])}>
           {children}
         </p>

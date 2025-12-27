@@ -1,7 +1,7 @@
 import { type FC } from 'react'
 
-import { Text, TextVariant } from '@shared//ui/Text/Text'
 import { classNames } from '@shared/helpers/classNames'
+import { Text } from '@shared/ui/Text/Text'
 
 import cls from './Checkbox.module.scss'
 
@@ -41,7 +41,7 @@ export const Checkbox: FC<IProps> = ({
         {label && <span className={cls.label}>{label}</span>}
       </label>
       {errorText && (
-        <Text className={classNames(cls.errorText, {}, [])} variant={TextVariant.ERROR}>
+        <Text className={classNames(cls.errorText, {}, [])} variant="error">
           {errorText}
         </Text>
       )}

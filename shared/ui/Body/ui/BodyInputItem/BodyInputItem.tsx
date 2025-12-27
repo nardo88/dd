@@ -1,20 +1,23 @@
-import { Text, TextVariant } from '@shared/ui/Text/Text'
-import cls from './BodyInputItem.module.scss'
-import { BodyItemType, IBody, IBodySetting } from '../../types'
 import { FC, useCallback, useEffect, useRef, useState } from 'react'
-import { bodyVariantsTitle, variants } from '../../const'
-import { Button, ButtonVariant } from '@shared/ui/Button/Button'
-import { Plus } from '@shared/ui/Icons/Plus'
+
 import { classNames } from '@shared/helpers/classNames'
 import { createId } from '@shared/helpers/createId/createId'
+import { Button } from '@shared/ui/Button/Button'
+import { CodeEditor } from '@shared/ui/CodeEditor/CodeEditor'
+import { Plus } from '@shared/ui/Icons/Plus'
 import { Remove } from '@shared/ui/Icons/Remove'
-import { MediumEditor } from '@shared/ui/MediumEditor'
+import { SettingIcon } from '@shared/ui/Icons/SettingIcon'
+import { Input } from '@shared/ui/Input'
 import { InputFile } from '@shared/ui/InputFile/InputFile'
 import { MarkDownEditor } from '@shared/ui/MarkDownEditor'
-import { CodeEditor } from '@shared/ui/CodeEditor/CodeEditor'
-import { Input } from '@shared/ui/Input'
+import { MediumEditor } from '@shared/ui/MediumEditor'
+import { Text } from '@shared/ui/Text/Text'
+
+import { bodyVariantsTitle, variants } from '../../const'
+import { BodyItemType, IBody, IBodySetting } from '../../types'
 import { Setting } from '../Setting/Setting'
-import { SettingIcon } from '@shared/ui/Icons/SettingIcon'
+
+import cls from './BodyInputItem.module.scss'
 
 interface IBodyInputItemProps extends IBody {
   index: number
@@ -86,11 +89,11 @@ export const BodyInputItem: FC<IBodyInputItemProps> = (props) => {
   return (
     <div className={cls.bodyItem}>
       <div className={cls.topContent}>
-        <Text variant={TextVariant.HELPER}>{bodyVariantsTitle[type]}</Text>
+        <Text variant="helper">{bodyVariantsTitle[type]}</Text>
         <div className={cls.topBtnWrapper} onPointerDown={(e) => e.stopPropagation()}>
           {index !== body.length - 1 && (
             <div className={cls.addBetween} ref={ref}>
-              <Button variant={ButtonVariant.ICON} onClick={() => setIsOpen((p) => !p)}>
+              <Button variant="icon" onClick={() => setIsOpen((p) => !p)}>
                 <Plus />
               </Button>
               <div
@@ -98,7 +101,8 @@ export const BodyInputItem: FC<IBodyInputItemProps> = (props) => {
                 className={classNames(cls.variants, { [cls.isOpen]: isOpen })}
                 style={{
                   transform: `translateY(${down ? '-125%' : '0'})`,
-                }}>
+                }}
+              >
                 <ul className={cls.variantList}>
                   {variants.map((item) => (
                     <li key={item.id} className={cls.variantItem} onClick={() => addItem(item.id)}>
@@ -110,11 +114,11 @@ export const BodyInputItem: FC<IBodyInputItemProps> = (props) => {
             </div>
           )}
           {['code'].includes(type) && (
-            <Button variant={ButtonVariant.ICON} onClick={() => setIsPopupOpen(true)}>
+            <Button variant="icon" onClick={() => setIsPopupOpen(true)}>
               <SettingIcon />
             </Button>
           )}
-          <Button variant={ButtonVariant.ICON} onClick={() => removeItem(_id)}>
+          <Button variant="icon" onClick={() => removeItem(_id)}>
             <Remove />
           </Button>
         </div>
