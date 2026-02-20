@@ -100,4 +100,5 @@ export const covers: Partial<Record<Categories, string>> = {
   webassembly: '/img/templates/webassembly.jpg',
   svg: '/img/templates/svg.png',
   nestjs: '/img/templates/nestjs.png',
+  vue: '/img/templates/vue.jpg',
 }
