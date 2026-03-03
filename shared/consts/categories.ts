@@ -32,6 +32,7 @@ export enum Categories {
   webassembly = 'webassembly',
   svg = 'svg',
   nestjs = 'nestjs',
+  ai = 'ai',
 }
 
 interface ICategory {
@@ -73,6 +74,7 @@ const _categories: ICategory[] = [
   { id: Categories.webassembly, title: 'WebAssembly' },
   { id: Categories.svg, title: 'SVG' },
   { id: Categories.nestjs, title: 'Nest JS' },
+  { id: Categories.ai, title: 'AI' },
 ]
 
 export const categories = _categories.sort((a, b) => a.title.localeCompare(b.title))
@@ -101,4 +103,5 @@ export const covers: Partial<Record<Categories, string>> = {
   svg: '/img/templates/svg.png',
   nestjs: '/img/templates/nestjs.png',
   vue: '/img/templates/vue.jpg',
+  ai: '/img/templates/ai.png',
 }
