@@ -1,6 +1,8 @@
-import { IBody } from '@shared/ui/Body'
-import { ArticleEditorState, IArticleData, IValidateErrors, TabVariant } from '../../types'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+
+import { IBody } from '@shared/ui/Body'
+
+import { ArticleEditorState, IArticleData, IValidateErrors, TabVariant } from '../../types'
 import { create } from '../asyncThunks/create'
 import { update } from '../asyncThunks/update'
 

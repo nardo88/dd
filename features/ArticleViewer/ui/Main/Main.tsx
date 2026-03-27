@@ -1,17 +1,25 @@
-import { FC, useEffect } from 'react'
-import cls from './Main.module.scss'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Sidebar } from '@features/Sidebar'
+import { FC, useEffect } from 'react'
 import { useStore } from 'react-redux'
+
 import { ReduxStoreWithManager } from '@app/redux'
-import { articleReducer } from '../../modules/slice'
+import { getSessionData } from '@entities/User'
+
+import { Sidebar } from '@features/Sidebar'
+
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
+import { BodyOutput } from '@shared/ui/Body'
+import { Button } from '@shared/ui/Button/Button'
+import { ArrowBottom } from '@shared/ui/Icons/ArrowBottom'
+import { Loader } from '@shared/ui/Loader/Loader'
+
 import { getArticle } from '../../modules/asyncThunk'
 import { getArticleBody, getIsLoading } from '../../modules/selectors'
-import { BodyOutput } from '@shared/ui/Body'
-import { Loader } from '@shared/ui/Loader/Loader'
-import { getSessionData } from '@entities/User'
-import Link from 'next/link'
+import { articleReducer } from '../../modules/slice'
+import { Navigation } from '../Navigation/Navigation'
+
+import cls from './Main.module.scss'
 
 export const Main: FC = () => {
   const store = useStore() as ReduxStoreWithManager
@@ -22,6 +30,10 @@ export const Main: FC = () => {
   const article = useAppSelector(getArticleBody)
   const isLoading = useAppSelector(getIsLoading)
   const { userData } = useAppSelector(getSessionData)
+
+  const gotToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   useEffect(() => {
     if (id) {
@@ -46,7 +58,15 @@ export const Main: FC = () => {
           </Link>
         )}
         {isLoading && <Loader className={cls.loader} />}
-        {!isLoading && <BodyOutput body={article} />}
+        {!isLoading && (
+          <>
+            <Navigation />
+            <BodyOutput body={article} />
+            <Button onClick={gotToTop} className={cls.goTopBtn}>
+              <ArrowBottom />
+            </Button>
+          </>
+        )}
       </div>
     </div>
   )

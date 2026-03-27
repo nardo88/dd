@@ -1,18 +1,23 @@
+import { useRouter } from 'next/router'
 import { FC } from 'react'
-import { Button } from '@shared/ui/Button/Button'
-import { BodyInput, IBody } from '@shared/ui/Body'
+
+import { useNotification } from '@entities/Notifications'
+
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
+import { BodyInput, IBody } from '@shared/ui/Body'
+import { Button } from '@shared/ui/Button/Button'
+
+import { create } from '../../modules/asyncThunks/create'
+import { update } from '../../modules/asyncThunks/update'
+import { validate } from '../../modules/helpers/validate'
 import { getBody, getCategory, getTitle } from '../../modules/selectors'
 import { articleEditorAction } from '../../modules/slice'
-import { validate } from '../../modules/helpers/validate'
-import { create } from '../../modules/asyncThunks/create'
-import { useRouter } from 'next/router'
-import { update } from '../../modules/asyncThunks/update'
+
 import cls from './Content.module.scss'
-import { useNotification } from '@entities/Notifications'
 
 export const Content: FC<{ id?: string }> = ({ id }) => {
   const { addNotification } = useNotification()
+
   const dispatch = useAppDispatch()
   const { push } = useRouter()
   const body = useAppSelector(getBody)

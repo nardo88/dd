@@ -9,11 +9,15 @@ export type BodyItemType =
   | 'frame'
   | 'code'
   | 'terminal'
+  | 'anchor'
+
+export type AnchorType = 'h1' | 'h2' | 'h3' | 'h4' | 'h5'
 
 export interface IBodySetting {
   language?: SandboxStacks
   needTerminal?: boolean
   canEdit?: boolean
+  anchorType?: AnchorType
 }
 
 export interface IBody {

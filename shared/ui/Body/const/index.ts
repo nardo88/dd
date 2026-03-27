@@ -9,6 +9,7 @@ export const bodyVariantsTitle: Record<BodyItemType, string> = {
   frame: 'Фрейм',
   code: 'Код',
   terminal: 'Терминал',
+  anchor: 'Якорь',
 }
 
 export const variants: Array<{ id: BodyItemType; title: string }> = [
@@ -20,4 +21,5 @@ export const variants: Array<{ id: BodyItemType; title: string }> = [
   { id: 'frame', title: 'Фрейм' },
   { id: 'code', title: 'Код' },
   { id: 'terminal', title: 'Терминал' },
+  { id: 'anchor', title: 'Якорь' },
 ]

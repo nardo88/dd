@@ -1,0 +1,39 @@
+.navigation {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 600;
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.navLink {
+  color: var(--color-info);
+
+  a {
+    color: inherit;
+    font-weight: bold;
+    font-size: 18px;
+    text-decoration: none;
+  }
+}
+
+.h2 {
+  padding-left: 10px;
+}
+.h3 {
+  padding-left: 20px;
+}
+.h4 {
+  padding-left: 30px;
+}
+.h5 {
+  padding-left: 40px;
+}

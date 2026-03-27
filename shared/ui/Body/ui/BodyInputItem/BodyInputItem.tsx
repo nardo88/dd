@@ -44,7 +44,11 @@ export const BodyInputItem: FC<IBodyInputItemProps> = (props) => {
 
   const addItem = (type: BodyItemType) => {
     const newBody = [...body]
-    newBody.splice(index + 1, 0, { _id: createId(), type, value: '' })
+    const item: IBody = { _id: createId(), type, value: '' }
+    if (type === 'anchor') {
+      item.settings = { anchorType: 'h1' }
+    }
+    newBody.splice(index + 1, 0, item)
     onChange(newBody)
     setIsOpen(false)
   }
@@ -89,7 +93,10 @@ export const BodyInputItem: FC<IBodyInputItemProps> = (props) => {
   return (
     <div className={cls.bodyItem}>
       <div className={cls.topContent}>
-        <Text variant="helper">{bodyVariantsTitle[type]}</Text>
+        <Text variant="helper">
+          {bodyVariantsTitle[type]}
+          {type === 'anchor' ? ` (${settings?.anchorType})` : ''}
+        </Text>
         <div className={cls.topBtnWrapper} onPointerDown={(e) => e.stopPropagation()}>
           {index !== body.length - 1 && (
             <div className={cls.addBetween} ref={ref}>
@@ -113,7 +120,7 @@ export const BodyInputItem: FC<IBodyInputItemProps> = (props) => {
               </div>
             </div>
           )}
-          {['code'].includes(type) && (
+          {['code', 'anchor'].includes(type) && (
             <Button variant="icon" onClick={() => setIsPopupOpen(true)}>
               <SettingIcon />
             </Button>
@@ -147,10 +154,14 @@ export const BodyInputItem: FC<IBodyInputItemProps> = (props) => {
           />
         )}
 
+        {type === 'anchor' && <Input value={value} onChange={(v) => changeValue(_id, v)} />}
+
         {['frame', 'terminal'].includes(type) && (
           <Input value={value} onChange={(v) => changeValue(_id, v)} />
         )}
-        {isPopupOpen && <Setting settings={settings} onChange={changeSetting} close={closePopup} />}
+        {isPopupOpen && (
+          <Setting type={type} settings={settings} onChange={changeSetting} close={closePopup} />
+        )}
       </div>
     </div>
   )

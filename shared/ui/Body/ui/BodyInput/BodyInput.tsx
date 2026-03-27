@@ -26,7 +26,11 @@ export const BodyInput: FC<BodyInputProps> = (props) => {
   const listRef = useRef<HTMLDivElement>(null)
 
   const addItem = (type: BodyItemType) => {
-    onChange([...body, { _id: createId(), type, value: '' }])
+    const item: IBody = { _id: createId(), type, value: '' }
+    if (type === 'anchor') {
+      item.settings = { anchorType: 'h1' }
+    }
+    onChange([...body, item])
     setIsOpen(false)
   }
 

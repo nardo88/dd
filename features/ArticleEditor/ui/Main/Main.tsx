@@ -1,16 +1,20 @@
 import { FC, useEffect } from 'react'
-import cls from './Main.module.scss'
-import { Tabs } from '../Tabs/Tabs'
-import { articleEditorReducer } from '../../modules/slice'
 import { useStore } from 'react-redux'
+
 import { ReduxStoreWithManager } from '@app/redux'
-import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
-import { getActiveTab, getIsLoading } from '../../modules/selectors'
-import { Settings } from '../Settings/Settings'
-import { getArticleData } from '../../modules/asyncThunks/getArticleData'
-import { Content } from '../Content/Content'
-import { Loader } from '@shared/ui/Loader/Loader'
 import { useNotification } from '@entities/Notifications'
+
+import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
+import { Loader } from '@shared/ui/Loader/Loader'
+
+import { getArticleData } from '../../modules/asyncThunks/getArticleData'
+import { getActiveTab, getIsLoading } from '../../modules/selectors'
+import { articleEditorReducer } from '../../modules/slice'
+import { Content } from '../Content/Content'
+import { Settings } from '../Settings/Settings'
+import { Tabs } from '../Tabs/Tabs'
+
+import cls from './Main.module.scss'
 
 interface MainProps {
   id?: string
@@ -32,9 +36,8 @@ export const Main: FC<MainProps> = (props) => {
   }, [store])
 
   useEffect(() => {
-    if (id) {
-      dispatch(getArticleData({ id, addNotification }))
-    }
+    if (!id) return
+    dispatch(getArticleData({ id, addNotification }))
   }, [id])
 
   return (

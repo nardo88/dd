@@ -5,6 +5,7 @@ import { MarkdownViewer } from '@shared/ui/MarkdownViewer'
 
 import { IBody } from '../..'
 import { MediumText } from '../../../MediumText'
+import { Anchor } from '../Anchor/Anchor'
 import { AsyncCode as Code } from '../Code/Code.async'
 import { IFrame } from '../IFrame/IFrame'
 import { Image } from '../Image/Image'
@@ -40,6 +41,7 @@ export const BodyOutput: FC<BodyOutputProps> = (props) => {
               Скачать файл
             </a>
           )}
+          {item.type === 'anchor' && <Anchor {...item} />}
         </div>
       ))}
     </div>

@@ -1,10 +1,13 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { ArticleState } from '../types'
+
 import { IBody } from '@shared/ui/Body'
+
 import { getArticle } from '../asyncThunk'
+import { ArticleState } from '../types'
 
 const initialState: ArticleState = {
   body: [],
+  navigation: [],
   error: null,
   isLoading: false,
 }
@@ -22,7 +25,9 @@ const ArticleSlice = createSlice({
       .addCase(getArticle.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(getArticle.fulfilled, (state) => {
+      .addCase(getArticle.fulfilled, (state, action) => {
+        state.body = action.payload.body
+        state.navigation = action.payload.navigation
         state.isLoading = false
       })
       .addCase(getArticle.rejected, (state, action) => {

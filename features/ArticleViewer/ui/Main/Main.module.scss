@@ -17,3 +17,29 @@
   width: fit-content;
   margin-left: auto;
 }
+
+.goTopBtn {
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  z-index: 200;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.3;
+  transition: opacity 0.3s;
+
+  svg {
+    width: 18px;
+    height: 18px;
+    transform: rotate(180deg);
+    path {
+      stroke: var(--color-white);
+    }
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+}
