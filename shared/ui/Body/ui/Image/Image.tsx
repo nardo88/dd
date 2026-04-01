@@ -1,4 +1,7 @@
 import { FC } from 'react'
+
+import { getFilePath } from '@shared/helpers/getFilePath'
+
 import cls from './Image.module.scss'
 
 interface ImageProps {
@@ -10,7 +13,7 @@ export const Image: FC<ImageProps> = (props) => {
 
   return (
     <div className={cls.imgWrapper}>
-      <img src={src} className={cls.img} />
+      <img src={getFilePath(src)} className={cls.img} />
     </div>
   )
 }

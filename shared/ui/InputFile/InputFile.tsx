@@ -1,15 +1,15 @@
-import { FC, useEffect, useState } from 'react'
-
-import dayjs from 'dayjs'
+import { ChangeEvent, FC, useState } from 'react'
 
 import { classNames } from '@shared/helpers/classNames'
-import useFirebase from '@shared/hooks/useFireBase'
+import { getFilePath } from '@shared/helpers/getFilePath'
+import { api } from '@shared/libs/axios'
 import { BodyItemType, bodyVariantsTitle } from '@shared/ui/Body'
 import { Button } from '@shared/ui/Button/Button'
 import { Remove } from '@shared/ui/Icons/Remove'
 import { Progress } from '@shared/ui/Progress/Progress'
 
 import { Upload } from '../Icons/Upload'
+import { Text } from '../Text/Text'
 
 import cls from './InputFile.module.scss'
 
@@ -24,92 +24,74 @@ interface InputFileProps {
 
 export const InputFile: FC<InputFileProps> = (props) => {
   const { className, onChange, type, url, label, remove } = props
-  const [file, setFile] = useState(null) as any
-  const [urlFile, setUrlFile] = useState(url)
   const [progress, setProgress] = useState(0)
-  const { storage, getDownloadURL, ref, uploadBytesResumable } = useFirebase()
+  const [error, setError] = useState<string | null>(null)
 
-  useEffect(() => {
-    if (file) {
-      const name = dayjs().valueOf()
-      const imagesRef = ref(storage, `/${type}/${name}`)
-      const uploadTask = uploadBytesResumable(imagesRef, file)
-
-      uploadTask.on(
-        'state_changed',
-        (snapshot: any) => {
-          const progress = Math.floor((snapshot.bytesTransferred / snapshot.totalBytes) * 100)
-          setProgress(progress)
+  const uploadFile = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setProgress(0)
+    const formData = new FormData()
+    formData.append('file', file)
+    try {
+      const response = await api.post<string>('/files/upload', formData, {
+        headers: { 'Content-Type': 'multipart/form-data; charset=UTF-16' },
+        onUploadProgress: (progressEvent) => {
+          if (progressEvent.total)
+            setProgress(Math.round((progressEvent.loaded * 100) / progressEvent.total))
         },
-        (error: any) => {
-          switch (error?.code) {
-            case 'storage/unauthorized':
-              // eslint-disable-next-line quotes
-              console.log("User doesn't have permission to access the object")
-              break
-            case 'storage/canceled':
-              console.log('User canceled the upload')
-              break
-            case 'storage/unknown':
-              console.log('Unknown error occurred, inspect error.serverResponse')
-              break
-          }
-        },
-        () => {
-          // После того как файл загружен мы получаем ссылку
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL: string) => {
-            setUrlFile(downloadURL)
-            onChange(downloadURL)
-          })
-        }
-      )
-    } else {
+      })
       setProgress(0)
+      onChange?.(response.data)
+    } catch (error) {
+      setError((error as Error).message)
+    } finally {
+      e.target.value = ''
     }
-  }, [file])
+  }
+
+  const removeFile = () => {
+    if (!remove) return
+
+    api.delete(`/files/${url}`).then(remove).catch(setError)
+  }
 
   return (
     <div className={classNames(cls.InputFile, {}, [className])}>
-      {label ? (
-        <span className={cls.label}>{label}</span>
-      ) : bodyVariantsTitle[type] ? (
+      {error && <Text variant="error">{error}</Text>}
+      {label && <span className={cls.label}>{label}</span>}
+      {!label && bodyVariantsTitle[type] && (
         <span className={cls.label}>{bodyVariantsTitle[type]}</span>
-      ) : null}
+      )}
+
       <div className={cls.Control}>
         {url && remove && (
-          <Button
-            variant="icon"
-            onClick={() => {
-              remove()
-              setProgress(0)
-            }}
-            className={cls.controlBtn}
-            title="Удалить"
-          >
-            <Remove fill="var(----color-secondary)" />
+          <Button variant="icon" onClick={removeFile} className={cls.controlBtn} title="Удалить">
+            <Remove fill="var(--color-secondary)" />
           </Button>
         )}
         <div className={cls.InputWrapper}>
-          <Button variant="icon" onClick={remove} className={cls.controlBtn}>
+          <Button variant="icon" onClick={removeFile} className={cls.controlBtn}>
             <Upload />
           </Button>
-          <input
-            type="file"
-            onChange={(e: any) => {
-              setFile(e.target.files[0])
-            }}
-          />
+          <input type="file" onChange={uploadFile} />
         </div>
         {progress > 0 && <Progress className={cls.progress} progress={progress} />}
       </div>
 
-      {type === 'image' && url && <img src={url} className={cls.preview} />}
+      {type === 'image' && url && <img src={getFilePath(url)} className={cls.preview} />}
       {type === 'file' && url && (
-        <a download={url} href={url} className="mt20 df" target="_blank" rel="noreferrer">
+        <a
+          download={getFilePath(url)}
+          href={getFilePath(url)}
+          className="mt20 df"
+          target="_blank"
+          rel="noreferrer"
+        >
           Скачать
         </a>
       )}
-      {type === 'video' && url && <video controls className={cls.video} src={url} />}
+      {type === 'video' && url && <video controls className={cls.video} src={getFilePath(url)} />}
     </div>
   )
 }

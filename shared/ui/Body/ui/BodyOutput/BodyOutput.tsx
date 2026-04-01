@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import { classNames } from '@shared/helpers/classNames'
+import { getFilePath } from '@shared/helpers/getFilePath'
 import { MarkdownViewer } from '@shared/ui/MarkdownViewer'
 
 import { IBody } from '../..'
@@ -32,8 +33,8 @@ export const BodyOutput: FC<BodyOutputProps> = (props) => {
           {item.type === 'markdown' && <MarkdownViewer value={item.value} />}
           {item.type === 'file' && (
             <a
-              download={item.value}
-              href={item.value}
+              download={getFilePath(item.value)}
+              href={getFilePath(item.value)}
               className={cls.downLoad}
               target="_blank"
               rel="noreferrer"
