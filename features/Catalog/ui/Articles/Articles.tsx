@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import { Categories, covers } from '@shared/consts/categories'
+import { getFilePath } from '@shared/helpers/getFilePath'
 import { useAppSelector } from '@shared/hooks/redux'
 import { ArticleCard } from '@shared/ui/ArticleCard/ArticleCard'
 import { Text } from '@shared/ui/Text/Text'
@@ -25,7 +26,7 @@ export const Articles: FC = () => {
         <ArticleCard
           key={item.id}
           {...item}
-          image={item.image || covers?.[item.category as Categories]}
+          image={item.image ? getFilePath(item.image) : covers?.[item.category as Categories]}
         />
       ))}
     </div>
