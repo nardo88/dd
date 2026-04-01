@@ -41,11 +41,11 @@ export const InputFile: FC<InputFileProps> = (props) => {
             setProgress(Math.round((progressEvent.loaded * 100) / progressEvent.total))
         },
       })
-      setProgress(0)
       onChange?.(response.data)
     } catch (error) {
       setError((error as Error).message)
     } finally {
+      setTimeout(() => setProgress(0), 0)
       e.target.value = ''
     }
   }
