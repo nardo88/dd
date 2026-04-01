@@ -53,7 +53,10 @@ export const InputFile: FC<InputFileProps> = (props) => {
   const removeFile = () => {
     if (!remove) return
 
-    api.delete(`/files/${url}`).then(remove).catch(setError)
+    api
+      .delete(`/files/${url}`)
+      .then(remove)
+      .catch((e) => setError(e?.message))
   }
 
   return (

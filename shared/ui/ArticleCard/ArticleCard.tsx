@@ -5,6 +5,7 @@ import dayjs from 'dayjs'
 
 import { categories } from '@shared/consts/categories'
 import { classNames } from '@shared/helpers/classNames'
+import { getFilePath } from '@shared/helpers/getFilePath'
 import { Text } from '@shared/ui/Text/Text'
 
 import cls from './ArticleCard.module.scss'
@@ -26,7 +27,7 @@ export const ArticleCard: FC<ArticleCardProps> = (props) => {
   return (
     <Link href={`/article/${id}`} className={classNames(cls.ArticleCard, {}, [className])}>
       <div className={cls.top}>
-        <img src={image || '/img/templates/empty.png'} />
+        <img src={image ? getFilePath(image) : '/img/templates/empty.png'} />
       </div>
       <div className={cls.bottom}>
         <div className={cls.titles}>
