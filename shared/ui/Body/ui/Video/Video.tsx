@@ -1,4 +1,7 @@
 import { FC } from 'react'
+
+import { getFilePath } from '@shared/helpers/getFilePath'
+
 import cls from './Video.module.scss'
 
 interface VideoProps {
@@ -10,7 +13,7 @@ export const Video: FC<VideoProps> = (props) => {
 
   return (
     <div className={cls.Video}>
-      <video src={src} controls />
+      <video src={getFilePath(src)} controls />
     </div>
   )
 }
