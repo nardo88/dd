@@ -1,12 +1,15 @@
+import { useEffect, useState } from 'react'
+
 import { getSessionData } from '@entities/User'
+
 import { ArticleViewer } from '@features/ArticleViewer'
+import { Layout } from '@widgets/Layout'
+
 import { NOT_FOUND_PAGE } from '@shared/consts/pages'
 import { useAppSelector } from '@shared/hooks/redux'
 import { AccessType } from '@shared/types/pages'
 import { Loader } from '@shared/ui/Loader/Loader'
-import { Layout } from '@widgets/Layout'
-import { NotFoundPage } from '@widgets/NotFoundPage'
-import { useEffect, useState } from 'react'
+import { NotFoundPage } from '@shared/ui/NotFoundPage/NotFoundPage'
 
 const Home: React.FC = () => {
   const [access, setAccess] = useState<AccessType>('pending')

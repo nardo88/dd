@@ -4,11 +4,11 @@ import { getSessionData } from '@entities/User'
 
 import { Profile } from '@features/Profile'
 import { Layout } from '@widgets/Layout'
-import { NotFoundPage } from '@widgets/NotFoundPage'
 
 import { useAppSelector } from '@shared/hooks/redux'
 import { AccessType } from '@shared/types/pages'
 import { Loader } from '@shared/ui/Loader/Loader'
+import { NotFoundPage } from '@shared/ui/NotFoundPage/NotFoundPage'
 
 export default function () {
   const { isAuth, isReady } = useAppSelector(getSessionData)

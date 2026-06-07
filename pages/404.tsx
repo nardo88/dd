@@ -1,5 +1,6 @@
 import { Layout } from '@widgets/Layout'
-import { NotFoundPage } from '@widgets/NotFoundPage'
+
+import { NotFoundPage } from '@shared/ui/NotFoundPage/NotFoundPage'
 
 const Home: React.FC = () => {
   return (

@@ -4,12 +4,12 @@ import { getSessionData } from '@entities/User'
 
 import { SandboxWeb } from '@features/SandboxWeb'
 import { Layout } from '@widgets/Layout'
-import { NotFoundPage } from '@widgets/NotFoundPage'
 
 import { NOT_FOUND_PAGE } from '@shared/consts/pages'
 import { useAppSelector } from '@shared/hooks/redux'
 import { AccessType } from '@shared/types/pages'
 import { Loader } from '@shared/ui/Loader/Loader'
+import { NotFoundPage } from '@shared/ui/NotFoundPage/NotFoundPage'
 
 export default function EditorPage() {
   const [access, setAccess] = useState<AccessType>('pending')
