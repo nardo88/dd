@@ -2,6 +2,8 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 import { emptyArray } from '@shared/consts/common'
 
+import { getData } from '../thunks/getData'
+import { toggleAdmin } from '../thunks/toggleAdmin'
 import { IUserListSchema } from '../types'
 
 const initialState: IUserListSchema = {
@@ -26,19 +28,35 @@ const slice = createSlice({
   },
   extraReducers(builder) {
     builder
-    // Комментарий
-    // .addCase(thunk.pending, (state) => {
-    //   state.isLoading = true
-    //   state.error = null
-    // })
-    // .addCase(thunk.fulfilled, (state, action) => {
-    //   state.isLoading = false
-    //   state.institutions = action.payload
-    // })
-    // .addCase(thunk.rejected, (state, action) => {
-    //   state.isLoading = false
-    //   state.error = action.payload || null
-    // })
+      // Получение данных
+      .addCase(getData.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(getData.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.total = action.payload.total
+        state.data = action.payload.list
+      })
+      .addCase(getData.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload || null
+      })
+      // toggle admin
+      .addCase(toggleAdmin.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(toggleAdmin.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.data = state.data.map((i) =>
+          i._id === action.payload ? { ...i, isAdmin: !i.isAdmin } : i
+        )
+      })
+      .addCase(toggleAdmin.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload || null
+      })
   },
 })
 

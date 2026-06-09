@@ -1,0 +1,25 @@
+.empty {
+  font-style: italic;
+}
+
+.row {
+  padding: 10px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 30px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.removeIcon {
+  cursor: pointer;
+
+  path {
+    stroke: var(--color-secondary);
+  }
+}
+
+.btnWrapper {
+  padding-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
