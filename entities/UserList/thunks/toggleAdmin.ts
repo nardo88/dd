@@ -9,7 +9,7 @@ export const toggleAdmin = createAsyncThunk<string, string, { rejectValue: strin
       await api.put(`/users/toggle-admin/${id}`)
       return thunkApi.fulfillWithValue(id)
     } catch (e: any) {
-      return thunkApi.rejectWithValue(e)
+      return thunkApi.rejectWithValue(e?.message)
     }
   }
 )

@@ -22,7 +22,7 @@ export const getData = createAsyncThunk<IOutputData, void, { rejectValue: string
       })
       return thunkApi.fulfillWithValue(data)
     } catch (e: any) {
-      return thunkApi.rejectWithValue(e)
+      return thunkApi.rejectWithValue(e?.message)
     }
   }
 )

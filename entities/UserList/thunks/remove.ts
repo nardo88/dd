@@ -20,7 +20,7 @@ export const remove = createAsyncThunk<void, IInputData, { rejectValue: string }
       thunkApi.dispatch(getData())
       thunkApi.fulfillWithValue(null)
     } catch (e: any) {
-      return thunkApi.rejectWithValue(e)
+      return thunkApi.rejectWithValue(e?.message)
     }
   }
 )

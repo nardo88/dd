@@ -23,6 +23,7 @@ const slice = createSlice({
       state.currentPage = action.payload
     },
     setFilter(state, action: PayloadAction<string>) {
+      state.currentPage = 1
       state.filter = action.payload
     },
   },
