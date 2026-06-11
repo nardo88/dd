@@ -23,7 +23,7 @@ export const FilterBlock: FC = () => {
           setValue(val)
           debounce(val)
         }}
-        placeholder="ФИО / email / id"
+        placeholder="email / id"
       />
     </div>
   )
