@@ -2,6 +2,7 @@ import { FC, useState } from 'react'
 
 import { useNotification } from '@entities/Notifications'
 
+import { classNames } from '@shared/helpers/classNames'
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
 import { Button } from '@shared/ui/Button/Button'
 import { Checkbox } from '@shared/ui/Checkbox/Checkbox'
@@ -25,9 +26,31 @@ const TableItem = (props: IData) => {
 
   return (
     <div className={cls.row}>
-      <Text>{_id}</Text>
-      <Text variant="helper">{email}</Text>
-      <Checkbox checked={isAdmin} onChange={() => dispatch(toggleAdmin(_id))} />
+      <div>
+        <Text className={cls.mobileTitle} variant="small">
+          ID
+        </Text>
+        <Text>{_id}</Text>
+      </div>
+      <div>
+        <Text className={cls.mobileTitle} variant="small">
+          Email
+        </Text>
+        <Text>{email}</Text>
+      </div>
+      <div>
+        <Checkbox
+          className={cls.mobileCheckbox}
+          label="has admin role"
+          checked={isAdmin}
+          onChange={() => dispatch(toggleAdmin(_id))}
+        />
+        <Checkbox
+          className={cls.desktopCheckbox}
+          checked={isAdmin}
+          onChange={() => dispatch(toggleAdmin(_id))}
+        />
+      </div>
       <Remove className={cls.removeIcon} onClick={() => setIsOpen(true)} />
       {isOpen && (
         <Popup title="Вы уверены что хотите удалить пользователя?">
@@ -56,7 +79,7 @@ export const TableBlock: FC = () => {
     )
   return (
     <div className={cls.tableBlock}>
-      <div className={cls.row}>
+      <div className={classNames(cls.row, {}, [cls.titles])}>
         <Text variant="helper">ID</Text>
         <Text variant="helper">Email</Text>
         <Text variant="helper">Admin</Text>
