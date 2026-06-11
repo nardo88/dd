@@ -54,9 +54,9 @@ export const LeftMenu: FC = () => {
           title: 'Управление конспектами',
         },
         {
-          id: 'roles',
-          click: () => push('/roles'),
-          title: 'Роли',
+          id: 'users',
+          click: () => push('/users'),
+          title: 'Пользователи',
         },
         {
           id: 'editor',

@@ -2,6 +2,7 @@ import { NotificationSchema } from '@entities/Notifications'
 import { SandboxListState } from '@entities/Sandbox'
 import { ISessionsSchema } from '@entities/Sessions'
 import { SessionSchema } from '@entities/User'
+import { IUserListSchema } from '@entities/UserList'
 import {
   AnyAction,
   CombinedState,
@@ -43,6 +44,7 @@ export interface StateSchema {
   sandboxList?: SandboxListState
   sandboxWeb?: SandboxWebState
   sessions?: ISessionsSchema
+  userList?: IUserListSchema
 }
 
 export type StateSchemaKey = keyof StateSchema

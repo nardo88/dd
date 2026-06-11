@@ -1,13 +1,16 @@
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+
 import { getSessionData } from '@entities/User'
+
 import { ArticleEditor } from '@features/ArticleEditor'
+import { Layout } from '@widgets/Layout'
+
 import { NOT_FOUND_PAGE } from '@shared/consts/pages'
 import { useAppSelector } from '@shared/hooks/redux'
 import { AccessType } from '@shared/types/pages'
 import { Loader } from '@shared/ui/Loader/Loader'
-import { Layout } from '@widgets/Layout'
-import { NotFoundPage } from '@widgets/NotFoundPage'
-import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { NotFoundPage } from '@shared/ui/NotFoundPage/NotFoundPage'
 
 export default function EditorPage() {
   const [access, setAccess] = useState<AccessType>('pending')
