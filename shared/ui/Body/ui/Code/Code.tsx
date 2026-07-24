@@ -39,7 +39,11 @@ export const Code: FC<IBody> = (props) => {
           >
             {isCopied ? 'Copied' : 'Copy'}
           </button>
-          <SyntaxHighlighter language={settings?.language || 'typescript'} style={oneDark}>
+          <SyntaxHighlighter
+            showLineNumbers
+            language={settings?.language || 'typescript'}
+            style={oneDark}
+          >
             {value}
           </SyntaxHighlighter>
         </>
