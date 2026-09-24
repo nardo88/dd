@@ -1,6 +1,9 @@
 .content {
   position: relative;
   padding: 20px 20px 20px calc(var(--sidebar-width-min) + 20px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 
   @media (max-width: 768px) {
     width: 100vw;
@@ -12,7 +15,6 @@
 
 .edit {
   color: inherit;
-  margin-bottom: 30px;
   display: block;
   width: fit-content;
   margin-left: auto;
