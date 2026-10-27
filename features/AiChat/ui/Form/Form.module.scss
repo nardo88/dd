@@ -1,0 +1,24 @@
+.form {
+  display: grid;
+  grid-template-columns: 1fr 40px;
+  padding: 6px;
+}
+
+.btn {
+  width: 100%;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0 4px 4px 0;
+
+  svg {
+    stroke: var(--color-white);
+  }
+}
+
+.input {
+  input {
+    border-radius: 4px 0 0 4px;
+  }
+}

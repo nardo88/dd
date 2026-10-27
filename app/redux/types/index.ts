@@ -11,6 +11,7 @@ import {
   ReducersMapObject,
 } from '@reduxjs/toolkit'
 
+import { AiChatState } from '@features/AiChat'
 import { ArticleEditorState } from '@features/ArticleEditor'
 import { ArticleManagerState } from '@features/ArticleManager'
 import { ArticleState } from '@features/ArticleViewer'
@@ -34,6 +35,7 @@ export interface StateSchema {
   notification: NotificationSchema
 
   // async
+  aiChat?: AiChatState
   login?: LoginInitialState
   signup?: SignupInitialState
   catalog?: CatalogState
