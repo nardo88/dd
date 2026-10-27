@@ -8,7 +8,6 @@ import { getData } from '../asyncThunks/getData'
 const initialState: AiChatState = {
   isLoading: false,
   error: null,
-  isOpen: false,
   message: '',
   messages: emptyArray,
 }
@@ -17,9 +16,6 @@ const aiChatSlice = createSlice({
   name: 'aiChat',
   initialState,
   reducers: {
-    toggleIsOpen(state) {
-      state.isOpen = !state.isOpen
-    },
     setMessage(state, action: PayloadAction<string>) {
       state.message = action.payload
     },

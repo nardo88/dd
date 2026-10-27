@@ -1,3 +1,4 @@
+import { AiChatState } from '@entities/AIChat/types'
 import { NotificationSchema } from '@entities/Notifications'
 import { SandboxListState } from '@entities/Sandbox'
 import { ISessionsSchema } from '@entities/Sessions'
@@ -11,7 +12,6 @@ import {
   ReducersMapObject,
 } from '@reduxjs/toolkit'
 
-import { AiChatState } from '@features/AiChat'
 import { ArticleEditorState } from '@features/ArticleEditor'
 import { ArticleManagerState } from '@features/ArticleManager'
 import { ArticleState } from '@features/ArticleViewer'
