@@ -3,13 +3,17 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { emptyArray } from '@shared/consts/common'
 
 import { AiChatState } from '../../types'
-import { getData } from '../asyncThunks/getData'
+import { getMessageList } from '../asyncThunks/getMessageList'
+import { getSession } from '../asyncThunks/getSession'
 
 const initialState: AiChatState = {
   isLoading: false,
   error: null,
   message: '',
   messages: emptyArray,
+  sessionId: null,
+  currentPage: 1,
+  total: 0,
 }
 
 const aiChatSlice = createSlice({
@@ -22,14 +26,28 @@ const aiChatSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(getData.pending, (state) => {
+      .addCase(getMessageList.pending, (state) => {
         state.isLoading = true
         state.error = null
       })
-      .addCase(getData.fulfilled, (state) => {
+      .addCase(getMessageList.fulfilled, (state, action) => {
         state.isLoading = false
+        state.messages.push(...action.payload.list)
+        state.total = action.payload.total
       })
-      .addCase(getData.rejected, (state, action) => {
+      .addCase(getMessageList.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload as string
+      })
+      .addCase(getSession.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(getSession.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.sessionId = action.payload
+      })
+      .addCase(getSession.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload as string
       })

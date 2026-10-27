@@ -5,4 +5,7 @@ export interface AiChatState {
   error: null | string
   message: string
   messages: IAIMessage[]
+  sessionId: string | null
+  currentPage: number
+  total: number
 }
