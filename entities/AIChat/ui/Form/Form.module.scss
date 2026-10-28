@@ -1,23 +1,19 @@
 .form {
   display: grid;
-  grid-template-columns: 1fr 40px;
+  grid-template-columns: 1fr 36px;
+  align-items: start;
+  gap: 6px;
 }
 
 .btn {
-  width: 100%;
+  width: 36px;
+  height: 36px;
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 0 4px 4px 0;
 
   svg {
     stroke: var(--color-white);
-  }
-}
-
-.input {
-  input {
-    border-radius: 4px 0 0 4px;
   }
 }

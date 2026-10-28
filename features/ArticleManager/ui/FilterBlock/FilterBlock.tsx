@@ -1,13 +1,16 @@
 import { FC, useState } from 'react'
-import cls from './FilterBlock.module.scss'
-import { OptionType, Select } from '@shared/ui/Select/Select'
+
 import { categories } from '@shared/consts/categories'
-import { Input } from '@shared/ui/Input'
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
-import { getCategoryFilter, getTitleFilter } from '../../selectors'
 import useDebounce from '@shared/hooks/useDebounce'
-import { articleManagerAction } from '../../slice'
 import { Button } from '@shared/ui/Button/Button'
+import { Input } from '@shared/ui/Input/Input'
+import { OptionType, Select } from '@shared/ui/Select/Select'
+
+import { getCategoryFilter, getTitleFilter } from '../../selectors'
+import { articleManagerAction } from '../../slice'
+
+import cls from './FilterBlock.module.scss'
 
 interface FilterBlockProps {
   className?: string
