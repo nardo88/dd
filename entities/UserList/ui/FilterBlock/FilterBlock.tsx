@@ -2,7 +2,7 @@ import { FC, useState } from 'react'
 
 import { useAppDispatch } from '@shared/hooks/redux'
 import useDebounce from '@shared/hooks/useDebounce'
-import { Input } from '@shared/ui/Input'
+import { Input } from '@shared/ui/Input/Input'
 
 import { actions } from '../../slice'
 

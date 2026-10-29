@@ -1,9 +1,12 @@
 import { FC, useState } from 'react'
-import cls from './FilterBlock.module.scss'
+
 import { useAppDispatch } from '@shared/hooks/redux'
-import { Input } from '@shared/ui/Input'
 import useDebounce from '@shared/hooks/useDebounce'
+import { Input } from '@shared/ui/Input/Input'
+
 import { catalogAction } from '../../modules/slice'
+
+import cls from './FilterBlock.module.scss'
 
 export const FilterBlock: FC = () => {
   const [title, setTitle] = useState('')

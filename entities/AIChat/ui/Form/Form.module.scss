@@ -1,0 +1,19 @@
+.form {
+  display: grid;
+  grid-template-columns: 1fr 36px;
+  align-items: start;
+  gap: 6px;
+}
+
+.btn {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    stroke: var(--color-white);
+  }
+}

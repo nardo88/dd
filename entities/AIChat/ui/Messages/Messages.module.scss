@@ -1,0 +1,11 @@
+.messages {
+  padding: 6px;
+  height: var(--messages-height);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+}
+
+.empty {
+  text-align: center;
+  margin-top: calc(var(--messages-height) / 2);
+}
