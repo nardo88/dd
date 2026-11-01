@@ -3,9 +3,11 @@ import { StateSchema } from '@app/redux'
 import { emptyArray } from '@shared/consts/common'
 import { IAIMessage } from '@shared/types/aiMessages'
 
+export const getStatus = (state: StateSchema) => state.aiChat?.status || 'ready'
 export const getIsLoading = (state: StateSchema) => state.aiChat?.isLoading || false
 export const getSessionId = (state: StateSchema) => state.aiChat?.sessionId || null
 export const getMessage = (state: StateSchema) => state.aiChat?.message || ''
+export const getStreaming = (state: StateSchema) => state.aiChat?.streaming || ''
 export const getMessages = (state: StateSchema): IAIMessage[] =>
   state.aiChat?.messages || emptyArray
 

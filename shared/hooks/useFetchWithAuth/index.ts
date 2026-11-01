@@ -23,6 +23,8 @@ async function refreshAccessToken(): Promise<string> {
   return await api.get('/session/refresh-token', { withCredentials: true })
 }
 
+export type FetchType = (url: string, options?: RequestInit) => Promise<Response>
+
 export const useFetchWithAuth = () =>
   useCallback(async (url: string, options: RequestInit = {}) => {
     if (isRefreshing) {

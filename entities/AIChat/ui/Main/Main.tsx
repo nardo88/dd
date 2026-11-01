@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react'
+import { FC, useEffect, useRef } from 'react'
 import { useStore } from 'react-redux'
 
 import { ReduxStoreWithManager } from '@app/redux'
@@ -19,6 +19,15 @@ export const Main: FC = () => {
   const dispatch = useAppDispatch()
   const sessionId = useAppSelector(getSessionId)
 
+  const wrapper = useRef<HTMLDivElement>(null)
+
+  const scrollToBottom = () => {
+    setTimeout(() => {
+      if (!wrapper.current) return
+      wrapper.current.scrollTop = wrapper.current.scrollHeight
+    }, 0)
+  }
+
   useEffect(() => {
     store.reducerManager.add('aiChat', aiChatReducer)
     dispatch({ type: '@@INIT_AIChat' })
@@ -33,13 +42,13 @@ export const Main: FC = () => {
 
   useEffect(() => {
     if (!sessionId) return
-    dispatch(getMessageList())
+    dispatch(getMessageList()).then(scrollToBottom)
   }, [sessionId])
 
   return (
     <div className={cls.chat}>
-      <Messages />
-      <Form />
+      <Messages ref={wrapper} />
+      <Form scrollToBottom={scrollToBottom} />
     </div>
   )
 }

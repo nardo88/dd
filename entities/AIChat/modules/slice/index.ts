@@ -1,19 +1,23 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 import { emptyArray } from '@shared/consts/common'
+import { IAIMessage } from '@shared/types/aiMessages'
 
-import { AiChatState } from '../../types'
+import { AiChatState, ChatStatus } from '../../types'
 import { getMessageList } from '../asyncThunks/getMessageList'
 import { getSession } from '../asyncThunks/getSession'
+import { sendMessage } from '../asyncThunks/sendMessage'
 
 const initialState: AiChatState = {
   isLoading: false,
   error: null,
   message: '',
+  streaming: '',
   messages: emptyArray,
   sessionId: null,
   currentPage: 1,
   total: 0,
+  status: 'ready',
 }
 
 const aiChatSlice = createSlice({
@@ -22,6 +26,15 @@ const aiChatSlice = createSlice({
   reducers: {
     setMessage(state, action: PayloadAction<string>) {
       state.message = action.payload
+    },
+    setStreaming(state, action: PayloadAction<string>) {
+      state.streaming = action.payload
+    },
+    addMessage(state, action: PayloadAction<IAIMessage[]>) {
+      state.messages.push(...action.payload)
+    },
+    setStatus(state, action: PayloadAction<ChatStatus>) {
+      state.status = action.payload
     },
   },
   extraReducers(builder) {
@@ -48,6 +61,22 @@ const aiChatSlice = createSlice({
         state.sessionId = action.payload
       })
       .addCase(getSession.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload as string
+      })
+      .addCase(sendMessage.pending, (state) => {
+        state.error = null
+        state.status = 'submitted'
+      })
+      .addCase(sendMessage.fulfilled, (state, action) => {
+        const { id, text } = action.payload
+        state.isLoading = false
+        state.status = 'ready'
+        state.messages = state.messages.map((i) =>
+          i._id === id ? { ...i, parts: [{ text, type: 'text' }] } : i
+        )
+      })
+      .addCase(sendMessage.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload as string
       })
