@@ -1,4 +1,4 @@
-import { forwardRef, useImperativeHandle, useLayoutEffect, useRef } from 'react'
+import { FC, MutableRefObject, useLayoutEffect, useRef } from 'react'
 
 import { useAppSelector } from '@shared/hooks/redux'
 import { Text } from '@shared/ui/Text/Text'
@@ -9,15 +9,19 @@ import { StreamMessage } from '../StreamMessage/StreamMessage'
 
 import cls from './Messages.module.scss'
 
-export const Messages = forwardRef<HTMLDivElement>((_, ref) => {
+interface IProps {
+  triggerRef: MutableRefObject<HTMLDivElement | null>
+  wrapperRef: MutableRefObject<HTMLDivElement | null>
+}
+
+export const Messages: FC<IProps> = (props) => {
+  const { triggerRef, wrapperRef } = props
   const messages = useAppSelector(getMessages)
   const status = useAppSelector(getStatus)
   const streaming = useAppSelector(getStreaming)
 
   const container = useRef<HTMLDivElement | null>(null)
   const stickToBottom = useRef(true)
-
-  useImperativeHandle(ref, () => container.current as HTMLDivElement, [])
 
   // Пользователь начал крутить — выключаем автопрокрутку.
   const handleUserScrollIntent = () => {
@@ -43,7 +47,11 @@ export const Messages = forwardRef<HTMLDivElement>((_, ref) => {
   return (
     <div
       className={cls.messages}
-      ref={container}
+      ref={(r) => {
+        if (!r) return
+        wrapperRef.current = r
+        container.current = r
+      }}
       onScroll={onScroll}
       onWheel={handleUserScrollIntent}
       onTouchMove={handleUserScrollIntent}
@@ -53,6 +61,7 @@ export const Messages = forwardRef<HTMLDivElement>((_, ref) => {
         }
       }}
     >
+      <div ref={triggerRef} />
       {!messages.length && (
         <Text className={cls.empty} variant="helper">
           Нет сообщений
@@ -61,8 +70,8 @@ export const Messages = forwardRef<HTMLDivElement>((_, ref) => {
       {messages.map((item) => (
         <Message key={item._id} {...item} />
       ))}
-      {status === 'submitted' && <Text className={cls.think}>Дума...</Text>}
+      {status === 'submitted' && <Text className={cls.think}>Думаю...</Text>}
       <StreamMessage />
     </div>
   )
-})
+}

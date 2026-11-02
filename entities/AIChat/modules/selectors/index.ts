@@ -7,6 +7,8 @@ export const getStatus = (state: StateSchema) => state.aiChat?.status || 'ready'
 export const getIsLoading = (state: StateSchema) => state.aiChat?.isLoading || false
 export const getSessionId = (state: StateSchema) => state.aiChat?.sessionId || null
 export const getMessage = (state: StateSchema) => state.aiChat?.message || ''
+export const getTotal = (state: StateSchema) => state.aiChat?.total || 0
+export const getCurrentPage = (state: StateSchema) => state.aiChat?.currentPage || 0
 export const getStreaming = (state: StateSchema) => state.aiChat?.streaming || ''
 export const getMessages = (state: StateSchema): IAIMessage[] =>
   state.aiChat?.messages || emptyArray

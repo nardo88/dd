@@ -7,6 +7,7 @@ import { AiChatState, ChatStatus } from '../../types'
 import { getMessageList } from '../asyncThunks/getMessageList'
 import { getSession } from '../asyncThunks/getSession'
 import { sendMessage } from '../asyncThunks/sendMessage'
+import { uploadMessages } from '../asyncThunks/uploadMessages'
 
 const initialState: AiChatState = {
   isLoading: false,
@@ -31,10 +32,16 @@ const aiChatSlice = createSlice({
       state.streaming = action.payload
     },
     addMessage(state, action: PayloadAction<IAIMessage[]>) {
-      state.messages.push(...action.payload)
+      state.messages = action.payload
     },
     setStatus(state, action: PayloadAction<ChatStatus>) {
       state.status = action.payload
+    },
+    setCurrentPage(state, action: PayloadAction<number>) {
+      state.currentPage = action.payload
+    },
+    incCurrentPage(state) {
+      state.currentPage = state.currentPage + 1
     },
   },
   extraReducers(builder) {
@@ -49,6 +56,19 @@ const aiChatSlice = createSlice({
         state.total = action.payload.total
       })
       .addCase(getMessageList.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload as string
+      })
+      .addCase(uploadMessages.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(uploadMessages.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.messages = [...action.payload.list, ...state.messages]
+        state.total = action.payload.total
+      })
+      .addCase(uploadMessages.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload as string
       })
