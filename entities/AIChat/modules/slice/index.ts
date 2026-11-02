@@ -10,7 +10,7 @@ import { sendMessage } from '../asyncThunks/sendMessage'
 import { uploadMessages } from '../asyncThunks/uploadMessages'
 
 const initialState: AiChatState = {
-  isLoading: false,
+  isLoading: true,
   error: null,
   message: '',
   streaming: '',
@@ -31,8 +31,8 @@ const aiChatSlice = createSlice({
     setStreaming(state, action: PayloadAction<string>) {
       state.streaming = action.payload
     },
-    addMessage(state, action: PayloadAction<IAIMessage[]>) {
-      state.messages = action.payload
+    addMessages(state, action: PayloadAction<IAIMessage[]>) {
+      state.messages.push(...action.payload)
     },
     setStatus(state, action: PayloadAction<ChatStatus>) {
       state.status = action.payload

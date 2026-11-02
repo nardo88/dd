@@ -4,7 +4,8 @@ import { emptyArray } from '@shared/consts/common'
 import { IAIMessage } from '@shared/types/aiMessages'
 
 export const getStatus = (state: StateSchema) => state.aiChat?.status || 'ready'
-export const getIsLoading = (state: StateSchema) => state.aiChat?.isLoading || false
+export const getIsLoading = (state: StateSchema) =>
+  state.aiChat?.isLoading !== undefined ? state.aiChat?.isLoading : true
 export const getSessionId = (state: StateSchema) => state.aiChat?.sessionId || null
 export const getMessage = (state: StateSchema) => state.aiChat?.message || ''
 export const getTotal = (state: StateSchema) => state.aiChat?.total || 0

@@ -1,9 +1,10 @@
 import { FC, MutableRefObject, useLayoutEffect, useRef } from 'react'
 
 import { useAppSelector } from '@shared/hooks/redux'
+import { Loader } from '@shared/ui/Loader/Loader'
 import { Text } from '@shared/ui/Text/Text'
 
-import { getMessages, getStatus, getStreaming } from '../../modules/selectors'
+import { getIsLoading, getMessages, getStatus, getStreaming } from '../../modules/selectors'
 import { Message } from '../Message/Message'
 import { StreamMessage } from '../StreamMessage/StreamMessage'
 
@@ -19,6 +20,7 @@ export const Messages: FC<IProps> = (props) => {
   const messages = useAppSelector(getMessages)
   const status = useAppSelector(getStatus)
   const streaming = useAppSelector(getStreaming)
+  const isLoading = useAppSelector(getIsLoading)
 
   const container = useRef<HTMLDivElement | null>(null)
   const stickToBottom = useRef(true)
@@ -62,16 +64,13 @@ export const Messages: FC<IProps> = (props) => {
       }}
     >
       <div ref={triggerRef} />
-      {!messages.length && (
-        <Text className={cls.empty} variant="helper">
-          Нет сообщений
-        </Text>
-      )}
+
       {messages.map((item) => (
         <Message key={item._id} {...item} />
       ))}
       {status === 'submitted' && <Text className={cls.think}>Думаю...</Text>}
       <StreamMessage />
+      {isLoading && <Loader />}
     </div>
   )
 }

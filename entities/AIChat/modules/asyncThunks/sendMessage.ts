@@ -40,7 +40,7 @@ export const sendMessage = createAsyncThunk<IOutputData, IInput, { rejectValue: 
       }
 
       thunkApi.dispatch(
-        actions.addMessage([
+        actions.addMessages([
           {
             _id: createId(),
             role: 'user',
@@ -113,9 +113,7 @@ export const sendMessage = createAsyncThunk<IOutputData, IInput, { rejectValue: 
     } catch (e: any) {
       return thunkApi.rejectWithValue(e)
     } finally {
-      setTimeout(() => {
-        scrollToBottom()
-      })
+      setTimeout(() => scrollToBottom())
     }
   }
 )

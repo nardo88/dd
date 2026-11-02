@@ -11,7 +11,6 @@ import { TypeScript } from '../TypeScript/TypeScript'
 import cls from './Main.module.scss'
 
 export const Main: FC<IMainProps> = (props) => {
-  console.log('props: ', props)
   const { className, language } = props
 
   return (

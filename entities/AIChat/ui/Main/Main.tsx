@@ -47,7 +47,6 @@ export const Main: FC = () => {
     wrapperRef,
     callback: () => {
       if (messages.length < total && !isLoading) {
-        console.log({ length: messages.length, total })
         dispatch(actions.incCurrentPage())
       }
     },
