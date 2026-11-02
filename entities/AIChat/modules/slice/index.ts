@@ -4,6 +4,7 @@ import { emptyArray } from '@shared/consts/common'
 import { IAIMessage } from '@shared/types/aiMessages'
 
 import { AiChatState, ChatStatus } from '../../types'
+import { addSession } from '../asyncThunks/addSession'
 import { getMessageList } from '../asyncThunks/getMessageList'
 import { getSession } from '../asyncThunks/getSession'
 import { sendMessage } from '../asyncThunks/sendMessage'
@@ -98,6 +99,18 @@ const aiChatSlice = createSlice({
       })
       .addCase(sendMessage.rejected, (state, action) => {
         state.isLoading = false
+        state.error = action.payload as string
+      })
+      .addCase(addSession.pending, (state) => {
+        state.error = null
+      })
+      .addCase(addSession.fulfilled, (state, action) => {
+        const { sessionId } = action.payload
+        state.sessionId = sessionId
+        state.messages = emptyArray
+        state.total = 0
+      })
+      .addCase(addSession.rejected, (state, action) => {
         state.error = action.payload as string
       })
   },

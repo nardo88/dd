@@ -111,7 +111,7 @@ export const sendMessage = createAsyncThunk<IOutputData, IInput, { rejectValue: 
 
       return thunkApi.fulfillWithValue({ text: textBuffer, id })
     } catch (e: any) {
-      return thunkApi.rejectWithValue(e)
+      return thunkApi.rejectWithValue(e.response?.data?.message || e.message)
     } finally {
       setTimeout(() => scrollToBottom())
     }

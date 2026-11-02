@@ -11,6 +11,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: string | ReactNode
   variant?: ButtonVariant
   ref?: LegacyRef<HTMLButtonElement> | undefined
+  disabled?: boolean
 }
 
 export const Button: FC<ButtonProps> = (props) => {
@@ -21,6 +22,7 @@ export const Button: FC<ButtonProps> = (props) => {
     onClick,
     ref,
     type = 'button',
+    disabled,
     ...options
   } = props
 
@@ -29,8 +31,9 @@ export const Button: FC<ButtonProps> = (props) => {
       ref={ref}
       onClick={onClick}
       type={type}
+      disabled={disabled}
       className={classNames(
-        cls.Button,
+        cls.button,
         {
           [cls.primary]: variant === 'primary',
           [cls.secondary]: variant === 'secondary',

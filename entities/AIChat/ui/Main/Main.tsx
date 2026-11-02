@@ -6,11 +6,13 @@ import { uploadMessages } from '@entities/AIChat/modules/asyncThunks/uploadMessa
 
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
 import { useInfiniteScroll } from '@shared/hooks/useInfiniteScroll'
+import { Text } from '@shared/ui/Text/Text'
 
 import { getMessageList } from '../../modules/asyncThunks/getMessageList'
 import { getSession } from '../../modules/asyncThunks/getSession'
 import {
   getCurrentPage,
+  getError,
   getIsLoading,
   getMessages,
   getSessionId,
@@ -31,6 +33,7 @@ export const Main: FC = () => {
   const total = useAppSelector(getTotal)
   const isLoading = useAppSelector(getIsLoading)
   const currentPage = useAppSelector(getCurrentPage)
+  const error = useAppSelector(getError)
 
   const wrapperRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLDivElement>(null)
@@ -79,6 +82,7 @@ export const Main: FC = () => {
       <TopBlock />
       <Messages triggerRef={triggerRef} wrapperRef={wrapperRef} />
       <Form scrollToBottom={scrollToBottom} />
+      {error && <Text variant="error">{error}</Text>}
     </div>
   )
 }

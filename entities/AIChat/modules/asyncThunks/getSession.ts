@@ -9,7 +9,7 @@ export const getSession = createAsyncThunk<string, void, { rejectValue: string }
       const { data } = await api.get<{ sessionId: string }>('/ai/get-session')
       return thunkApi.fulfillWithValue(data.sessionId)
     } catch (e: any) {
-      return thunkApi.rejectWithValue(e)
+      return thunkApi.rejectWithValue(e.response?.data?.message || e.message)
     }
   }
 )
