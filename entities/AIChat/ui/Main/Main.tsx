@@ -26,7 +26,12 @@ import { TopBlock } from '../TopBlock/TopBlock'
 
 import cls from './Main.module.scss'
 
-export const Main: FC = () => {
+interface IProps {
+  close: () => void
+}
+
+export const Main: FC<IProps> = (props) => {
+  const { close } = props
   const store = useStore() as ReduxStoreWithManager
   const dispatch = useAppDispatch()
   const sessionId = useAppSelector(getSessionId)
@@ -86,7 +91,7 @@ export const Main: FC = () => {
 
   return (
     <div className={cls.chat}>
-      <TopBlock onOpenHistory={openHistory} />
+      <TopBlock onOpenHistory={openHistory} close={close} />
       <Messages triggerRef={triggerRef} wrapperRef={wrapperRef} />
       <Form scrollToBottom={scrollToBottom} />
       {error && <Text variant="error">{error}</Text>}

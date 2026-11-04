@@ -15,7 +15,7 @@ export const Main: FC = () => {
       <Button onClick={toggleChar} className={cls.btn}>
         <RobotIcon />
       </Button>
-      {isOpen && <AIChat />}
+      {isOpen && <AIChat close={() => setIsOpen(false)} />}
     </div>
   )
 }

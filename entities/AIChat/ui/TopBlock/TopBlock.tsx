@@ -2,6 +2,7 @@ import { FC } from 'react'
 
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
 import { Button } from '@shared/ui/Button/Button'
+import { CloseIcon } from '@shared/ui/Icons/CloseIcon'
 import { HistoryICon } from '@shared/ui/Icons/HistoryICon'
 import { Plus } from '@shared/ui/Icons/Plus'
 
@@ -12,10 +13,11 @@ import cls from './TopBlock.module.scss'
 
 interface IProps {
   onOpenHistory: () => void
+  close: () => void
 }
 
 export const TopBlock: FC<IProps> = (props) => {
-  const { onOpenHistory } = props
+  const { onOpenHistory, close } = props
   const dispatch = useAppDispatch()
   const messages = useAppSelector(getMessages)
 
@@ -30,6 +32,9 @@ export const TopBlock: FC<IProps> = (props) => {
       </Button>
       <Button className={cls.btn} onClick={onOpenHistory}>
         <HistoryICon className={cls.history} />
+      </Button>
+      <Button className={cls.btn} onClick={close}>
+        <CloseIcon className={cls.history} />
       </Button>
     </div>
   )

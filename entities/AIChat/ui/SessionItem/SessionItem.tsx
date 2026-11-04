@@ -54,7 +54,7 @@ export const SessionItem: FC<IProps> = (props) => {
     <li className={classNames(cls.item, { [cls.active]: isActive })} onClick={selectHandler}>
       <div className={cls.info}>
         <Text className={cls.message} title={message}>
-          {message}
+          {message || 'Пустая сессия'}
         </Text>
         <Text variant="small" className={cls.date}>
           {createdDate.format('DD.MM.YYYY HH:mm')}

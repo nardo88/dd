@@ -1,8 +1,13 @@
 .Main {
   position: fixed;
-  right: 100px;
+  right: 50px;
   bottom: 50px;
   z-index: 20;
+
+  @media (max-width: 768px) {
+    right: 25px;
+    bottom: 25px;
+  }
 }
 
 .btn {

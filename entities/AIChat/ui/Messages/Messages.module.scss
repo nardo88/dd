@@ -10,6 +10,10 @@
   flex-direction: column;
   gap: 10px;
   @include scroll(var(--color-border));
+
+  @media (max-width: 768px) {
+    flex: 1 1;
+  }
 }
 
 .empty {
