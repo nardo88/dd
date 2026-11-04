@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import { useStore } from 'react-redux'
 
 import { ReduxStoreWithManager } from '@app/redux'
@@ -20,6 +20,7 @@ import {
 } from '../../modules/selectors'
 import { actions, aiChatReducer } from '../../modules/slice'
 import { Form } from '../Form/Form'
+import { HistoryModal } from '../HistoryModal/HistoryModal'
 import { Messages } from '../Messages/Messages'
 import { TopBlock } from '../TopBlock/TopBlock'
 
@@ -34,9 +35,15 @@ export const Main: FC = () => {
   const isLoading = useAppSelector(getIsLoading)
   const currentPage = useAppSelector(getCurrentPage)
   const error = useAppSelector(getError)
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false)
 
   const wrapperRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLDivElement>(null)
+
+  const openHistory = () => {
+    dispatch(actions.setSessionsCurrentPage(1))
+    setIsHistoryOpen(true)
+  }
 
   const scrollToBottom = () => {
     setTimeout(() => {
@@ -79,10 +86,11 @@ export const Main: FC = () => {
 
   return (
     <div className={cls.chat}>
-      <TopBlock />
+      <TopBlock onOpenHistory={openHistory} />
       <Messages triggerRef={triggerRef} wrapperRef={wrapperRef} />
       <Form scrollToBottom={scrollToBottom} />
       {error && <Text variant="error">{error}</Text>}
+      {isHistoryOpen && <HistoryModal onClose={() => setIsHistoryOpen(false)} />}
     </div>
   )
 }

@@ -70,9 +70,11 @@ useEffect(() => {
 
 ### Стили
 
+- Каждый UI-компонент хранится в отдельной папке: `Component/Component.tsx` и `Component/Component.module.scss`.
 - Стили компонентов лежат рядом с компонентами как `*.module.scss`; импортируются как `cls`.
 - Для условных классов используйте `classNames` из `@shared/helpers/classNames`.
 - Глобальные стили и переменные: `app/styles/index.scss`, `app/styles/modules/*.scss`.
+- В стилях используйте только цвета из CSS-переменных (`var(--color-*)`); не задавайте собственные цветовые значения.
 
 ### API и авторизация
 

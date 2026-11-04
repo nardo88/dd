@@ -10,7 +10,12 @@ import { getMessages } from '../../modules/selectors'
 
 import cls from './TopBlock.module.scss'
 
-export const TopBlock: FC = () => {
+interface IProps {
+  onOpenHistory: () => void
+}
+
+export const TopBlock: FC<IProps> = (props) => {
+  const { onOpenHistory } = props
   const dispatch = useAppDispatch()
   const messages = useAppSelector(getMessages)
 
@@ -18,16 +23,12 @@ export const TopBlock: FC = () => {
     dispatch(addSession())
   }
 
-  const openHistory = () => {
-    //
-  }
-
   return (
     <div className={cls.topBlock}>
       <Button className={cls.btn} onClick={adSession} disabled={!messages.length}>
         <Plus />
       </Button>
-      <Button className={cls.btn} onClick={openHistory}>
+      <Button className={cls.btn} onClick={onOpenHistory}>
         <HistoryICon className={cls.history} />
       </Button>
     </div>

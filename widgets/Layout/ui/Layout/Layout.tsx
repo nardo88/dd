@@ -29,14 +29,14 @@ export const Layout: React.FC<LayoutProps> & {
   Header: React.FC
   Content: React.FC<IProps>
 } = ({ children, title = 'Distant.Global' }) => {
-  const { isAuth } = useAppSelector(getSessionData)
+  const { userData } = useAppSelector(getSessionData)
   return (
     <>
       <Head>
         <title>{title || ''}</title>
       </Head>
       <Notifications />
-      {isAuth && <AiChatWidget />}
+      {userData?.roles?.includes('admin') && <AiChatWidget />}
       <div className={classNames('', {}, ['df', 'fdc', 'fh'])}>{children}</div>
     </>
   )

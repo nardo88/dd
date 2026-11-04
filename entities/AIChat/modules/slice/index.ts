@@ -5,8 +5,10 @@ import { IAIMessage } from '@shared/types/aiMessages'
 
 import { AiChatState, ChatStatus } from '../../types'
 import { addSession } from '../asyncThunks/addSession'
+import { deleteSession } from '../asyncThunks/deleteSession'
 import { getMessageList } from '../asyncThunks/getMessageList'
 import { getSession } from '../asyncThunks/getSession'
+import { getSessionList } from '../asyncThunks/getSessionList'
 import { sendMessage } from '../asyncThunks/sendMessage'
 import { uploadMessages } from '../asyncThunks/uploadMessages'
 
@@ -20,6 +22,11 @@ const initialState: AiChatState = {
   currentPage: 1,
   total: 0,
   status: 'ready',
+  sessions: emptyArray,
+  sessionsTotal: 0,
+  sessionsCurrentPage: 1,
+  isSessionsLoading: false,
+  sessionsError: null,
 }
 
 const aiChatSlice = createSlice({
@@ -43,6 +50,17 @@ const aiChatSlice = createSlice({
     },
     incCurrentPage(state) {
       state.currentPage = state.currentPage + 1
+    },
+    setSession(state, action: PayloadAction<string>) {
+      state.sessionId = action.payload
+      state.messages = emptyArray
+      state.currentPage = 1
+      state.total = 0
+      state.status = 'ready'
+      state.streaming = ''
+    },
+    setSessionsCurrentPage(state, action: PayloadAction<number>) {
+      state.sessionsCurrentPage = action.payload
     },
   },
   extraReducers(builder) {
@@ -112,6 +130,30 @@ const aiChatSlice = createSlice({
       })
       .addCase(addSession.rejected, (state, action) => {
         state.error = action.payload as string
+      })
+      .addCase(getSessionList.pending, (state) => {
+        state.isSessionsLoading = true
+        state.sessionsError = null
+      })
+      .addCase(getSessionList.fulfilled, (state, action) => {
+        state.isSessionsLoading = false
+        state.sessions = action.payload.list
+        state.sessionsTotal = action.payload.total
+      })
+      .addCase(getSessionList.rejected, (state, action) => {
+        state.isSessionsLoading = false
+        state.sessionsError = action.payload as string
+      })
+      .addCase(deleteSession.pending, (state) => {
+        state.isSessionsLoading = true
+        state.sessionsError = null
+      })
+      .addCase(deleteSession.fulfilled, (state) => {
+        state.isSessionsLoading = false
+      })
+      .addCase(deleteSession.rejected, (state, action) => {
+        state.isSessionsLoading = false
+        state.sessionsError = action.payload as string
       })
   },
 })

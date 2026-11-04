@@ -3,6 +3,8 @@ import { StateSchema } from '@app/redux'
 import { emptyArray } from '@shared/consts/common'
 import { IAIMessage } from '@shared/types/aiMessages'
 
+import { IAISessions } from '../../types'
+
 export const getStatus = (state: StateSchema) => state.aiChat?.status || 'ready'
 export const getIsLoading = (state: StateSchema) =>
   state.aiChat?.isLoading !== undefined ? state.aiChat?.isLoading : true
@@ -15,3 +17,12 @@ export const getMessages = (state: StateSchema): IAIMessage[] =>
   state.aiChat?.messages || emptyArray
 
 export const getError = (state: StateSchema) => state.aiChat?.error || null
+
+export const getSessions = (state: StateSchema): IAISessions[] =>
+  state.aiChat?.sessions || emptyArray
+export const getSessionsTotal = (state: StateSchema) => state.aiChat?.sessionsTotal || 0
+export const getSessionsCurrentPage = (state: StateSchema) =>
+  state.aiChat?.sessionsCurrentPage || 1
+export const getIsSessionsLoading = (state: StateSchema) =>
+  state.aiChat?.isSessionsLoading || false
+export const getSessionsError = (state: StateSchema) => state.aiChat?.sessionsError || null
