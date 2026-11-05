@@ -1,3 +1,4 @@
+import { AiChatState } from '@entities/AIChat/types'
 import { NotificationSchema } from '@entities/Notifications'
 import { SandboxListState } from '@entities/Sandbox'
 import { ISessionsSchema } from '@entities/Sessions'
@@ -34,6 +35,7 @@ export interface StateSchema {
   notification: NotificationSchema
 
   // async
+  aiChat?: AiChatState
   login?: LoginInitialState
   signup?: SignupInitialState
   catalog?: CatalogState

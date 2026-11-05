@@ -8,7 +8,7 @@ import { loginByEmail } from '@features/Login/modules/asyncThunk'
 
 import { useAppDispatch } from '@shared/hooks/redux'
 import { Button } from '@shared/ui/Button/Button'
-import { Input, InputTypes } from '@shared/ui/Input'
+import { Input, InputTypes } from '@shared/ui/Input/Input'
 import { Loader, LoaderVariants } from '@shared/ui/Loader/Loader'
 import { Text } from '@shared/ui/Text/Text'
 

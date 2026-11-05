@@ -1,7 +1,7 @@
 import { type FC } from 'react'
 
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
-import { Input } from '@shared/ui/Input'
+import { Input } from '@shared/ui/Input/Input'
 
 import { getTitle } from '../../selectors'
 import { sandboxWebAction } from '../../slice'

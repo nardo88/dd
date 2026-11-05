@@ -1,0 +1,27 @@
+.chat {
+  position: absolute;
+  bottom: 110%;
+  right: 0;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow);
+  border-radius: 4px;
+  background: var(--color-white);
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px;
+
+  --messages-height: 50vh;
+
+  @media (max-width: 768px) {
+    position: fixed;
+    top: var(--navbar-height);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 300;
+    width: 100vw;
+    border-radius: 0;
+  }
+}

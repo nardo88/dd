@@ -11,7 +11,6 @@ import cls from './Navigation.module.scss'
 
 export const Navigation: FC = () => {
   const navigation = useAppSelector(getNavigation)
-  console.log('navigation: ', navigation)
 
   if (!navigation.length) return null
 

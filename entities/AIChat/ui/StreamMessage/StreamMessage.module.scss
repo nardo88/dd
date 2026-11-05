@@ -1,0 +1,21 @@
+.message {
+  align-self: flex-start;
+  max-width: 95%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border-bottom-left-radius: 4px;
+  box-shadow: var(--shadow);
+}
+
+.thinking {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.spinner {
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+}

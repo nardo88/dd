@@ -6,7 +6,7 @@ import { sandboxListAction } from '@entities/Sandbox/slice'
 import { useAppDispatch } from '@shared/hooks/redux'
 import useDebounce from '@shared/hooks/useDebounce'
 import { Button } from '@shared/ui/Button/Button'
-import { Input } from '@shared/ui/Input'
+import { Input } from '@shared/ui/Input/Input'
 
 import cls from './FilterBlock.module.scss'
 

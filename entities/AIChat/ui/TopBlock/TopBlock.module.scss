@@ -1,0 +1,27 @@
+.topBlock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.btn {
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  transition: background 0.3s;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.history {
+  fill: var(--color-secondary);
+}

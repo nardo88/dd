@@ -1,4 +1,4 @@
-.Button {
+.button {
   padding: 9px 15px;
   outline: none;
   cursor: pointer;
@@ -9,7 +9,6 @@
 
   &:disabled {
     color: var(--color-border);
-    background-color: var(--color-secondary);
     cursor: default;
   }
 }

@@ -1,12 +1,15 @@
 import { FC } from 'react'
-import cls from './Settings.module.scss'
-import { OptionType, Select } from '@shared/ui/Select/Select'
+
 import { categories } from '@shared/consts/categories'
-import { Input, InputTypes } from '@shared/ui/Input'
 import { useAppDispatch, useAppSelector } from '@shared/hooks/redux'
+import { Input, InputTypes } from '@shared/ui/Input/Input'
+import { InputFile } from '@shared/ui/InputFile/InputFile'
+import { OptionType, Select } from '@shared/ui/Select/Select'
+
 import { getCategory, getDescription, getImage, getOrder, getTitle } from '../../modules/selectors'
 import { articleEditorAction } from '../../modules/slice'
-import { InputFile } from '@shared/ui/InputFile/InputFile'
+
+import cls from './Settings.module.scss'
 
 interface SettingsProps {
   className?: string
